@@ -1,0 +1,39 @@
+#ifndef __NODA_H
+#define __NODA_H
+
+#include "noda_common.h"
+#include "noda_internal.h"
+
+#ifndef NODA_HEARTBEAT_MILLIS
+#define NODA_HEARTBEAT_MILLIS 200
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+int noda_startup(int argc, const char** argv);
+int noda_cleanup(void);
+int noda_loop(void);
+
+#ifndef NODA_USE_CUSTOM_APP_ENTRY
+int main(int argc, const char** argv) {
+    int rt = noda_startup(argc, argv);
+    if (NODA_OK == rt) {
+        do {
+            noda_throttle(NODA_HEARTBEAT_MILLIS);
+            noda_sync();
+            rt = noda_loop();
+            noda_post();
+        } while (NODA_OK == rt);
+        rt = noda_cleanup();
+    }
+    return rt;
+}
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // __NODA_H
