@@ -1,7 +1,7 @@
 #define NODA_HEARTBEAT_MILLIS 1000
 
 #include <noda.h>
-#include <noda_device.h>
+#include <noda_device_center.h>
 #include <noda_ntc_sensor.h>
 #include <noda_log.h>
 
@@ -18,7 +18,7 @@ int noda_startup(int argc, const char** argv) {
     }
     noda_print("\n");
     noda_logd("noda_startup");
-    noda_device_init();
+    noda_device_center_startup();
     return NODA_OK;
 }
 
