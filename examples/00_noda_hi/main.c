@@ -13,12 +13,12 @@ NODA_DEVICE_LIST {
 };
 
 int noda_startup(int argc, const char** argv) {
-    noda_device_init();
     for (int i = 0; i < argc; ++i) {
         noda_print("%s ", argv[i]);
     }
     noda_print("\n");
     noda_logd("noda_startup");
+    noda_device_init();
     return NODA_OK;
 }
 
@@ -27,7 +27,7 @@ int noda_cleanup(void) {
     return NODA_OK;
 }
 
-int noda_loop(void) {
+int noda_onloop(void) {
     static int counter = 0;
     noda_logd("noda_loop %d", counter++);
     return counter > 10 ? NODA_FAIL : NODA_OK;

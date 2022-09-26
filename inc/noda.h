@@ -14,18 +14,13 @@ extern "C" {
 
 int noda_startup(int argc, const char** argv);
 int noda_cleanup(void);
-int noda_loop(void);
+int noda_onloop(void);
 
 #ifndef NODA_USE_CUSTOM_APP_ENTRY
 int main(int argc, const char** argv) {
     int rt = noda_startup(argc, argv);
     if (NODA_OK == rt) {
-        do {
-            noda_throttle(NODA_HEARTBEAT_MILLIS);
-            noda_sync();
-            rt = noda_loop();
-            noda_post();
-        } while (NODA_OK == rt);
+        while (NODA_OK == (rt = noda_loop()));
         rt = noda_cleanup();
     }
     return rt;

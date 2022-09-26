@@ -10,11 +10,12 @@ extern "C" {
 
 int noda_sleep(bool deep);
 int noda_wakeup(void);
-
-int noda_sync(void);
-int noda_post(void);
+extern int noda_onloop(void);
 
 void noda_throttle(clock_t ms);
+
+int noda_loop_internal(clock_t millis);
+#define noda_loop() noda_loop_internal(NODA_HEARTBEAT_MILLIS)
 
 #ifdef __cplusplus
 }

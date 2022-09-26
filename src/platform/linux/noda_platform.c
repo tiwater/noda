@@ -2,7 +2,6 @@
 
 #include <sys/select.h>
 #include "noda_time.h"
-#include "noda_log.h"
 
 void noda_throttle(clock_t ms) {
     static clock_t prev, curr;
