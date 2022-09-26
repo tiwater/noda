@@ -23,6 +23,7 @@ int noda_startup(int argc, const char** argv) {
 }
 
 int noda_cleanup(void) {
+    noda_device_center_cleanup();
     noda_logd("noda_cleanup");
     return NODA_OK;
 }
@@ -30,5 +31,6 @@ int noda_cleanup(void) {
 int noda_onloop(void) {
     static int counter = 0;
     noda_logd("noda_loop %d", counter++);
+    noda_device_center_dump();
     return counter > 10 ? NODA_FAIL : NODA_OK;
 }

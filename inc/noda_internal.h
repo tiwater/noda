@@ -12,8 +12,6 @@ int noda_sleep(bool deep);
 int noda_wakeup(void);
 extern int noda_onloop(void);
 
-void noda_throttle(clock_t ms);
-
 int noda_loop_internal(clock_t millis);
 #define noda_loop() noda_loop_internal(NODA_HEARTBEAT_MILLIS)
 

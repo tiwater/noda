@@ -1,4 +1,5 @@
 #include "noda_internal.h"
+#include "noda_utils.h"
 
 int noda_sleep(bool deep) {
     NODA_UNUSED(deep);
