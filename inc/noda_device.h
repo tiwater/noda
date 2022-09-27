@@ -8,12 +8,20 @@ extern "C" {
 #endif
 
 #define NODA_DEVICE_BASE(cls) \
+    const char* name; \
     int (*open) (struct cls* self); \
     int (*close) (struct cls* self); \
     int (*power_mode_changed) (struct cls* self, noda_power_mode_t mode); \
     int (*read) (struct cls* self, int c, uint8_t* data); \
     int (*write) (struct cls* self, int c, const uint8_t* data); \
-    const char* name
+    bool opened
+
+#define NODA_DEVICE_SET_VTABLE(cls) \
+    .open = cls##_open, \
+    .close = cls##_close, \
+    .power_mode_changed = cls##_power_mode_changed, \
+    .read = cls##_read, \
+    .write = cls##_write
 
 typedef enum {
     NODA_POWER_MODE_UNKNOWN,

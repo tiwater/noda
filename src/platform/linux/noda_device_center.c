@@ -22,8 +22,9 @@ static void* _runner(void* args) {
     noda_device_t* dev;
     for (int i = 0; i < ndev; ++i) {
         dev = devs[i];
-        if (dev->open && NODA_OK == dev->open(dev)) {
+        if (!dev->opened && dev->open && NODA_OK == dev->open(dev)) {
             noda_logd("open device %d:%s", i, dev->name);
+            dev->opened = true;
         } else {
             noda_loge("fail to open device %d:%s", i, dev->name);
         }
@@ -33,8 +34,9 @@ static void* _runner(void* args) {
     }
     for (int i = 0; i < ndev; ++i) {
         dev = devs[i];
-        if (dev->close && NODA_OK == dev->close(dev)) {
+        if (dev->opened && dev->close && NODA_OK == dev->close(dev)) {
             noda_logd("close device %d:%s", i, dev->name);
+            dev->opened = false;
         } else {
             noda_loge("fail to close device %d:%s", i, dev->name);
         }
@@ -72,7 +74,9 @@ int noda_device_center_dump(void) {
     }
     noda_device_t** devs = s_task.devs;
     for (int i = 0, ndev = s_task.ndev; i < ndev; ++i) {
-        noda_logd("device %d:%s dump", i, devs[i]->name);
+        if (devs[i]->opened) {
+            noda_logd("device %d:%s dump", i, devs[i]->name);
+        }
     }
     return NODA_OK;
 }

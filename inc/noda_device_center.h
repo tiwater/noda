@@ -11,7 +11,11 @@ extern "C" {
 #define NODA_DEVICE_LIST  \
     static noda_device_t* noda_device_list[] =
 
-#define NODA_DEVICE_ADD(dev, ...) (noda_device_t*) &dev(__VA_ARGS__),
+#define NODA_DEVICE_ADD(dev, ...) \
+    (noda_device_t*) &((dev##_t) { \
+        NODA_DEVICE_SET_VTABLE(dev), \
+        __VA_ARGS__ \
+    }),
 
 #define noda_device_center_startup() \
     noda_device_center_startup_internal(\

@@ -12,11 +12,17 @@ typedef struct noda_ntc_sensor_t {
     uint8_t     pin;
     uint8_t     chn;
     uint16_t    vref;
-    bool        opened;
 } noda_ntc_sensor_t;
 
-#define noda_ntc_sensor(...)  \
-    (noda_ntc_sensor_t) { __VA_ARGS__ }
+int noda_ntc_sensor_open(noda_ntc_sensor_t* self);
+
+int noda_ntc_sensor_close(noda_ntc_sensor_t* self);
+
+int noda_ntc_sensor_power_mode_changed(noda_ntc_sensor_t* self, noda_power_mode_t mode);
+
+int noda_ntc_sensor_read(noda_ntc_sensor_t* self, int c, uint8_t* data);
+
+int noda_ntc_sensor_write(noda_ntc_sensor_t* self, int c, const uint8_t* data);
 
 #ifdef __cplusplus
 }
