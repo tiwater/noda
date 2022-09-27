@@ -19,11 +19,25 @@ static void* _runner(void* args) {
     noda_device_t** devs = task->devs;
     int ndev = task->ndev;
     task->running = true;
+    noda_device_t* dev;
     for (int i = 0; i < ndev; ++i) {
-        noda_logd("device %d:%s at %p", i, devs[i]->name, (void*)devs[i]);
+        dev = devs[i];
+        if (dev->open && NODA_OK == dev->open(dev)) {
+            noda_logd("open device %d:%s", i, dev->name);
+        } else {
+            noda_loge("fail to open device %d:%s", i, dev->name);
+        }
     }
     while (task->running) {
         noda_throttle(1000);
+    }
+    for (int i = 0; i < ndev; ++i) {
+        dev = devs[i];
+        if (dev->close && NODA_OK == dev->close(dev)) {
+            noda_logd("close device %d:%s", i, dev->name);
+        } else {
+            noda_loge("fail to close device %d:%s", i, dev->name);
+        }
     }
     return NULL;
 }

@@ -7,8 +7,8 @@
 extern "C" {
 #endif
 
-typedef struct {
-    NODA_DEVICE_BASE;
+typedef struct noda_ntc_sensor_t {
+    NODA_DEVICE_BASE(noda_ntc_sensor_t);
     uint8_t     pin;
     uint8_t     chn;
     uint16_t    vref;
