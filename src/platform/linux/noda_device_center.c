@@ -68,6 +68,42 @@ int noda_device_center_cleanup(void) {
     return NODA_FAIL;
 }
 
+int noda_device_center_sync(void) {
+    if (!s_task.running) {
+        return NODA_FAIL;
+    }
+    noda_device_t** devs = s_task.devs;
+    int ndev = s_task.ndev;
+    noda_device_t* dev;
+    for (int i = 0; i < ndev; ++i) {
+        dev = devs[i];
+        if (dev->opened && dev->sync && NODA_OK == dev->sync(dev)) {
+            noda_logd("sync from device %d:%s", i, dev->name);
+        } else {
+            noda_loge("fail to sync from device %d:%s", i, dev->name);
+        }
+    }
+    return NODA_OK;
+}
+
+int noda_device_center_post(void) {
+    if (!s_task.running) {
+        return NODA_FAIL;
+    }
+    noda_device_t** devs = s_task.devs;
+    int ndev = s_task.ndev;
+    noda_device_t* dev;
+    for (int i = 0; i < ndev; ++i) {
+        dev = devs[i];
+        if (dev->opened && dev->post && NODA_OK == dev->post(dev)) {
+            noda_logd("post to device %d:%s", i, dev->name);
+        } else {
+            noda_loge("fail to post to device %d:%s", i, dev->name);
+        }
+    }
+    return NODA_OK;
+}
+
 int noda_device_center_dump(void) {
     if (!s_task.running) {
         return NODA_FAIL;

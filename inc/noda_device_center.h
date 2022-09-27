@@ -24,6 +24,8 @@ extern "C" {
 
 int noda_device_center_startup_internal(int ndev, noda_device_t** devs);
 int noda_device_center_cleanup(void);
+int noda_device_center_sync(void);
+int noda_device_center_post(void);
 int noda_device_center_dump(void);
 
 #ifdef __cplusplus

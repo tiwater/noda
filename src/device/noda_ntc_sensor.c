@@ -16,6 +16,16 @@ int noda_ntc_sensor_power_mode_changed(noda_ntc_sensor_t* self, noda_power_mode_
     return NODA_OK;
 }
 
+int noda_ntc_sensor_sync(noda_ntc_sensor_t* self) {
+    NODA_UNUSED(self);
+    return NODA_OK;
+}
+
+int noda_ntc_sensor_post(noda_ntc_sensor_t* self) {
+    NODA_UNUSED(self);
+    return NODA_OK;
+}
+
 int noda_ntc_sensor_read(noda_ntc_sensor_t* self, int c, uint8_t* data) {
     NODA_UNUSED(self);
     NODA_UNUSED(c);
