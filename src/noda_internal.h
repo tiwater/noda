@@ -8,6 +8,10 @@
 extern "C" {
 #endif
 
+#ifndef NODA_HEARTBEAT_MILLIS
+#define NODA_HEARTBEAT_MILLIS 200
+#endif
+
 int noda_sleep(bool deep);
 int noda_wakeup(void);
 extern int noda_onloop(void);
