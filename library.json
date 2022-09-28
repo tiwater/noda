@@ -1,0 +1,27 @@
+{
+  "name": "noda",
+  "version": "0.0.1",
+  "description": "for test tiwater-noda",
+  "keywords": "test",
+  "authors":
+  {
+    "name":  "Tiwater",
+    "url":   "git@github.com:tiwater/noda.git",
+    "maintainer": true
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "git@github.com:tiwater/noda.git"
+  },
+  "homepage": "http://tiwater.cc",
+  "export": {
+    "exclude": [
+      "inc",
+      "src"
+    ]
+  },
+  "frameworks": "*",
+  "platforms": "*",
+  "examples": "examples/*/*.ino"
+}
