@@ -11,6 +11,7 @@ NODA_DEVICE_CLASS_BEGIN(noda_ntc_sensor);
     uint8_t     pin;
     uint8_t     chn;
     uint16_t    vref;
+    NODA_VAR(int, adc);
 NODA_DEVICE_CLASS_END();
 
 #ifdef __cplusplus

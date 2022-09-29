@@ -17,7 +17,6 @@ int noda_startup(int argc, const char** argv) {
         noda_print("%s ", argv[i]);
     }
     noda_print("\n");
-    noda_logd("noda_startup");
     noda_device_center_startup();
     return NODA_OK;
 }
@@ -31,6 +30,7 @@ int noda_cleanup(void) {
 int noda_onloop(void) {
     static int counter = 0;
     noda_logd("noda_loop %d", counter++);
-    noda_device_center_dump();
+    int adc = noda_getval(noda_ntc_sensor, "ntc", adc);
+    noda_logd("noda_ntc_sensor adc = %d, dirty ? %d", adc, node_isdirty());
     return counter > 10 ? NODA_FAIL : NODA_OK;
 }
