@@ -18,24 +18,26 @@ int noda_startup(void) {
         noda_print("%s ", argv[i]);
     }
     */
-    noda_print("\n");
-    noda_logd("noda_startup");
+    Serial.begin(115200);
     noda_device_center_startup();
     return NODA_OK;
 }
-
+/*
 int noda_cleanup(void) {
     noda_device_center_cleanup();
     noda_logd("noda_cleanup");
     return NODA_OK;
 }
-
+*/
 int noda_onloop(void) {
-   
-    
-    static int counter = 0;
-    noda_logd("noda_loop %d", counter++);
-    noda_device_center_dump();
-    return counter > 10 ? NODA_FAIL : NODA_OK;
-    
+  for(int i=0; i<17; i=i+8) {
+	  chipId |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
+	}
+
+	Serial.printf("ESP32 Chip model = %s Rev %d\n", ESP.getChipModel(), ESP.getChipRevision());
+	Serial.printf("This chip has %d cores\n", ESP.getChipCores());
+  Serial.print("Chip ID: "); Serial.println(chipId);
+  
+	delay(3000);
+    return 1;
 }

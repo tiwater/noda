@@ -23,5 +23,5 @@
   },
   "frameworks": "*",
   "platforms": "*",
-  "examples": "examples/*/*.ino"
+  "examples": "examples/*/*/*.ino"
 }
