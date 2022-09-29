@@ -14,8 +14,6 @@ extern "C" {
     int (*power_mode_changed) (struct cls* self, noda_power_mode_t mode); \
     int (*copy_cache) (struct cls* self); \
     int (*post_cache) (struct cls* self); \
-    int (*read) (struct cls* self, int c, uint8_t* data); \
-    int (*write) (struct cls* self, int c, const uint8_t* data); \
     bool opened
 
 #define NODA_DEVICE_SET_VTABLE(cls) \
@@ -23,9 +21,7 @@ extern "C" {
     .close = cls##_close, \
     .power_mode_changed = cls##_power_mode_changed, \
     .copy_cache = cls##_copy_cache, \
-    .post_cache = cls##_post_cache, \
-    .read = cls##_read, \
-    .write = cls##_write
+    .post_cache = cls##_post_cache
 
 #define NODA_DEVICE_CLASS_BEGIN(cls) \
     struct cls##_t; \
@@ -35,8 +31,6 @@ extern "C" {
     int cls##_power_mode_changed(cls##_t* self, noda_power_mode_t mode); \
     int cls##_copy_cache(cls##_t* self); \
     int cls##_post_cache(cls##_t* self); \
-    int cls##_read(cls##_t* self, int c, uint8_t* data); \
-    int cls##_write(cls##_t* self, int c, const uint8_t* data); \
     struct cls##_t { \
         NODA_DEVICE_VTABLE(cls##_t)
 

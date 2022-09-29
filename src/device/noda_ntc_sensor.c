@@ -26,17 +26,3 @@ int noda_ntc_sensor_post_cache(noda_ntc_sensor_t* self) {
     noda_post(self, adc);
     return NODA_OK;
 }
-
-int noda_ntc_sensor_read(noda_ntc_sensor_t* self, int c, uint8_t* data) {
-    NODA_UNUSED(self);
-    NODA_UNUSED(c);
-    NODA_UNUSED(data);
-    return NODA_OK;
-}
-
-int noda_ntc_sensor_write(noda_ntc_sensor_t* self, int c, const uint8_t* data) {
-    NODA_UNUSED(self);
-    NODA_UNUSED(c);
-    NODA_UNUSED(data);
-    return NODA_OK;
-}

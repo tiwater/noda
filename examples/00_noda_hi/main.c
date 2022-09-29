@@ -31,6 +31,6 @@ int noda_onloop(void) {
     static int counter = 0;
     noda_logd("noda_loop %d", counter++);
     int adc = noda_getval(noda_ntc_sensor, "ntc", adc);
-    noda_logd("noda_ntc_sensor adc = %d, dirty ? %d", adc, node_isdirty());
+    noda_logd("noda_ntc_sensor adc = %d", adc);
     return counter > 10 ? NODA_FAIL : NODA_OK;
 }

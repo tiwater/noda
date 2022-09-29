@@ -117,9 +117,7 @@ noda_device_t* noda_device_center_search(const char* devname) {
     // TODO 将搜索时间控制在O(1)
     for (int i = 0, ndev = s_ndev; i < ndev; ++i) {
         dev = devs[i];
-        noda_logd("devname %s", dev->name);
         if (0 == strcmp(dev->name, devname)) {
-            noda_logd("device %s found", devname);
             return dev;
         }
     }
