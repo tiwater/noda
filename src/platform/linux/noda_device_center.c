@@ -2,9 +2,9 @@
 #include "noda_utils.h"
 #include "noda_log.h"
 
-#include <pthread.h>
+//#include <pthread.h>
 #include <string.h>
-
+/*
 typedef struct {
     pthread_t tid;
     noda_device_t** devs;
@@ -116,3 +116,4 @@ int noda_device_center_dump(void) {
     }
     return NODA_OK;
 }
+*/

@@ -1,9 +1,10 @@
 #include "noda_internal.h"
 
-#include <sys/select.h>
+//#include <sys/select.h>
 #include "noda_time.h"
 
 void noda_throttle(clock_t ms) {
+    /*
     static clock_t prev, curr;
 
     clock_t timeout, millis;
@@ -19,4 +20,5 @@ void noda_throttle(clock_t ms) {
         tv.tv_usec= (timeout % 1000) * 1000;
         select(0, NULL, NULL, NULL, &tv);
     }
+    */
 }
