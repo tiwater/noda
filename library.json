@@ -17,8 +17,8 @@
   "homepage": "http://tiwater.cc",
   "export": {
     "exclude": [
-      "inc",
       "src"
+     
     ]
   },
   "frameworks": "*",

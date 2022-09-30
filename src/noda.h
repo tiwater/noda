@@ -8,7 +8,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#define platform 1
 int noda_startup(void);
 //int noda_startup(int argc, const char** argv);
 int noda_cleanup(void);

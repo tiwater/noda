@@ -1,10 +1,10 @@
-#include "noda_device_center.h"
+#include "noda_linux_device_center.h"
 #include "noda_utils.h"
 #include "noda_log.h"
-
-//#include <pthread.h>
 #include <string.h>
-/*
+#include "noda.h"
+#if platform==0
+#include <pthread.h>
 typedef struct {
     pthread_t tid;
     noda_device_t** devs;
@@ -44,7 +44,7 @@ static void* _runner(void* args) {
     return NULL;
 }
 
-int noda_device_center_startup_internal(int ndev, noda_device_t** devs) {
+int noda_linux_device_center_startup_internal(int ndev, noda_device_t** devs) {
     if (!s_task.running && ndev > 0 && devs) {
         if (0 == pthread_create(&s_task.tid, NULL, _runner, (void*)&s_task)) {
             s_task.devs = devs;
@@ -57,7 +57,7 @@ int noda_device_center_startup_internal(int ndev, noda_device_t** devs) {
     return NODA_FAIL;
 }
 
-int noda_device_center_cleanup(void) {
+int noda_linux_device_center_cleanup(void) {
     if (s_task.running) {
         s_task.running = false;
         pthread_join(s_task.tid, NULL);
@@ -68,7 +68,7 @@ int noda_device_center_cleanup(void) {
     return NODA_FAIL;
 }
 
-int noda_device_center_sync(void) {
+int noda_linux_device_center_sync(void) {
     if (!s_task.running) {
         return NODA_FAIL;
     }
@@ -86,7 +86,7 @@ int noda_device_center_sync(void) {
     return NODA_OK;
 }
 
-int noda_device_center_post(void) {
+int noda_linux_device_center_post(void) {
     if (!s_task.running) {
         return NODA_FAIL;
     }
@@ -104,7 +104,7 @@ int noda_device_center_post(void) {
     return NODA_OK;
 }
 
-int noda_device_center_dump(void) {
+int noda_linux_device_center_dump(void) {
     if (!s_task.running) {
         return NODA_FAIL;
     }
@@ -116,4 +116,4 @@ int noda_device_center_dump(void) {
     }
     return NODA_OK;
 }
-*/
+#endif
