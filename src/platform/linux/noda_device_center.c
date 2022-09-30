@@ -7,6 +7,7 @@
 
 typedef struct {
     pthread_t tid;
+    pthread_mutex_t lock;
     volatile bool running;
 } task_t;
 
@@ -14,16 +15,39 @@ static task_t s_task;
 static noda_device_t** s_devs;
 static int s_ndev;
 
+static int noda_device_center_sync_cache_from_dev(void) {
+    noda_device_t** devs = s_devs;
+    noda_device_t* dev;
+    for (int i = 0, n = s_ndev; i < n; ++i) {
+        dev = devs[i];
+        if (dev->opened) {
+            dev->sync_cache_from_dev(dev);
+        }
+    }
+    return NODA_OK;
+}
+
+static int noda_device_center_post_cache_to_dev(void) {
+    noda_device_t** devs = s_devs;
+    noda_device_t* dev;
+    for (int i = 0, n = s_ndev; i < n; ++i) {
+        dev = devs[i];
+        if (dev->opened) {
+            dev->post_cache_to_dev(dev);
+        }
+    }
+    return NODA_OK;
+}
+
 static void* _runner(void* args) {
     task_t* task = (task_t*) args;
     noda_device_t** devs = s_devs;
-    int ndev = s_ndev;
     task->running = true;
     noda_device_t* dev;
-    for (int i = 0; i < ndev; ++i) {
+    for (int i = 0, n = s_ndev; i < n; ++i) {
         dev = devs[i];
         if (!dev->opened) {
-            if (dev->open && NODA_OK == dev->open(dev)) {
+            if (NODA_OK == dev->open(dev)) {
                 noda_logd("device %d:%s open", i, dev->name);
                 dev->opened = true;
             } else {
@@ -32,13 +56,14 @@ static void* _runner(void* args) {
         }
     }
     while (task->running) {
-        // TODO
-        noda_throttle(1000);
+        noda_device_center_post_cache_to_dev();
+        noda_throttle(200);
+        noda_device_center_sync_cache_from_dev();
     }
-    for (int i = 0; i < ndev; ++i) {
+    for (int i = 0, n = s_ndev; i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
-            if (dev->close && NODA_OK == dev->close(dev)) {
+            if (NODA_OK == dev->close(dev)) {
                 noda_logd("device %d:%s close", i, dev->name);
                 dev->opened = false;
             } else {
@@ -53,6 +78,7 @@ int noda_device_center_startup_internal(int ndev, noda_device_t** devs) {
     if (!s_task.running && ndev > 0 && devs) {
         s_devs = devs;
         s_ndev = ndev;
+        pthread_mutex_init(&s_task.lock, NULL);
         if (0 == pthread_create(&s_task.tid, NULL, _runner, (void*)&s_task)) {
             noda_logd("device center startup");
             return NODA_OK;
@@ -66,6 +92,7 @@ int noda_device_center_cleanup(void) {
     if (s_task.running) {
         s_task.running = false;
         pthread_join(s_task.tid, NULL);
+        pthread_mutex_destroy(&s_task.lock);
         s_devs = NULL;
         s_ndev = 0;
         memset(&s_task, 0, sizeof(s_task));
@@ -76,36 +103,24 @@ int noda_device_center_cleanup(void) {
 }
 
 int noda_device_center_sync(void) {
-    if (!s_task.running) {
-        return NODA_FAIL;
-    }
     noda_device_t** devs = s_devs;
-    int ndev = s_ndev;
     noda_device_t* dev;
-    for (int i = 0; i < ndev; ++i) {
+    for (int i = 0, n = s_ndev; i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
-            if (dev->copy_cache && NODA_OK == dev->copy_cache(dev)) {
-                noda_logd("device %d:%s sync", i, dev->name);
-            }
+            dev->sync_from_cache(dev);
         }
     }
     return NODA_OK;
 }
 
 int noda_device_center_post(void) {
-    if (!s_task.running) {
-        return NODA_FAIL;
-    }
     noda_device_t** devs = s_devs;
-    int ndev = s_ndev;
     noda_device_t* dev;
-    for (int i = 0; i < ndev; ++i) {
+    for (int i = 0, n = s_ndev; i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
-            if (dev->post_cache && NODA_OK == dev->post_cache(dev)) {
-                noda_logd("device %d:%s post", i, dev->name);
-            }
+            dev->post_to_cache(dev);
         }
     }
     return NODA_OK;

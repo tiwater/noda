@@ -1,4 +1,4 @@
-#include "noda_ntc_sensor.h"
+#include "device/noda_ntc_sensor.h"
 #include "noda_log.h"
 
 int noda_ntc_sensor_open(noda_ntc_sensor_t* self) {
@@ -17,12 +17,26 @@ int noda_ntc_sensor_power_mode_changed(noda_ntc_sensor_t* self, noda_power_mode_
     return NODA_OK;
 }
 
-int noda_ntc_sensor_copy_cache(noda_ntc_sensor_t* self) {
-    noda_copy(self, adc);
+int noda_ntc_sensor_sync_from_cache(noda_ntc_sensor_t* self) {
+    noda_sync_from_cache(self, adc);
     return NODA_OK;
 }
 
-int noda_ntc_sensor_post_cache(noda_ntc_sensor_t* self) {
-    noda_post(self, adc);
+int noda_ntc_sensor_post_to_cache(noda_ntc_sensor_t* self) {
+    noda_post_to_cache(self, adc);
+    return NODA_OK;
+}
+
+int noda_ntc_sensor_sync_cache_from_dev(noda_ntc_sensor_t* self) {
+    static int count;
+    noda_setcache(self, adc, count++);
+    return NODA_OK;
+}
+
+int noda_ntc_sensor_post_cache_to_dev(noda_ntc_sensor_t* self) {
+    if (noda_cacheisdirty(self, adc)) {
+        int adc = noda_getcache(self, adc);
+        noda_logd("adc update to dev: %d", adc);
+    }
     return NODA_OK;
 }

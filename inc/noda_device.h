@@ -12,16 +12,20 @@ extern "C" {
     int (*open) (struct cls* self); \
     int (*close) (struct cls* self); \
     int (*power_mode_changed) (struct cls* self, noda_power_mode_t mode); \
-    int (*copy_cache) (struct cls* self); \
-    int (*post_cache) (struct cls* self); \
+    int (*sync_from_cache) (struct cls* self); \
+    int (*post_to_cache) (struct cls* self); \
+    int (*sync_cache_from_dev) (struct cls* self); \
+    int (*post_cache_to_dev) (struct cls* self); \
     bool opened
 
 #define NODA_DEVICE_SET_VTABLE(cls) \
     .open = cls##_open, \
     .close = cls##_close, \
     .power_mode_changed = cls##_power_mode_changed, \
-    .copy_cache = cls##_copy_cache, \
-    .post_cache = cls##_post_cache
+    .sync_from_cache = cls##_sync_from_cache, \
+    .post_to_cache = cls##_post_to_cache, \
+    .sync_cache_from_dev = cls##_sync_cache_from_dev, \
+    .post_cache_to_dev = cls##_post_cache_to_dev
 
 #define NODA_DEVICE_CLASS_BEGIN(cls) \
     struct cls##_t; \
@@ -29,8 +33,10 @@ extern "C" {
     int cls##_open(cls##_t* self); \
     int cls##_close(cls##_t* self); \
     int cls##_power_mode_changed(cls##_t* self, noda_power_mode_t mode); \
-    int cls##_copy_cache(cls##_t* self); \
-    int cls##_post_cache(cls##_t* self); \
+    int cls##_sync_from_cache(cls##_t* self); \
+    int cls##_post_to_cache(cls##_t* self); \
+    int cls##_sync_cache_from_dev(cls##_t* self); \
+    int cls##_post_cache_to_dev(cls##_t* self); \
     struct cls##_t { \
         NODA_DEVICE_VTABLE(cls##_t)
 
@@ -57,19 +63,30 @@ typedef struct noda_device_t {
     ((self)->_##v##_dirty = false, (self)->_##v##_var)
 
 #define noda_set(self, v, d)    \
-    ((self)->_##v##_dirty = ((self)->_##v##_var != d), (self)->_##v##_var = d)
+    if ((self)->_##v##_var != d) {  \
+        (self)->_##v##_dirty = true;\
+        (self)->_##v##_var = d;     \
+    }
 
-#define noda_getcache(self, v) noda_get(self, v##_cache)
+#define noda_iscachedirty(self, v)  \
+    noda_isdirty((self), v##_cache)
 
-#define noda_setcache(self, v, d) noda_set(self, v##_cache, d)
-
-#define noda_copy(self, v)                              \
+#define noda_sync_from_cache(self, v)                   \
     if ((self)->_##v##_var != (self)->_##v##_cache_var) \
         noda_set((self), v, (self)->_##v##_cache_var)
 
-#define noda_post(self, v)                              \
+#define noda_post_to_cache(self, v)                     \
     if ((self)->_##v##_cache_var != (self)->_##v##_var) \
         noda_set((self), v##_cache, (self)->_##v##_var)
+
+#define noda_cacheisdirty(self, v) \
+    noda_isdirty((self), v##_cache)
+
+#define noda_setcache(self, v, d)    \
+    noda_set((self), v##_cache, d)
+
+#define noda_getcache(self, v) \
+    noda_get((self), v##_cache)
 
 #ifdef __cplusplus
 }

@@ -2,7 +2,7 @@
 
 #include <noda.h>
 #include <noda_device_center.h>
-#include <noda_ntc_sensor.h>
+#include <device/noda_ntc_sensor.h>
 #include <noda_log.h>
 
 NODA_DEVICE_LIST {
