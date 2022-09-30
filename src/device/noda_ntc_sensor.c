@@ -34,9 +34,13 @@ int noda_ntc_sensor_sync_cache_from_dev(noda_ntc_sensor_t* self) {
 }
 
 int noda_ntc_sensor_post_cache_to_dev(noda_ntc_sensor_t* self) {
+#if 0
     if (noda_cacheisdirty(self, adc)) {
         int adc = noda_getcache(self, adc);
-        noda_logd("adc update to dev: %d", adc);
+        noda_logd("%s adc update to %d", self->name, adc);
     }
+#else
+    NODA_UNUSED(self);
+#endif
     return NODA_OK;
 }

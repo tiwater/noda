@@ -5,8 +5,11 @@
 #include <device/noda_ntc_sensor.h>
 #include <noda_log.h>
 
+#include "hi_sensor.h"
+
 NODA_DEVICE_LIST {
     NODA_DEVICE_ADD(noda_ntc_sensor, .name="ntc", .pin=3, .chn=3, .vref=3300)
+    NODA_DEVICE_ADD(hi_sensor, .name="hi", .sda=7, .scl=6, .addr=5, .freq=100)
 //    NODA_DEVICE_ADD(silan_sc7a20, .name="accel", .sda=7, .scl=6, .addr=25, .freq=100)
 //    NODA_DEVICE_ADD(hx711, .name="weigh", .pwr=5, .sck=20, .dout=21, .gain=1)
 //    NODA_DEVICE_ADD(ws2812rmt, .name="led", .pin=10, .chn=0, .nums=6)
@@ -32,5 +35,12 @@ int noda_onloop(void) {
     noda_logd("noda_loop %d", counter++);
     int adc = noda_getval(noda_ntc_sensor, "ntc", adc);
     noda_logd("noda_ntc_sensor adc = %d", adc);
+
+    float x = noda_getval(hi_sensor, "hi", x);
+    noda_logd("hi_sensor x = %f", x);
+    float y = noda_getval(hi_sensor, "hi", y);
+    noda_logd("hi_sensor y = %f", y);
+    float z = noda_getval(hi_sensor, "hi", z);
+    noda_logd("hi_sensor z = %f", z);
     return counter > 10 ? NODA_FAIL : NODA_OK;
 }
