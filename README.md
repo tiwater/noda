@@ -7,6 +7,7 @@ Ticos IoT OS for c
 
 ```bash
 $ cd ${noda项目script目录}
+$ python noda_hal_gen.py --help #查看脚本命令描述
 $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda; uint8_t addr; uint8_t freq;" --public="float x; float y; float z;"
 ```
 
