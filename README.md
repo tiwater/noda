@@ -20,7 +20,7 @@ $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda
 $ cd examples/00_noda_hi
 $ mkdir build
 $ cd build
-$ cmake ..
+$ cmake ../../..
 $ make
 $ ./00_noda_hi
 ```
