@@ -8,7 +8,6 @@ extern "C" {
 #endif
 
 #define NODA_DEVICE_VTABLE(cls) \
-    const char* name; \
     int (*open) (struct cls* self); \
     int (*close) (struct cls* self); \
     int (*power_mode_changed) (struct cls* self, noda_power_mode_t mode); \
@@ -16,7 +15,9 @@ extern "C" {
     int (*post_to_cache) (struct cls* self); \
     int (*sync_cache_from_dev) (struct cls* self); \
     int (*post_cache_to_dev) (struct cls* self); \
-    bool opened
+    const char* name; \
+    uint8_t id:7; \
+    bool opened:1
 
 #define NODA_DEVICE_SET_VTABLE(cls) \
     .open = cls##_open, \

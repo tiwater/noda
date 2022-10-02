@@ -126,16 +126,6 @@ int noda_device_center_post(void) {
     return NODA_OK;
 }
 
-noda_device_t* noda_device_center_search(const char* devname) {
-    noda_device_t** devs = s_devs;
-    noda_device_t* dev;
-    // TODO 将搜索时间控制在O(1)
-    for (int i = 0, ndev = s_ndev; i < ndev; ++i) {
-        dev = devs[i];
-        if (0 == strcmp(dev->name, devname)) {
-            return dev;
-        }
-    }
-    noda_loge("device %s not found", devname);
-    return NULL;
+noda_device_t* noda_device_center_search(uint8_t id) {
+    return s_devs[id];
 }
