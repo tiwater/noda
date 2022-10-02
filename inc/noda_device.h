@@ -16,8 +16,7 @@ extern "C" {
     int (*sync_cache_from_dev) (struct cls* self); \
     int (*post_cache_to_dev) (struct cls* self); \
     const char* name; \
-    uint8_t id:7; \
-    bool opened:1
+    bool opened
 
 #define NODA_DEVICE_SET_VTABLE(cls) \
     .open = cls##_open, \

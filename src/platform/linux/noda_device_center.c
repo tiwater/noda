@@ -12,11 +12,10 @@ typedef struct {
 } task_t;
 
 static task_t s_task;
-static noda_device_t** s_devs;
-static int s_ndev;
+static uint8_t s_ndev;
 
 static int noda_device_center_sync_cache_from_dev(void) {
-    noda_device_t** devs = s_devs;
+    noda_device_t* const* devs = noda_device_list;
     noda_device_t* dev;
     for (int i = 0, n = s_ndev; i < n; ++i) {
         dev = devs[i];
@@ -28,7 +27,7 @@ static int noda_device_center_sync_cache_from_dev(void) {
 }
 
 static int noda_device_center_post_cache_to_dev(void) {
-    noda_device_t** devs = s_devs;
+    noda_device_t* const* devs = noda_device_list;
     noda_device_t* dev;
     for (int i = 0, n = s_ndev; i < n; ++i) {
         dev = devs[i];
@@ -41,7 +40,7 @@ static int noda_device_center_post_cache_to_dev(void) {
 
 static void* _runner(void* args) {
     task_t* task = (task_t*) args;
-    noda_device_t** devs = s_devs;
+    noda_device_t* const* devs = noda_device_list;
     task->running = true;
     noda_device_t* dev;
     for (int i = 0, n = s_ndev; i < n; ++i) {
@@ -74,9 +73,8 @@ static void* _runner(void* args) {
     return NULL;
 }
 
-int noda_device_center_startup_internal(int ndev, noda_device_t** devs) {
-    if (!s_task.running && ndev > 0 && devs) {
-        s_devs = devs;
+int noda_device_center_startup_internal(uint8_t ndev) {
+    if (!s_task.running && ndev > 0) {
         s_ndev = ndev;
         pthread_mutex_init(&s_task.lock, NULL);
         if (0 == pthread_create(&s_task.tid, NULL, _runner, (void*)&s_task)) {
@@ -93,7 +91,6 @@ int noda_device_center_cleanup(void) {
         s_task.running = false;
         pthread_join(s_task.tid, NULL);
         pthread_mutex_destroy(&s_task.lock);
-        s_devs = NULL;
         s_ndev = 0;
         memset(&s_task, 0, sizeof(s_task));
         noda_logd("device center cleanup");
@@ -103,7 +100,7 @@ int noda_device_center_cleanup(void) {
 }
 
 int noda_device_center_sync(void) {
-    noda_device_t** devs = s_devs;
+    noda_device_t* const* devs = noda_device_list;
     noda_device_t* dev;
     for (int i = 0, n = s_ndev; i < n; ++i) {
         dev = devs[i];
@@ -115,7 +112,7 @@ int noda_device_center_sync(void) {
 }
 
 int noda_device_center_post(void) {
-    noda_device_t** devs = s_devs;
+    noda_device_t* const* devs = noda_device_list;
     noda_device_t* dev;
     for (int i = 0, n = s_ndev; i < n; ++i) {
         dev = devs[i];
@@ -124,8 +121,4 @@ int noda_device_center_post(void) {
         }
     }
     return NODA_OK;
-}
-
-noda_device_t* noda_device_center_search(uint8_t id) {
-    return s_devs[id];
 }
