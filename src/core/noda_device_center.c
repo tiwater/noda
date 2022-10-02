@@ -1,17 +1,11 @@
 #include "noda_device_center.h"
+#include "noda_task.h"
 #include "noda_utils.h"
 #include "noda_log.h"
 
-#include <pthread.h>
 #include <string.h>
 
-typedef struct {
-    pthread_t tid;
-    pthread_mutex_t lock;
-    volatile bool running;
-} task_t;
-
-static task_t s_task;
+static noda_task_t* s_task;
 static uint8_t s_ndev;
 
 static int noda_device_center_sync_cache_from_dev(void) {
@@ -38,10 +32,8 @@ static int noda_device_center_post_cache_to_dev(void) {
     return NODA_OK;
 }
 
-static void* _runner(void* args) {
-    task_t* task = (task_t*) args;
+static void* _runner(noda_task_t* task) {
     noda_device_t* const* devs = noda_device_list;
-    task->running = true;
     noda_device_t* dev;
     for (int i = 0, n = s_ndev; i < n; ++i) {
         dev = devs[i];
@@ -54,7 +46,7 @@ static void* _runner(void* args) {
             }
         }
     }
-    while (task->running) {
+    while (noda_task_running(task)) {
         noda_device_center_post_cache_to_dev();
         noda_throttle(200);
         noda_device_center_sync_cache_from_dev();
@@ -74,29 +66,26 @@ static void* _runner(void* args) {
 }
 
 int noda_device_center_startup_internal(uint8_t ndev) {
-    if (!s_task.running && ndev > 0) {
+    if (!s_task && ndev > 0) {
         s_ndev = ndev;
-        pthread_mutex_init(&s_task.lock, NULL);
-        if (0 == pthread_create(&s_task.tid, NULL, _runner, (void*)&s_task)) {
-            noda_logd("device center startup");
-            return NODA_OK;
-        }
-        noda_loge("fail to create device center task");
+        s_task = noda_task_create(_runner);
     }
+    if (s_task) {
+        noda_logd("device center startup");
+        return NODA_OK;
+    }
+    noda_loge("fail to startup device center!");
     return NODA_FAIL;
 }
 
 int noda_device_center_cleanup(void) {
-    if (s_task.running) {
-        s_task.running = false;
-        pthread_join(s_task.tid, NULL);
-        pthread_mutex_destroy(&s_task.lock);
+    if (s_task) {
+        noda_task_destroy(s_task);
+        s_task = NULL;
         s_ndev = 0;
-        memset(&s_task, 0, sizeof(s_task));
         noda_logd("device center cleanup");
-        return NODA_OK;
     }
-    return NODA_FAIL;
+    return NODA_OK;
 }
 
 int noda_device_center_sync(void) {

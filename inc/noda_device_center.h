@@ -39,7 +39,6 @@ int noda_device_center_dump(void);
 
 extern noda_device_t* const noda_device_list[];
 
-
 #ifdef __cplusplus
 }
 #endif
