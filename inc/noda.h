@@ -12,8 +12,8 @@
 extern "C" {
 #endif
 
-int noda_startup(int argc, const char** argv);
-int noda_cleanup(void);
+int noda_onstart(int argc, const char** argv);
+int noda_onclean(void);
 int noda_onloop(void);
 
 #ifndef NODA_USE_CUSTOM_APP_ENTRY

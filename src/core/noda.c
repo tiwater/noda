@@ -2,12 +2,17 @@
 #include "noda_utils.h"
 #include "noda_device_center.h"
 
-int noda_sleep(bool deep) {
-    NODA_UNUSED(deep);
-    return NODA_OK;
+int noda_startup(int argc, const char** argv) {
+    int rt = noda_onstart(argc, argv);
+    if (NODA_OK == rt) {
+        rt = noda_device_center_startup();
+    }
+    return rt;
 }
 
-int noda_wakeup(void) {
+int noda_cleanup(void) {
+    noda_device_center_cleanup();
+    noda_onclean();
     return NODA_OK;
 }
 

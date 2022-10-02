@@ -3,15 +3,12 @@
 #include "noda_utils.h"
 #include "noda_log.h"
 
-#include <string.h>
-
 static noda_task_t* s_task;
-static uint8_t s_ndev;
 
 static int noda_device_center_sync_cache_from_dev(void) {
     noda_device_t* const* devs = noda_device_list;
     noda_device_t* dev;
-    for (int i = 0, n = s_ndev; i < n; ++i) {
+    for (int i = 0, n = noda_device_center_ndev(); i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
             dev->sync_cache_from_dev(dev);
@@ -23,7 +20,7 @@ static int noda_device_center_sync_cache_from_dev(void) {
 static int noda_device_center_post_cache_to_dev(void) {
     noda_device_t* const* devs = noda_device_list;
     noda_device_t* dev;
-    for (int i = 0, n = s_ndev; i < n; ++i) {
+    for (int i = 0, n = noda_device_center_ndev(); i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
             dev->post_cache_to_dev(dev);
@@ -35,7 +32,7 @@ static int noda_device_center_post_cache_to_dev(void) {
 static void* _runner(noda_task_t* task) {
     noda_device_t* const* devs = noda_device_list;
     noda_device_t* dev;
-    for (int i = 0, n = s_ndev; i < n; ++i) {
+    for (int i = 0, n = noda_device_center_ndev(); i < n; ++i) {
         dev = devs[i];
         if (!dev->opened) {
             if (NODA_OK == dev->open(dev)) {
@@ -51,7 +48,7 @@ static void* _runner(noda_task_t* task) {
         noda_throttle(200);
         noda_device_center_sync_cache_from_dev();
     }
-    for (int i = 0, n = s_ndev; i < n; ++i) {
+    for (int i = 0, n = noda_device_center_ndev(); i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
             if (NODA_OK == dev->close(dev)) {
@@ -65,9 +62,9 @@ static void* _runner(noda_task_t* task) {
     return NULL;
 }
 
-int noda_device_center_startup_internal(uint8_t ndev) {
+int noda_device_center_startup() {
+    uint8_t ndev = noda_device_center_ndev();
     if (!s_task && ndev > 0) {
-        s_ndev = ndev;
         s_task = noda_task_create(_runner);
     }
     if (s_task) {
@@ -82,7 +79,6 @@ int noda_device_center_cleanup(void) {
     if (s_task) {
         noda_task_destroy(s_task);
         s_task = NULL;
-        s_ndev = 0;
         noda_logd("device center cleanup");
     }
     return NODA_OK;
@@ -91,7 +87,7 @@ int noda_device_center_cleanup(void) {
 int noda_device_center_sync(void) {
     noda_device_t* const* devs = noda_device_list;
     noda_device_t* dev;
-    for (int i = 0, n = s_ndev; i < n; ++i) {
+    for (int i = 0, n = noda_device_center_ndev(); i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
             dev->sync_from_cache(dev);
@@ -103,7 +99,7 @@ int noda_device_center_sync(void) {
 int noda_device_center_post(void) {
     noda_device_t* const* devs = noda_device_list;
     noda_device_t* dev;
-    for (int i = 0, n = s_ndev; i < n; ++i) {
+    for (int i = 0, n = noda_device_center_ndev(); i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
             dev->post_to_cache(dev);

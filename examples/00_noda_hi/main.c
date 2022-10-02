@@ -11,12 +11,15 @@
 #include "hi_sensor.h"
 
 /*************************************************************************
-  * 向工程注册设备标识号，后期开发者可据此标识号查询设备
-  * 请将此标识号列表成员作为NODA_DEVICE_ADD首参，系统将自动为您构建设备
+  * 向工程注册设备标识号
+  * 请将此标识号列表成员作为NODA_DEVICE_ADD首参
+  * 系统将按此标识号列表的顺序对设备进行自动排序
+  * 开发者可据此标识号通过noda_getval/noda_setval进行设备操作
   ************************************************************************/
 NODA_DEVICE_ID_MAP {
     NTC,
     HI,
+    NODA_NDEV,  /* 此行负责告知系统设备总数，请勿用于NODA_DEVICE_ADD首参 */
 };
 
 /*************************************************************************
@@ -24,30 +27,30 @@ NODA_DEVICE_ID_MAP {
   * NODA_DEVICE_ADD首参为标识号，为设备唯一标识
   ************************************************************************/
 NODA_DEVICE_LIST {
-    NODA_DEVICE_ADD(NTC, noda_ntc_sensor, .pin=3, .chn=3, .vref=3300)
-    NODA_DEVICE_ADD(HI, hi_sensor, .sda=7, .scl=6, .addr=5, .freq=100)
-//    NODA_DEVICE_ADD(silan_sc7a20, .name="accel", .sda=7, .scl=6, .addr=25, .freq=100)
-//    NODA_DEVICE_ADD(hx711, .name="weigh", .pwr=5, .sck=20, .dout=21, .gain=1)
-//    NODA_DEVICE_ADD(ws2812rmt, .name="led", .pin=10, .chn=0, .nums=6)
+    NODA_DEVICE_ADD(NTC, noda_ntc_sensor, .pin=3, .chn=3, .vref=3300),
+    NODA_DEVICE_ADD(HI, hi_sensor, .sda=7, .scl=6, .addr=5, .freq=100),
+//    NODA_DEVICE_ADD(silan_sc7a20, .name="accel", .sda=7, .scl=6, .addr=25, .freq=100),
+//    NODA_DEVICE_ADD(hx711, .name="weigh", .pwr=5, .sck=20, .dout=21, .gain=1),
+//    NODA_DEVICE_ADD(ws2812rmt, .name="led", .pin=10, .chn=0, .nums=6),
 };
 
 /*************************************************************************
   * 生命周期函数，在系统启动后被尽快调用
+  * 可以在此执行用户自定义的初始化操作
   ************************************************************************/
-int noda_startup(int argc, const char** argv) {
+int noda_onstart(int argc, const char** argv) {
     for (int i = 0; i < argc; ++i) {
         noda_print("%s ", argv[i]);
     }
     noda_print("\n");
-    noda_device_center_startup();
     return NODA_OK;
 }
 
 /*************************************************************************
   * 生命周期函数，在系统结束运行前被最后调用
+  * 可以在此执行用户自定义的清理操作
   ************************************************************************/
-int noda_cleanup(void) {
-    noda_device_center_cleanup();
+int noda_onclean(void) {
     noda_logd("noda_cleanup");
     return NODA_OK;
 }
