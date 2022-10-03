@@ -2,6 +2,7 @@
 #define __NODA_H
 
 #include "noda_common.h"
+#include "noda_bus_center.h"
 #include "noda_device_center.h"
 #include "noda_internal.h"
 
@@ -13,13 +14,15 @@
 extern "C" {
 #endif
 
-int noda_onstart(int argc, const char** argv);
+int noda_onstart(void);
 int noda_onclean(void);
 int noda_onloop(void);
 
 #ifndef NODA_USE_CUSTOM_APP_ENTRY
 int main(int argc, const char** argv) {
-    int rt = noda_startup(argc, argv);
+    NODA_UNUSED(argc);
+    NODA_UNUSED(argv);
+    int rt = noda_startup();
     if (NODA_OK == rt) {
         while (NODA_OK == (rt = noda_loop()));
         rt = noda_cleanup();

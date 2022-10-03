@@ -62,7 +62,7 @@ static void* _runner(noda_task_t* task) {
     return NULL;
 }
 
-int noda_device_center_startup() {
+int noda_device_center_startup(void) {
     uint8_t ndev = noda_device_center_ndev();
     if (!s_task && ndev > 0) {
         s_task = noda_task_create(_runner);
