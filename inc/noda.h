@@ -2,6 +2,7 @@
 #define __NODA_H
 
 #include "noda_common.h"
+#include "noda_device_center.h"
 #include "noda_internal.h"
 
 #ifndef NODA_HEARTBEAT_MILLIS

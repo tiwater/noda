@@ -1,7 +1,7 @@
 #ifndef __NODA_UTILS_H
 #define __NODA_UTILS_H
 
-#include <time.h>
+#include "noda_common.h"
 
 #ifdef __cplusplus
 extern "C" {

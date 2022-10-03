@@ -2,7 +2,6 @@
 #define __NODA_INTERNAL_H
 
 #include "noda_common.h"
-#include <time.h>
 
 #ifdef __cplusplus
 extern "C" {

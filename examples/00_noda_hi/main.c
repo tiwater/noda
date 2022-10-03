@@ -4,17 +4,16 @@
 #define NODA_HEARTBEAT_MILLIS 1000
 
 #include <noda.h>
-#include <noda_device_center.h>
-#include <device/noda_ntc_sensor.h>
 #include <noda_log.h>
 
+#include <device/noda_ntc_sensor.h>
 #include "hi_sensor.h"
 
 /*************************************************************************
   * 向工程注册设备标识号
   * 请将此标识号列表成员作为NODA_DEVICE_ADD首参
   * 系统将按此标识号列表的顺序对设备进行自动排序
-  * 开发者可据此标识号通过noda_getval/noda_setval进行设备操作
+  * 开发者可据此标识号使用noda_isdirty/noda_getval/noda_setval读写设备数据
   ************************************************************************/
 NODA_DEVICE_ID_MAP {
     NTC,
@@ -43,6 +42,7 @@ int noda_onstart(int argc, const char** argv) {
         noda_print("%s ", argv[i]);
     }
     noda_print("\n");
+    noda_logd("noda_onstart");
     return NODA_OK;
 }
 
@@ -51,7 +51,7 @@ int noda_onstart(int argc, const char** argv) {
   * 可以在此执行用户自定义的清理操作
   ************************************************************************/
 int noda_onclean(void) {
-    noda_logd("noda_cleanup");
+    noda_logd("noda_onclean");
     return NODA_OK;
 }
 

@@ -2,7 +2,6 @@
 #define __NODA_TIME_H
 
 #include "noda_common.h"
-#include <time.h>
 #include <limits.h>
 
 #ifdef __cplusplus
