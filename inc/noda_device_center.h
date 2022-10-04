@@ -8,6 +8,10 @@
 extern "C" {
 #endif
 
+#define NODA_NO_DEVICE \
+    uint8_t noda_device_center_ndev(void) { return 0; } \
+    noda_device_t* const noda_device_list[] = { NULL }
+
 #define NODA_DEVICE_ID_MAP \
     enum noda_device_id_t
 
@@ -16,11 +20,8 @@ extern "C" {
     noda_device_t* const noda_device_list[] =
 
 #define NODA_DEVICE_ADD(_id, dev, ...) \
-    [_id] = (noda_device_t*) &((dev##_t) { \
-        NODA_DEVICE_SET_VTABLE(dev), \
-        .name = #_id, \
-        __VA_ARGS__ \
-    })
+    [_id] = (noda_device_t*) &((dev##_t) \
+            { NODA_DEVICE_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ })
 
 int noda_device_center_startup(void);
 int noda_device_center_cleanup(void);
@@ -31,10 +32,16 @@ uint8_t noda_device_center_ndev(void);
 
 extern noda_device_t* const noda_device_list[];
 
-#define noda_getval(id, devtype, var)  \
+#define noda_dev_getname(id)        \
+    (noda_device_list[id]->name)
+
+#define noda_dev_isdirty(id, devtype, var)   \
+    (((devtype##_t*) noda_device_list[id])->_##var##_dirty)
+
+#define noda_dev_getval(id, devtype, var)  \
     (((devtype##_t*) noda_device_list[id])->_##var##_var)
 
-#define noda_setval(id, devtype, var, val) \
+#define noda_dev_setval(id, devtype, var, val) \
     (((devtype##_t*) noda_device_list[id])->_##var##_var = val)
 
 #ifdef __cplusplus

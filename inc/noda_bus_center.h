@@ -8,6 +8,10 @@
 extern "C" {
 #endif
 
+#define NODA_NO_BUS \
+    uint8_t noda_bus_center_nbus(void) { return 0; } \
+    noda_bus_t* const noda_bus_list[] = { NULL }
+
 #define NODA_BUS_ID_MAP \
     enum noda_bus_id_t
 
@@ -25,8 +29,6 @@ extern "C" {
 int noda_bus_center_startup(void);
 int noda_bus_center_cleanup(void);
 uint8_t noda_bus_center_nbus(void);
-
-extern noda_bus_t* const noda_bus_list[];
 
 #ifdef __cplusplus
 }

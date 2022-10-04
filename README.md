@@ -18,10 +18,8 @@ $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda
 请参考noda项目目录下examples/00_noda_hi
 
 ```bash
-$ cd examples/00_noda_hi
-$ mkdir build
+$ cmake -B build
 $ cd build
-$ cmake ../../..
 $ make
 $ ./00_noda_hi
 ```

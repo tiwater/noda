@@ -71,12 +71,12 @@ typedef struct noda_device_t {
 #define noda_iscachedirty(self, v)  \
     noda_isdirty((self), v##_cache)
 
-#define noda_sync_from_cache(self, v)                   \
-    if ((self)->_##v##_var != (self)->_##v##_cache_var) \
+#define noda_sync_from_cache(self, v)                       \
+    if ((self)->_##v##_var != noda_get((self), v##_cache))  \
         noda_set((self), v, (self)->_##v##_cache_var)
 
-#define noda_post_to_cache(self, v)                     \
-    if ((self)->_##v##_cache_var != (self)->_##v##_var) \
+#define noda_post_to_cache(self, v)                         \
+    if ((self)->_##v##_cache_var != noda_get((self), v))    \
         noda_set((self), v##_cache, (self)->_##v##_var)
 
 #define noda_cacheisdirty(self, v) \

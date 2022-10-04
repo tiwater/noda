@@ -1,40 +1,40 @@
 /*************************************************************************
-  * @class ${CLS_NAME} 代码文件
-  * @generate date: ${GEN_DATE}
+  * @class dummy_adc_sensor 代码文件
+  * @generate date: 2022-10-04 12:44:02
   ************************************************************************/
 
-#include "${CLS_NAME}.h"
+#include "dummy_adc_sensor.h"
 
 /*************************************************************************
-  * ${CLS_NAME}_open：${CLS_NAME}必须实现的类成员函数，负责设备“打开”操作，
+  * dummy_adc_sensor_open：dummy_adc_sensor必须实现的类成员函数，负责设备“打开”操作，
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_open(${CLS_NAME}_t* self) {
+int dummy_adc_sensor_open(dummy_adc_sensor_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     return NODA_OK;
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_close：${CLS_NAME}必须实现的类成员函数，负责设备“关闭”操作，
+  * dummy_adc_sensor_close：dummy_adc_sensor必须实现的类成员函数，负责设备“关闭”操作，
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_close(${CLS_NAME}_t* self) {
+int dummy_adc_sensor_close(dummy_adc_sensor_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     return NODA_OK;
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_power_mode_changed：${CLS_NAME}必须实现的类成员函数，
+  * dummy_adc_sensor_power_mode_changed：dummy_adc_sensor必须实现的类成员函数，
   * 系统改变“电源模式”时被动触发，
   * @param self 类实例
   * @param mode 更改后的电源模式
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, noda_power_mode_t mode) {
+int dummy_adc_sensor_power_mode_changed(dummy_adc_sensor_t* self, noda_power_mode_t mode) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     NODA_UNUSED(mode);
@@ -42,51 +42,49 @@ int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, noda_power_mode_t mode) 
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_sync_from_cache：${CLS_NAME}必须实现的类成员函数，
+  * dummy_adc_sensor_sync_from_cache：dummy_adc_sensor必须实现的类成员函数，
   * 负责设备数据从缓存复制到应用层的复制操作，
   * 此函数为自动生成，请不要更改函数内容
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_sync_from_cache(${CLS_NAME}_t* self) {
-${SYNC_FROM_CACHE}
+int dummy_adc_sensor_sync_from_cache(dummy_adc_sensor_t* self) {
+    noda_sync_from_cache(self, adc);
     return NODA_OK;
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_post_to_cache：${CLS_NAME}必须实现的类成员函数，
+  * dummy_adc_sensor_post_to_cache：dummy_adc_sensor必须实现的类成员函数，
   * 负责设备数据从应用层到缓存的复制操作，
   * 此函数为自动生成，请不要更改函数内容
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_post_to_cache(${CLS_NAME}_t* self) {
-${POST_TO_CACHE}
+int dummy_adc_sensor_post_to_cache(dummy_adc_sensor_t* self) {
+    noda_post_to_cache(self, adc);
     return NODA_OK;
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_sync_cache_from_dev：${CLS_NAME}必须实现的类成员函数，
+  * dummy_adc_sensor_sync_cache_from_dev：dummy_adc_sensor必须实现的类成员函数，
   * 负责设备数据从传感器到缓存的获取操作，
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_sync_cache_from_dev(${CLS_NAME}_t* self) {
-    /* 填充代码内容后请删除NODA_UNUSED调用 */
-    NODA_UNUSED(self);
-    // 用法用例
-    // bool lv = true;
-    // noda_setcache(self, level, lv); // 填充设备数据到相应缓存区
+int dummy_adc_sensor_sync_cache_from_dev(dummy_adc_sensor_t* self) {
+    static int counter;
+    int adc = ++counter;
+    noda_setcache(self, adc, adc); // 填充设备数据到相应缓存区
     return NODA_OK;
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_post_cache_to_dev：${CLS_NAME}必须实现的类成员函数，
+  * dummy_adc_sensor_post_cache_to_dev：dummy_adc_sensor必须实现的类成员函数，
   * 负责设备数据从缓存到传感器的提交操作，
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_post_cache_to_dev(${CLS_NAME}_t* self) {
+int dummy_adc_sensor_post_cache_to_dev(dummy_adc_sensor_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED调用 */
     NODA_UNUSED(self);
     // 用法用例

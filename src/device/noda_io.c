@@ -1,40 +1,40 @@
 /*************************************************************************
-  * @class ${CLS_NAME} 代码文件
-  * @generate date: ${GEN_DATE}
+  * @class noda_io 代码文件
+  * @generate date: 2022-10-03 22:36:43
   ************************************************************************/
 
-#include "${CLS_NAME}.h"
+#include "device/noda_io.h"
 
 /*************************************************************************
-  * ${CLS_NAME}_open：${CLS_NAME}必须实现的类成员函数，负责设备“打开”操作，
+  * noda_io_open：noda_io必须实现的类成员函数，负责设备“打开”操作，
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_open(${CLS_NAME}_t* self) {
+int noda_io_open(noda_io_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     return NODA_OK;
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_close：${CLS_NAME}必须实现的类成员函数，负责设备“关闭”操作，
+  * noda_io_close：noda_io必须实现的类成员函数，负责设备“关闭”操作，
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_close(${CLS_NAME}_t* self) {
+int noda_io_close(noda_io_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     return NODA_OK;
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_power_mode_changed：${CLS_NAME}必须实现的类成员函数，
+  * noda_io_power_mode_changed：noda_io必须实现的类成员函数，
   * 系统改变“电源模式”时被动触发，
   * @param self 类实例
   * @param mode 更改后的电源模式
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, noda_power_mode_t mode) {
+int noda_io_power_mode_changed(noda_io_t* self, noda_power_mode_t mode) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     NODA_UNUSED(mode);
@@ -42,36 +42,36 @@ int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, noda_power_mode_t mode) 
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_sync_from_cache：${CLS_NAME}必须实现的类成员函数，
+  * noda_io_sync_from_cache：noda_io必须实现的类成员函数，
   * 负责设备数据从缓存复制到应用层的复制操作，
   * 此函数为自动生成，请不要更改函数内容
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_sync_from_cache(${CLS_NAME}_t* self) {
-${SYNC_FROM_CACHE}
+int noda_io_sync_from_cache(noda_io_t* self) {
+    noda_sync_from_cache(self, level);
     return NODA_OK;
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_post_to_cache：${CLS_NAME}必须实现的类成员函数，
+  * noda_io_post_to_cache：noda_io必须实现的类成员函数，
   * 负责设备数据从应用层到缓存的复制操作，
   * 此函数为自动生成，请不要更改函数内容
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_post_to_cache(${CLS_NAME}_t* self) {
-${POST_TO_CACHE}
+int noda_io_post_to_cache(noda_io_t* self) {
+    noda_post_to_cache(self, level);
     return NODA_OK;
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_sync_cache_from_dev：${CLS_NAME}必须实现的类成员函数，
+  * noda_io_sync_cache_from_dev：noda_io必须实现的类成员函数，
   * 负责设备数据从传感器到缓存的获取操作，
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_sync_cache_from_dev(${CLS_NAME}_t* self) {
+int noda_io_sync_cache_from_dev(noda_io_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED调用 */
     NODA_UNUSED(self);
     // 用法用例
@@ -81,12 +81,12 @@ int ${CLS_NAME}_sync_cache_from_dev(${CLS_NAME}_t* self) {
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_post_cache_to_dev：${CLS_NAME}必须实现的类成员函数，
+  * noda_io_post_cache_to_dev：noda_io必须实现的类成员函数，
   * 负责设备数据从缓存到传感器的提交操作，
   * @param self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
-int ${CLS_NAME}_post_cache_to_dev(${CLS_NAME}_t* self) {
+int noda_io_post_cache_to_dev(noda_io_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED调用 */
     NODA_UNUSED(self);
     // 用法用例

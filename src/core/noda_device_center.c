@@ -64,15 +64,18 @@ static void* _runner(noda_task_t* task) {
 
 int noda_device_center_startup(void) {
     uint8_t ndev = noda_device_center_ndev();
-    if (!s_task && ndev > 0) {
-        s_task = noda_task_create(_runner);
+    if (ndev > 0) {
+        if (!s_task) {
+            s_task = noda_task_create(_runner);
+        }
+        if (s_task) {
+            noda_logd("device center startup");
+            return NODA_OK;
+        }
+        noda_loge("fail to startup device center!");
+        return NODA_FAIL;
     }
-    if (s_task) {
-        noda_logd("device center startup");
-        return NODA_OK;
-    }
-    noda_loge("fail to startup device center!");
-    return NODA_FAIL;
+    return NODA_OK;
 }
 
 int noda_device_center_cleanup(void) {

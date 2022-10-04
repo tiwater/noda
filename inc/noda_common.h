@@ -11,6 +11,8 @@
 extern "C" {
 #endif
 
+typedef uint8_t noda_pin_t;
+
 typedef enum {
     NODA_OK,
     NODA_FAIL,

@@ -21,7 +21,10 @@ aux_source_directory (./src/device          DEVICE_SRCS)
 aux_source_directory (./src/platform/linux  PLATFORM_SRCS)
 set (NODA_SRCS ${PLATFORM_SRCS} ${BUS_SRCS} ${DEVICE_SRCS} ${CORE_SRCS})
 
-# build noda_hi
-aux_source_directory (./examples/00_noda_hi EXAMPLE_00)
-add_executable (00_noda_hi ${NODA_SRCS} ${EXAMPLE_00})
-# add_executable (00_noda_hi ./examples/00_noda_hi ${NODA_SRCS})
+# build targets
+aux_source_directory (./examples/00_hello EXAMPLE_00)
+add_executable (00_hello ${NODA_SRCS} ${EXAMPLE_00})
+aux_source_directory (./examples/01_device EXAMPLE_01)
+add_executable (01_device ${NODA_SRCS} ${EXAMPLE_01})
+#aux_source_directory (./examples/02_bus EXAMPLE_02)
+#add_executable (02_bus ${NODA_SRCS} ${EXAMPLE_02})
