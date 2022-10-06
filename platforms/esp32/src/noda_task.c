@@ -24,7 +24,7 @@ noda_task_t* noda_task_create(const char* name, noda_task_runner_t runner) {
     if (task) {
         task->runner = runner;
         // FIXME 需要完善Task配置信息
-        if (pdPASS != xTaskCreate(_runner, name, 4*1024, NULL, 5, &task->tid)) {
+        if (pdPASS != xTaskCreate(_runner, name, 4*1024, task, 5, &task->tid)) {
             noda_loge("node_task_create: fail to create task!");
             free(task);
             task = NULL;
