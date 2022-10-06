@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "noda_log.h"
 
-typedef struct{
+typedef struct {
     noda_task_runner_t runner;
     volatile bool running;
     pthread_t tid;
@@ -19,7 +19,8 @@ static void* _runner(void* task) {
     return NULL;
 }
 
-noda_task_t* noda_task_create(noda_task_runner_t runner) {
+noda_task_t* noda_task_create(const char* name, noda_task_runner_t runner) {
+    NODA_UNUSED(name);
     internal_task_t* task = calloc(1, sizeof(internal_task_t));
     if (task) {
         task->runner = runner;
@@ -31,7 +32,7 @@ noda_task_t* noda_task_create(noda_task_runner_t runner) {
     } else {
         noda_loge("noda_task_create: memory leak!");
     }
-    return (noda_task_t*)task;
+    return (noda_task_t*) task;
 }
 
 void noda_task_destroy(noda_task_t* task) {

@@ -1,5 +1,5 @@
 #include "noda_internal.h"
-#include "noda_utils.h"
+#include "noda_time.h"
 #include "noda_bus_center.h"
 #include "noda_device_center.h"
 #include "noda_log.h"
@@ -32,7 +32,7 @@ int noda_cleanup(void) {
 
 int noda_loop_internal(clock_t millis) {
     int rt = NODA_OK;
-    noda_throttle(millis);
+    noda_delay(millis);
     noda_device_center_sync();
     rt = noda_onloop();
     noda_device_center_post();

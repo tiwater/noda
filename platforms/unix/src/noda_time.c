@@ -1,9 +1,7 @@
-#include "noda_internal.h"
-
-#include <sys/select.h>
 #include "noda_time.h"
+#include <sys/select.h>
 
-void noda_throttle(clock_t ms) {
+void noda_delay(clock_t ms) {
     static clock_t prev, curr;
 
     clock_t timeout, millis;

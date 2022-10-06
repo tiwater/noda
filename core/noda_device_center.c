@@ -1,6 +1,6 @@
 #include "noda_device_center.h"
 #include "noda_task.h"
-#include "noda_utils.h"
+#include "noda_time.h"
 #include "noda_log.h"
 
 static noda_task_t* s_task;
@@ -45,7 +45,7 @@ static void* _runner(noda_task_t* task) {
     }
     while (noda_task_running(task)) {
         noda_device_center_post_cache_to_dev();
-        noda_throttle(200);
+        noda_delay(200);
         noda_device_center_sync_cache_from_dev();
     }
     for (int i = 0, n = noda_device_center_ndev(); i < n; ++i) {
@@ -66,7 +66,7 @@ int noda_device_center_startup(void) {
     uint8_t ndev = noda_device_center_ndev();
     if (ndev > 0) {
         if (!s_task) {
-            s_task = noda_task_create(_runner);
+            s_task = noda_task_create("noda_device_center", _runner);
         }
         if (s_task) {
             noda_logd("device center startup");

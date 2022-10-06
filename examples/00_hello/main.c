@@ -38,6 +38,5 @@ int noda_onclean(void) {
 int noda_onloop(void) {
     static int counter = 0;
     noda_logd("noda_loop %d", counter++);
-    // 本例程仅令系统主循环触发五次，然后返回NODA_FAIL结束循环
-    return counter > 5 ? NODA_FAIL : NODA_OK;
+    return NODA_OK;
 }
