@@ -32,11 +32,11 @@ uint8_t noda_bus_center_nbus(void);
 
 extern noda_bus_t* const noda_bus_list[];
 
-#define noda_bus(id, type)    \
-    ((type##_t*)noda_bus_list[id])
+#define noda_bus(id)        (noda_bus_list[id])
 
-#define noda_bus_name(id)   \
-    (noda_bus_list[id]->name)
+#define noda_bus_name(id)   (noda_bus_list[id]->name)
+
+#define noda_bus_opened(id) (noda_bus_list[id]->opened)
 
 #ifdef __cplusplus
 }
