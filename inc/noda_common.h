@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stddef.h>
 #include <time.h>
 
 #define NODA_UNUSED(x) (void) x

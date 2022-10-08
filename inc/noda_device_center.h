@@ -32,17 +32,20 @@ uint8_t noda_device_center_ndev(void);
 
 extern noda_device_t* const noda_device_list[];
 
-#define noda_dev_getname(id)        \
+#define noda_dev(id, type)    \
+    ((type##_t*)(noda_device_list[id]))
+
+#define noda_dev_name(id)        \
     (noda_device_list[id]->name)
 
-#define noda_dev_isdirty(id, devtype, var)   \
-    (((devtype##_t*) noda_device_list[id])->_##var##_dirty)
+#define noda_dev_isdirty(id, type, var)   \
+    (((type##_t*) noda_device_list[id])->_##var##_dirty)
 
-#define noda_dev_getval(id, devtype, var)  \
-    (((devtype##_t*) noda_device_list[id])->_##var##_var)
+#define noda_dev_getval(id, type, var)  \
+    (((type##_t*) noda_device_list[id])->_##var##_var)
 
-#define noda_dev_setval(id, devtype, var, val) \
-    (((devtype##_t*) noda_device_list[id])->_##var##_var = val)
+#define noda_dev_setval(id, type, var, val) \
+    (((type##_t*) noda_device_list[id])->_##var##_var = val)
 
 #ifdef __cplusplus
 }

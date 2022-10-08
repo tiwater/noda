@@ -79,13 +79,13 @@ typedef struct noda_device_t {
     if ((self)->_##v##_cache_var != noda_get((self), v))    \
         noda_set((self), v##_cache, (self)->_##v##_var)
 
-#define noda_cacheisdirty(self, v) \
+#define noda_cache_isdirty(self, v) \
     noda_isdirty((self), v##_cache)
 
-#define noda_setcache(self, v, d)    \
+#define noda_cache_set(self, v, d)    \
     noda_set((self), v##_cache, d)
 
-#define noda_getcache(self, v) \
+#define noda_cache_get(self, v) \
     noda_get((self), v##_cache)
 
 #ifdef __cplusplus

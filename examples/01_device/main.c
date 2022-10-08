@@ -56,10 +56,11 @@ int noda_onloop(void) {
     static int counter = 0;
     noda_logd("noda_loop %d", counter++);
     // 检查DEV_IO0设备缓存中的level值是否已被更新
-    if (noda_dev_isdirty(DEV_IO0, noda_io, level)) {
+    noda_io_t* io = noda_dev(DEV_IO0, noda_io);
+    if (noda_isdirty(io, level)) {
       // 输出DEV_IO0设备缓存中得到的level值
-        bool level = noda_dev_getval(DEV_IO0, noda_io, level);
-        noda_logd("%s level = %d", noda_dev_getname(DEV_IO0), level);
+        bool level = noda_get(io, level);
+        noda_logd("%s level = %d", noda_dev_name(DEV_IO0), level);
     }
     return NODA_OK;
 }

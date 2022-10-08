@@ -1,8 +1,6 @@
 #include "noda_bus_center.h"
 #include "noda_log.h"
 
-extern noda_bus_t* const noda_bus_list[];
-
 int noda_bus_center_startup(void) {
     uint8_t nbus = noda_bus_center_nbus();
     if (nbus > 0) {

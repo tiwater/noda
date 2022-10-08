@@ -76,7 +76,7 @@ int ${CLS_NAME}_sync_cache_from_dev(${CLS_NAME}_t* self) {
     NODA_UNUSED(self);
     // 用法用例
     // bool lv = true;
-    // noda_setcache(self, level, lv); // 填充设备数据到相应缓存区
+    // noda_cache_set(self, level, lv); // 填充设备数据到相应缓存区
     return NODA_OK;
 }
 
@@ -91,7 +91,7 @@ int ${CLS_NAME}_post_cache_to_dev(${CLS_NAME}_t* self) {
     NODA_UNUSED(self);
     // 用法用例
     // if (noda_cacheisdirty(self, level)) {  // 检查缓存数值已经被应用层更新
-    //    bool level = noda_getcache(self, level); // 从缓存获取数值
+    //    bool level = noda_cache_get(self, level); // 从缓存获取数值
     //    noda_logd("%s level update to %d", self->name, level); // 提交到设备
     // }
     return NODA_OK;
