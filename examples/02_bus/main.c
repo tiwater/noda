@@ -5,7 +5,7 @@
 
 #include <noda.h>
 #include <noda/log.h>
-#include <noda/i2c.h>
+#include <noda/bus/i2c.h>
 
 #include "silan_sc7a20.h"
 

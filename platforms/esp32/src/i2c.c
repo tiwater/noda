@@ -1,4 +1,4 @@
-#include "noda/i2c.h"
+#include "noda/bus/i2c.h"
 #include "noda/log.h"
 
 #include <driver/i2c.h>

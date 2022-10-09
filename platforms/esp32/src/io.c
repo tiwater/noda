@@ -3,7 +3,7 @@
   * @generate date: 2022-10-06 21:35:04
   ************************************************************************/
 
-#include "noda/io.h"
+#include "noda/device/io.h"
 #include "noda/log.h"
 
 #include <driver/gpio.h>
