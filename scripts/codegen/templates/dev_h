@@ -6,7 +6,7 @@
 #ifndef __${CLS_NAME_UPPER_CASE}_H
 #define __${CLS_NAME_UPPER_CASE}_H
 
-#include "noda_device.h"
+#include "noda/device.h"
 
 #ifdef __cplusplus
 extern "C" {

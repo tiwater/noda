@@ -10,6 +10,8 @@ add_definitions (-Wall -Werror -Wextra -Wstrict-prototypes)
 if (NOT DEFINED ENV{NODA_PATH})
 set (NODA_PATH ${CMAKE_SOURCE_DIR}/../../../..)
 endif ()
+set (NODA_PLATFORM unix)
+
 include (${NODA_PATH}/scripts/cmake/noda.cmake)
 
 aux_source_directory (${NODA_PATH}/examples/${PROJECT_NAME} PROJECT_SRCS)

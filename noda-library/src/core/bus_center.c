@@ -1,5 +1,5 @@
-#include "noda_bus_center.h"
-#include "noda_log.h"
+#include "noda/bus_center.h"
+#include "noda/log.h"
 
 int noda_bus_center_startup(void) {
     uint8_t nbus = noda_bus_center_nbus();

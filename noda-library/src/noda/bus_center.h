@@ -1,8 +1,8 @@
 #ifndef __NODA_BUS_CENTER_H
 #define __NODA_BUS_CENTER_H
 
-#include "noda_common.h"
-#include "noda_bus.h"
+#include "noda/common.h"
+#include "noda/bus.h"
 
 #ifdef __cplusplus
 extern "C" {

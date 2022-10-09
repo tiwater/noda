@@ -1,8 +1,8 @@
 #ifndef __NODA_DEVICE_CENTER_H
 #define __NODA_DEVICE_CENTER_H
 
-#include "noda_common.h"
-#include "noda_device.h"
+#include "noda/common.h"
+#include "noda/device.h"
 
 #ifdef __cplusplus
 extern "C" {

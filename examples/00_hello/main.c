@@ -4,7 +4,7 @@
 #define NODA_HEARTBEAT_MILLIS 1000
 
 #include <noda.h>
-#include <noda_log.h>
+#include <noda/log.h>
 
 /*************************************************************************
   * 系统默认使用总线(BUS)管理协议复用，若项目不需要启用，请使用此声明

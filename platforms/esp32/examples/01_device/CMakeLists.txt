@@ -7,6 +7,8 @@ include ($ENV{IDF_PATH}/tools/cmake/project.cmake)
 if (NOT DEFINED ENV{NODA_PATH})
 set (NODA_PATH ${CMAKE_SOURCE_DIR}/../../../..)
 endif ()
+set (NODA_PLATFORM esp32)
+
 include (${NODA_PATH}/scripts/cmake/noda.cmake)
 
 project (01_device)

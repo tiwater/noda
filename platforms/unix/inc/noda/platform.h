@@ -1,8 +1,8 @@
 #ifndef __NODA_PLATFORM_H
 #define __NODA_PLATFORM_H
 
-#include "noda_common.h"
-#include "noda_internal.h"
+#include "noda/common.h"
+#include "noda/internal.h"
 
 int main(int argc, char** argv) {
     NODA_UNUSED(argc);

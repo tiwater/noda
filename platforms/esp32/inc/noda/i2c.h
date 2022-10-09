@@ -1,7 +1,7 @@
 #ifndef __NODA_I2C_H
 #define __NODA_I2C_H
 
-#include "noda_bus.h"
+#include "noda/bus.h"
 
 #ifdef __cplusplus
 extern "C" {

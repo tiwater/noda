@@ -6,7 +6,7 @@
 #ifndef __SILAN_SC7A20_H
 #define __SILAN_SC7A20_H
 
-#include "noda_device.h"
+#include "noda/device.h"
 
 #ifdef __cplusplus
 extern "C" {

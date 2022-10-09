@@ -1,10 +1,10 @@
 #ifndef __NODA_H
 #define __NODA_H
 
-#include "noda_common.h"
-#include "noda_internal.h"
-#include "noda_bus_center.h"
-#include "noda_device_center.h"
+#include "noda/common.h"
+#include "noda/internal.h"
+#include "noda/bus_center.h"
+#include "noda/device_center.h"
 
 #ifndef NODA_HEARTBEAT_MILLIS
 #define NODA_HEARTBEAT_MILLIS 200
@@ -19,7 +19,7 @@ int noda_onclean(void);
 int noda_onloop(void);
 
 #ifndef NODA_USE_CUSTOM_APP_ENTRY
-#include "noda_platfrom.h"
+#include "noda/platform.h"
 #endif
 
 #ifdef __cplusplus

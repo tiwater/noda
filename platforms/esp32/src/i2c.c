@@ -1,5 +1,6 @@
-#include "noda_i2c.h"
-#include "noda_log.h"
+#include "noda/i2c.h"
+#include "noda/log.h"
+
 #include <driver/i2c.h>
 
 int noda_i2c_open(noda_i2c_t* self) {

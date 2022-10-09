@@ -1,6 +1,7 @@
 #ifndef __NODA_LOG_H
 #define __NODA_LOG_H
 
+#include "noda/common.h"
 #include <stdio.h>
 
 #define noda_print  printf

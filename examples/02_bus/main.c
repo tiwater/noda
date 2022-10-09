@@ -4,8 +4,8 @@
 #define NODA_HEARTBEAT_MILLIS 1000
 
 #include <noda.h>
-#include <noda_log.h>
-#include <noda_i2c.h>
+#include <noda/log.h>
+#include <noda/i2c.h>
 
 #include "silan_sc7a20.h"
 

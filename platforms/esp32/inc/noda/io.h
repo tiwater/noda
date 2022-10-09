@@ -6,7 +6,7 @@
 #ifndef __NODA_IO_H
 #define __NODA_IO_H
 
-#include "noda_device.h"
+#include "noda/device.h"
 
 #ifdef __cplusplus
 extern "C" {

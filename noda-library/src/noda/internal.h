@@ -1,7 +1,7 @@
 #ifndef __NODA_INTERNAL_H
 #define __NODA_INTERNAL_H
 
-#include "noda_common.h"
+#include "noda/common.h"
 
 #ifdef __cplusplus
 extern "C" {
