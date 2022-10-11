@@ -1,0 +1,26 @@
+/*************************************************************************
+  * @class ${CLS_NAME} 头文件
+  * @generate date: ${GEN_DATE}
+  ************************************************************************/
+
+#ifndef __${CLS_NAME_UPPER_CASE}_H
+#define __${CLS_NAME_UPPER_CASE}_H
+
+#include "noda/device.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*************************************************************************
+  * ${CLS_NAME}类定义
+  ************************************************************************/
+NODA_DEVICE_CLASS_BEGIN(${CLS_NAME});
+${CLS_MEMBER_VAR_LIST}
+NODA_DEVICE_CLASS_END();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // __${CLS_NAME_UPPER_CASE}_H
