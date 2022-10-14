@@ -1,0 +1,25 @@
+{
+    "version": "1.0",
+    "telemetry": [
+        {
+            "id": "temperature",
+            "type": "float"
+        },
+        {
+            "id": "oxygen",
+            "type": "float"
+        }
+    ],
+    "property": [
+    ],
+    "command": [
+        {
+            "id": "temperature",
+            "type": "float"
+        },
+        {
+            "id": "oxygen",
+            "type": "float"
+        }
+    ]
+}
