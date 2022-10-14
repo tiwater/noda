@@ -1,0 +1,14 @@
+/*************************************************************************
+  * @file ti_thingmodel.c 物模型代码文件
+  * @generate date: ${GEN_DATE}
+  * 此文件为自动生成，请不要更改文件内容
+  ************************************************************************/
+
+#include "ti_thingmodel.h"
+#include "${CLS_NAME}.h"
+${FUNC_DEFS}
+const ti_iot_telemetry_info_t ti_iot_telemetry_tab[] = {${TELEMETRY_TABS}};
+
+const ti_iot_propertyy_info_t ti_iot_property_tab[] = {${PROPERTY_TABS}};
+
+const ti_iot_command_info_t ti_iot_command_tab[] = {${COMMAND_TABS}};
