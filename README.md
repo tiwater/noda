@@ -8,10 +8,11 @@ Ticos IoT OS for c
 ```bash
 $ cd ${noda项目根目录}/scripts/codegen
 $ python noda_hal_gen.py --help #查看脚本命令描述
-$ python noda_hal_gen.py --name="noda_iot" --json='templates/thing_model.json' #thing_model.json文件仅为示例模型，后期需要根据具体模型协议更改脚本
+$ python noda_hal_gen.py --name="noda_iot" --private="uint32_t pid;uint32_t did; uint32_t skey;" --json='templates/thing_model.json'
 ```
 
 创建成功后，请将新生成的.h与.c文件直接复制到您的项目代码目录下，即可正常使用
+实例中thing_model.json文件仅为示例模型，后期需要根据具体模型协议更改脚本
 
 ## 利用noda_hal_gen.py创建设备接口代码模板文件(.h, .c)
 
