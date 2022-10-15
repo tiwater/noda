@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
 import os, sys, re, argparse
 
 from datetime import datetime
