@@ -71,7 +71,7 @@ def gen_table(s, _key):
         _i = item['id']
         _t = item['type']
         _e = type_to_iot_val_enum(_t)
-        tab += '\n    { \"%s\", %s, ti_iot_%s_%s },' %(_i, _e, _t, _i)
+        tab += '\n    { \"%s\", %s, ti_iot_%s_%s },' %(_i, _e, _key, _i)
     if tab:
         tab += '\n'
     else:
