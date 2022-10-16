@@ -5,10 +5,12 @@
   ************************************************************************/
 
 #include "ti_thingmodel.h"
+#include "ti_thingmodel_internal.h"
+#include "noda/device_center.h"
 #include "${CLS_NAME}.h"
 ${FUNC_DEFS}
 const ti_iot_telemetry_info_t ti_iot_telemetry_tab[] = {${TELEMETRY_TABS}};
 
-const ti_iot_propertyy_info_t ti_iot_property_tab[] = {${PROPERTY_TABS}};
+const ti_iot_property_info_t ti_iot_property_tab[] = {${PROPERTY_TABS}};
 
 const ti_iot_command_info_t ti_iot_command_tab[] = {${COMMAND_TABS}};
