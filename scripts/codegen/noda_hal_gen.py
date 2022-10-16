@@ -4,9 +4,6 @@ import os, sys, re, argparse
 from datetime import datetime
 from string import Template
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 def type_to_iot_val_enum(t):
     ''' 根据实际数据类型返回对应的TICOS_IOT_VAL_TYPE '''
     if t == 'float':
