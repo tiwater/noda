@@ -4,11 +4,11 @@
 #include "noda/common.h"
 #include "noda/internal.h"
 
-void setup() {
+void setup(void) {
     noda_startup();
 }
 
-void loop() {
+void loop(void) {
     if (NODA_OK != noda_loop()) {
         noda_cleanup();
     }

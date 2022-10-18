@@ -18,12 +18,10 @@ int noda_onstart(void);
 int noda_onclean(void);
 int noda_onloop(void);
 
-#ifndef NODA_USE_CUSTOM_APP_ENTRY
-#include <noda/platform.h>
-#endif
-
 #ifdef __cplusplus
 }
 #endif
+
+#include <noda/platform.h>
 
 #endif // __NODA_H
