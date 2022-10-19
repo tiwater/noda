@@ -8,7 +8,7 @@ add_definitions (-pipe -fPIC)
 add_definitions (-Wall -Werror -Wextra -Wstrict-prototypes)
 
 if (NOT DEFINED ENV{NODA_PATH})
-set (NODA_PATH ${CMAKE_SOURCE_DIR}/../../../..)
+set (NODA_PATH ${CMAKE_SOURCE_DIR}/../../..)
 endif ()
 set (NODA_PLATFORM unix)
 

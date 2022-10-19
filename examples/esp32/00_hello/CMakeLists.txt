@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 3.20)
 include ($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
 if (NOT DEFINED ENV{NODA_PATH})
-set (NODA_PATH ${CMAKE_SOURCE_DIR}/../../../..)
+set (NODA_PATH ${CMAKE_SOURCE_DIR}/../../..)
 endif ()
 set (NODA_PLATFORM esp32)
 set (NODA_USE_FREERTOS TRUE)
