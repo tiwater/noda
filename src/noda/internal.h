@@ -11,6 +11,9 @@ extern int noda_onstart(void);
 extern int noda_onclean(void);
 extern int noda_onloop(void);
 
+void noda_bus_list_setup(void);
+void noda_device_list_setup(void);
+
 int noda_startup(void);
 int noda_loop_internal(clock_t millis);
 #define noda_loop() noda_loop_internal(NODA_HEARTBEAT_MILLIS)

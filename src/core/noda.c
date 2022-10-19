@@ -4,9 +4,6 @@
 #include "noda/device_center.h"
 #include "noda/log.h"
 
-extern void noda_bus_list_setup(void);
-extern void noda_device_list_setup(void);
-
 static int g_ladder;
 
 #define _LADDER_UP(l, job) \
