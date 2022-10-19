@@ -1,10 +1,10 @@
 /*************************************************************************
-  * @class noda_io 头文件
+  * @class noda_gpio 头文件
   * @generate date: 2022-10-06 21:11:46
   ************************************************************************/
 
-#ifndef __NODA_IO_H
-#define __NODA_IO_H
+#ifndef __NODA_GPIO_H
+#define __NODA_GPIO_H
 
 #include "noda/device.h"
 
@@ -12,11 +12,18 @@
 extern "C" {
 #endif
 
+enum noda_gpio_mode_t {
+    NODA_GPIO_MODE_DISABLE,
+    NODA_GPIO_MODE_INPUT,
+    NODA_GPIO_MODE_OUTPUT,
+};
+
 /*************************************************************************
-  * noda_io类定义
+  * noda_gpio类定义
   ************************************************************************/
-NODA_DEVICE_CLASS_BEGIN(noda_io);
+NODA_DEVICE_CLASS_BEGIN(noda_gpio);
     noda_pin_t pin;
+    enum noda_gpio_mode_t mode;
     NODA_VAR(bool, level);
 NODA_DEVICE_CLASS_END();
 
@@ -24,4 +31,4 @@ NODA_DEVICE_CLASS_END();
 }
 #endif
 
-#endif // __NODA_IO_H
+#endif // __NODA_GPIO_H

@@ -45,7 +45,7 @@ static void* _runner(noda_task_t* task) {
     }
     while (noda_task_running(task)) {
         noda_device_center_post_cache_to_dev();
-        noda_delay(200);
+        noda_delay(20);
         noda_device_center_sync_cache_from_dev();
     }
     for (int i = 0, n = noda_device_center_ndev(); i < n; ++i) {

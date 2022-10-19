@@ -1,12 +1,12 @@
 /*************************************************************************
   * 设置noda_onloop函数触发间隔，若不设置，则默认为200毫秒
   ************************************************************************/
-#define NODA_HEARTBEAT_MILLIS 1000
+#define NODA_HEARTBEAT_MILLIS 250
 
 #include <noda.h>
 #include <noda/log.h>
 
-#include <noda/device/io.h>
+#include <noda/device/gpio.h>
 
 /*************************************************************************
   * 系统默认使用总线(BUS)管理协议复用，若项目不需要启用，请使用此声明
@@ -19,7 +19,8 @@ NODA_NO_BUS;
   * 开发者可据此标识号使用noda_isdirty/noda_getval/noda_setval读写设备数据
   ************************************************************************/
 NODA_DEVICE_ID_MAP {
-    DEV_IO0,
+    DEV_IO1,
+    DEV_IO3,
     // TODO 更多设备标识号
     NODA_NDEV,  /* 此行负责告知系统设备总数，请勿用于NODA_DEVICE_ADD首参 */
 };
@@ -29,7 +30,8 @@ NODA_DEVICE_ID_MAP {
   * NODA_DEVICE_ADD首参为标识号，为设备唯一标识
   ************************************************************************/
 NODA_DEVICE_LIST {
-    NODA_DEVICE_ADD(DEV_IO0, noda_io, .pin=0);
+    NODA_DEVICE_ADD(DEV_IO1, noda_gpio, .pin=1, .mode=NODA_GPIO_MODE_INPUT);
+    NODA_DEVICE_ADD(DEV_IO3, noda_gpio, .pin=3, .mode=NODA_GPIO_MODE_OUTPUT);
     // TODO 更多设备注册
 }
 
@@ -53,14 +55,12 @@ int noda_onclean(void) {
   * 生命周期函数，按照一定时间间隔(NODA_HEARTBEAT_MILLIS)触发
   ************************************************************************/
 int noda_onloop(void) {
-    static int counter = 0;
-    noda_logd("noda_loop %d", counter++);
-    // 检查DEV_IO0设备缓存中的level值是否已被更新
-    noda_io_t* io = noda_dev(DEV_IO0, noda_io);
-    if (noda_isdirty(io, level)) {
-      // 输出DEV_IO0设备缓存中得到的level值
-        bool level = noda_get(io, level);
-        noda_logd("%s level = %d", noda_dev_name(DEV_IO0), level);
+    // 检查DEV_IO1设备缓存中的level值是否已被更新
+    noda_gpio_t* io_1 = noda_dev(DEV_IO1, noda_gpio);
+    if (noda_isdirty(io_1, level)) {
+        bool level = noda_get(io_1, level);
+        // 当DEV_IO1电平变化时将DEV_IO3设置为反相
+        noda_dev_setval(DEV_IO3, noda_gpio, level, !level);
     }
     return NODA_OK;
 }
