@@ -6,7 +6,7 @@ Ticos IoT OS for c
 通过内含的noda_hal_gen.py脚本，用户可以创建新的物模型接口代码文件，以下为例子：
 
 ```bash
-$ cd ${noda项目根目录}/noda-library/extras/scripts/codegen
+$ cd ${noda项目根目录}/extras/scripts/codegen
 $ python noda_hal_gen.py --help #查看脚本命令描述
 $ python noda_hal_gen.py --name="noda_iot" --private="uint32_t pid;uint32_t did; uint32_t skey;" --json='templates/thing_model.json'
 ```
@@ -19,7 +19,7 @@ $ python noda_hal_gen.py --name="noda_iot" --private="uint32_t pid;uint32_t did;
 通过内含的noda_hal_gen.py脚本，用户可以创建新的设备接口代码文件，以下为例子：
 
 ```bash
-$ cd ${noda项目根目录}/noda-library/extras/scripts/codegen
+$ cd ${noda项目根目录}/extras/scripts/codegen
 $ python noda_hal_gen.py --help #查看脚本命令描述
 $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda; uint8_t addr; uint8_t freq;" --public="float x; float y; float z;"
 ```
