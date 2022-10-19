@@ -6,52 +6,34 @@
 
 #ifdef __cplusplus
 extern "C" {
-
-#define NODA_NO_BUS \
-    uint8_t noda_bus_center_nbus(void) { return 0; } \
-    noda_bus_t* const noda_bus_list[] = { NULL }
-
-#define NODA_BUS_ID_MAP \
-    enum noda_bus_id_t
-
-#define NODA_BUS_LIST \
-    uint8_t noda_bus_center_nbus(void) { return NODA_NBUS; } \
-    noda_bus_t* const noda_bus_list[] =
-
-#define NODA_BUS_ADD(_id, bus, ...) \
-    [_id] = (noda_bus_t*) &((bus##_t) { \
-        NODA_BUS_SET_VTABLE(bus), \
-        .name = #_id, \
-        __VA_ARGS__ \
-    })
-
-#else // __cplusplus
-
-#define NODA_NO_BUS \
-    uint8_t noda_bus_center_nbus(void) { return 0; } \
-    noda_bus_t* const noda_bus_list[] = { NULL }
-
-#define NODA_BUS_ID_MAP \
-    enum noda_bus_id_t
-
-#define NODA_BUS_LIST \
-    uint8_t noda_bus_center_nbus(void) { return NODA_NBUS; } \
-    noda_bus_t* const noda_bus_list[] =
-
-#define NODA_BUS_ADD(_id, bus, ...) \
-    [_id] = (noda_bus_t*) &((bus##_t) { \
-        NODA_BUS_SET_VTABLE(bus), \
-        .name = #_id, \
-        __VA_ARGS__ \
-    })
-
 #endif
+
+#define NODA_NO_BUS \
+    uint8_t noda_bus_center_nbus(void) { return 0; } \
+    void noda_bus_list_setup(void) {} \
+    noda_bus_t* noda_bus_list[1]
+
+#define NODA_BUS_ID_MAP \
+    enum noda_bus_id_t
+
+#define NODA_BUS_LIST \
+    uint8_t noda_bus_center_nbus(void) { return NODA_NBUS; } \
+    noda_bus_t* noda_bus_list[NODA_NBUS]; \
+    void noda_bus_list_setup(void)
+
+#define NODA_BUS_ADD(_id, bus, ...) \
+    do { \
+        static bus##_t bus##_id = { \
+            NODA_BUS_SET_VTABLE(bus), .name = #_id, __VA_ARGS__ \
+        }; \
+        noda_bus_list[_id] = (noda_bus_t*)&bus##_id; \
+    } while (0)
 
 int noda_bus_center_startup(void);
 int noda_bus_center_cleanup(void);
 uint8_t noda_bus_center_nbus(void);
 
-extern noda_bus_t* const noda_bus_list[];
+extern noda_bus_t* noda_bus_list[];
 
 #define noda_bus(id)        (noda_bus_list[id])
 

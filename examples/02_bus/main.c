@@ -16,9 +16,9 @@ NODA_BUS_ID_MAP {
 };
 
 NODA_BUS_LIST {
-    NODA_BUS_ADD(I2C0, noda_i2c, .port=0, .sda=7, .scl=6, .freq=100),
+    NODA_BUS_ADD(I2C0, noda_i2c, .port=0, .sda=7, .scl=6, .freq=100);
     // TODO 更多总线注册
-};
+}
 
 /*************************************************************************
   * 向工程注册设备标识号，系统将按此标识号列表的顺序对设备进行自动排序
@@ -36,9 +36,9 @@ NODA_DEVICE_ID_MAP {
   * NODA_DEVICE_ADD首参为标识号，为设备唯一标识
   ************************************************************************/
 NODA_DEVICE_LIST {
-    NODA_DEVICE_ADD(GSENSOR, silan_sc7a20, .bus=I2C0, .addr=0x19, .rw_wait_ms=1000),
+    NODA_DEVICE_ADD(GSENSOR, silan_sc7a20, .bus=I2C0, .addr=0x19, .rw_wait_ms=1000);
     // TODO 更多设备注册
-};
+}
 
 /*************************************************************************
   * 生命周期函数，在系统启动后被尽快调用

@@ -9,9 +9,7 @@ void setup(void) {
 }
 
 void loop(void) {
-    if (NODA_OK != noda_loop()) {
-        noda_cleanup();
-    }
+    noda_loop();
 }
 
 #endif // __NODA_PLATFORM_H

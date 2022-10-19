@@ -10,18 +10,24 @@ extern "C" {
 
 #define NODA_NO_DEVICE \
     uint8_t noda_device_center_ndev(void) { return 0; } \
-    noda_device_t* const noda_device_list[] = { NULL }
+    void noda_device_list_setup(void) {} \
+    noda_device_t* noda_device_list[1]
 
 #define NODA_DEVICE_ID_MAP \
     enum noda_device_id_t
 
 #define NODA_DEVICE_LIST  \
     uint8_t noda_device_center_ndev(void) { return NODA_NDEV; } \
-    noda_device_t* const noda_device_list[] =
+    noda_device_t* noda_device_list[NODA_NDEV]; \
+    void noda_device_list_setup(void)
 
 #define NODA_DEVICE_ADD(_id, dev, ...) \
-    [_id] = (noda_device_t*) &((dev##_t) \
-            { NODA_DEVICE_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ })
+    do { \
+        static dev##_t dev##_id = { \
+            NODA_DEVICE_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ \
+        }; \
+        noda_device_list[_id] = (noda_device_t*)&dev##_id; \
+    } while (0)
 
 int noda_device_center_startup(void);
 int noda_device_center_cleanup(void);
@@ -30,7 +36,7 @@ int noda_device_center_post(void);
 int noda_device_center_dump(void);
 uint8_t noda_device_center_ndev(void);
 
-extern noda_device_t* const noda_device_list[];
+extern noda_device_t* noda_device_list[];
 
 #define noda_dev(id, type)    \
     ((type##_t*)(noda_device_list[id]))
