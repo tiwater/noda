@@ -216,7 +216,7 @@ int silan_sc7a20_post_cache_to_dev(silan_sc7a20_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED调用 */
     NODA_UNUSED(self);
     // 用法用例
-    // if (noda_cacheisdirty(self, level)) {  // 检查缓存数值已经被应用层更新
+    // if (noda_cache_isdirty(self, level)) {  // 检查缓存数值已经被应用层更新
     //    bool level = noda_cache_get(self, level); // 从缓存获取数值
     //    noda_logd("%s level update to %d", self->name, level); // 提交到设备
     // }
