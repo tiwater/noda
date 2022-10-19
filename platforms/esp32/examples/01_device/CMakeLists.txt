@@ -8,6 +8,7 @@ if (NOT DEFINED ENV{NODA_PATH})
 set (NODA_PATH ${CMAKE_SOURCE_DIR}/../../../..)
 endif ()
 set (NODA_PLATFORM esp32)
+set (NODA_USE_FREERTOS TRUE)
 
 include (${NODA_PATH}/scripts/cmake/noda.cmake)
 

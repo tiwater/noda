@@ -1,0 +1,10 @@
+set (NODA_PLATFORM_DIR  ${NODA_PATH}/platforms/${NODA_PLATFORM})
+set (NODA_SOURCE_DIR    ${NODA_PATH}/src)
+
+aux_source_directory (${NODA_SOURCE_DIR}/core   CORE_SRCS)
+aux_source_directory (${NODA_PLATFORM_DIR}/src  PLATFORM_SRCS)
+if (NODA_USE_FREERTOS)
+    aux_source_directory (${NODA_SOURCE_DIR}/os/freertos OS_SRCS)
+endif ()
+set (NODA_SRCS ${PLATFORM_SRCS} ${OS_SRCS} ${CORE_SRCS})
+set (NODA_INCS ${NODA_PLATFORM_DIR}/inc ${NODA_SOURCE_DIR})
