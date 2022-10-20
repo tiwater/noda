@@ -1,0 +1,105 @@
+/*************************************************************************
+  * @class noda_gpio 代码文件
+  * @generate date: 2022-10-06 21:35:04
+  ************************************************************************/
+
+#include "noda/device/gpio.h"
+#include "noda/log.h"
+#include <Arduino.h>
+
+/*************************************************************************
+  * noda_gpio_open：noda_io必须实现的类成员函数，负责设备“打开”操作，
+  * @param self 类实例
+  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+  ************************************************************************/
+int noda_gpio_open(noda_gpio_t* self) {
+    switch (self->mode) {
+        case NODA_GPIO_MODE_INPUT:
+            pinMode(self->pin, INPUT_PULLUP);
+            break;
+        case NODA_GPIO_MODE_OUTPUT:
+            pinMode(self->pin, OUTPUT);
+            break;
+        default:
+            break;
+    }
+    return NODA_OK;
+}
+
+/*************************************************************************
+  * noda_gpio_close：noda_io必须实现的类成员函数，负责设备“关闭”操作，
+  * @param self 类实例
+  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+  ************************************************************************/
+int noda_gpio_close(noda_gpio_t* self) {
+    // TODO
+    NODA_UNUSED(self);
+    return NODA_OK;
+}
+
+/*************************************************************************
+  * noda_gpio_power_mode_changed：noda_io必须实现的类成员函数，
+  * 系统改变“电源模式”时被动触发，
+  * @param self 类实例
+  * @param mode 更改后的电源模式
+  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+  ************************************************************************/
+int noda_gpio_power_mode_changed(noda_gpio_t* self, noda_power_mode_t mode) {
+    /* 填充代码内容后请删除NODA_UNUSED函数调用 */
+    NODA_UNUSED(self);
+    NODA_UNUSED(mode);
+    return NODA_OK;
+}
+
+/*************************************************************************
+  * noda_gpio_sync_from_cache：noda_gpio必须实现的类成员函数，
+  * 负责设备数据从缓存复制到应用层的复制操作，
+  * 此函数为自动生成，请不要更改函数内容
+  * @param self 类实例
+  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+  ************************************************************************/
+int noda_gpio_sync_from_cache(noda_gpio_t* self) {
+    noda_sync_from_cache(self, level);
+    return NODA_OK;
+}
+
+/*************************************************************************
+  * noda_gpio_post_to_cache：noda_io必须实现的类成员函数，
+  * 负责设备数据从应用层到缓存的复制操作，
+  * 此函数为自动生成，请不要更改函数内容
+  * @param self 类实例
+  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+  ************************************************************************/
+int noda_gpio_post_to_cache(noda_gpio_t* self) {
+    noda_post_to_cache(self, level);
+    return NODA_OK;
+}
+
+/*************************************************************************
+  * noda_gpio_sync_cache_from_dev：noda_gpio必须实现的类成员函数，
+  * 负责设备数据从传感器到缓存的获取操作，
+  * @param self 类实例
+  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+  ************************************************************************/
+int noda_gpio_sync_cache_from_dev(noda_gpio_t* self) {
+    if (self->mode & NODA_GPIO_MODE_INPUT) {
+        bool lv = digitalRead(self->pin);
+        noda_cache_set(self, level, lv);
+    }
+    return NODA_OK;
+}
+
+/*************************************************************************
+  * noda_gpio_post_cache_to_dev：noda_gpio必须实现的类成员函数，
+  * 负责设备数据从缓存到传感器的提交操作，
+  * @param self 类实例
+  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+  ************************************************************************/
+int noda_gpio_post_cache_to_dev(noda_gpio_t* self) {
+    if ((self->mode & NODA_GPIO_MODE_OUTPUT)
+        && noda_cache_isdirty(self, level)) {
+       bool level = noda_cache_get(self, level);
+       digitalWrite(self->pin, level);
+    }
+    return NODA_OK;
+}
