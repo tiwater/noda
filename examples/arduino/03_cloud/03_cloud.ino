@@ -67,23 +67,25 @@ static void set_light(bool on) {
     noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);
     noda_dev_setval(DEV_IO3, noda_gpio, level, on);
     noda_set(iot, prop_switch, on);
+    noda_set(iot, prop_light, on);
     noda_set(iot, prop_DebugInfo, 
             on ? DEBUG_INFO_SWITCH_ON : DEBUG_INFO_SWITCH_OFF);
     g_light_on = on;
 }
 
 int noda_onloop() {
+    
+    noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);
+    if (noda_isdirty(iot, prop_switch)) {
+        bool on = noda_get(iot, prop_switch);
+        set_light(on);
+    }
 
     noda_gpio_t* io_1 = noda_dev(DEV_IO1, noda_gpio);
     if (noda_isdirty(io_1, level)) {
         if (!noda_get(io_1, level)) {
             switch_light();
         }
-    }
-    
-    noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);
-    if (noda_isdirty(iot, prop_switch)) {
-        set_light(noda_get(iot, prop_switch));
     }
 
     return NODA_OK;
