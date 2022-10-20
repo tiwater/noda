@@ -63,9 +63,9 @@ typedef struct noda_device_t {
     ((self)->_##v##_dirty = false, (self)->_##v##_var)
 
 #define noda_set(self, v, d)    \
-    if ((self)->_##v##_var != d) {  \
+    if ((self)->_##v##_var != (d)) {  \
         (self)->_##v##_dirty = true;\
-        (self)->_##v##_var = d;     \
+        (self)->_##v##_var = (d);     \
     }
 
 #define noda_iscachedirty(self, v)  \
@@ -83,7 +83,7 @@ typedef struct noda_device_t {
     noda_isdirty((self), v##_cache)
 
 #define noda_cache_set(self, v, d)    \
-    noda_set((self), v##_cache, d)
+    noda_set((self), v##_cache, (d))
 
 #define noda_cache_get(self, v) \
     noda_get((self), v##_cache)

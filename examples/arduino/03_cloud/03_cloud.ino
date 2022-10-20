@@ -55,14 +55,36 @@ int noda_onclean(void) {
 /*************************************************************************
   * 生命周期函数，按照一定时间间隔(NODA_HEARTBEAT_MILLIS)触发
   ************************************************************************/
+#define DEBUG_INFO_SWITCH_ON "switch is on !!!"
+#define DEBUG_INFO_SWITCH_OFF "switch is off !!!"
+
+static bool g_light_on;
+static inline void switch_light(void) {
+    set_light(!g_light_on);
+}
+
+static void set_light(bool on) {
+    noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);
+    noda_dev_setval(DEV_IO3, noda_gpio, level, on);
+    noda_set(iot, prop_switch, on);
+    noda_set(iot, prop_DebugInfo, 
+            on ? DEBUG_INFO_SWITCH_ON : DEBUG_INFO_SWITCH_OFF);
+    g_light_on = on;
+}
+
 int noda_onloop() {
-    // 检查DEV_IO1设备缓存中的level值是否已被更新
+
     noda_gpio_t* io_1 = noda_dev(DEV_IO1, noda_gpio);
     if (noda_isdirty(io_1, level)) {
-        bool level = noda_get(io_1, level);
-        // 当DEV_IO1电平变化时将DEV_IO3设置为反相
-        noda_dev_setval(DEV_IO3, noda_gpio, level, !level);
-        noda_dev_setval(DEV_IOT, noda_iot, prop_switch, level);
+        if (!noda_get(io_1, level)) {
+            switch_light();
+        }
     }
+    
+    noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);
+    if (noda_isdirty(iot, prop_switch)) {
+        set_light(noda_get(iot, prop_switch));
+    }
+
     return NODA_OK;
 }
