@@ -30,11 +30,11 @@ $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda
 
 ### unix
 
-以noda项目目录下platforms/unix/examples/00_hello例程为例：
+以noda项目目录下examples/unix/00_hello例程为例：
 
 ```bash
 $ export NODA_PATH=您的noda项目根目录
-$ cd ${NODA_PATH}/platforms/unix/examples/00_hello
+$ cd ${NODA_PATH}/examples/examples/00_hello
 $ cmake -B build
 $ cd build
 $ make
@@ -52,11 +52,11 @@ $ . ./install.sh                            # 安装工具链，本步骤仅需�
 $ . ./export.sh                             # 在本终端建立工具链运行环境，每个新建终端都需要执行一次
 ```
 
-以noda项目目录下platforms/esp32/examples/00_hello例程为例：
+以noda项目目录下examples/esp32/00_hello例程为例：
 
 ```bash
 $ export NODA_PATH=您的noda项目根目录
-$ cd ${NODA_PATH}/platforms/esp32/examples/00_hello
+$ cd ${NODA_PATH}/examples/esp32/00_hello
 $ idf.py --list-targets                     # 查看可选编译目标平台
 $ idf.py set-target esp32s3                 # 设置编译目标平台，此处选择了 esp32s3
 $ idf.py build                              # 编译项目
