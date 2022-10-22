@@ -7,13 +7,8 @@
 #include <noda/device/gpio.h>
 #include "noda_iot.h"
 
-#if 0
 #define _SSID "Tiwater"
 #define _PSWD "Ti210223"
-#else
-#define _SSID "3082"
-#define _PSWD "buyaolela886"
-#endif
 
 /*************************************************************************
   * 系统默认使用总线(BUS)管理协议复用，若项目不需要启用，请使用此声明
@@ -70,11 +65,13 @@ static bool g_light_on;
 
 static void set_light(bool on) {
     noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);
-    noda_dev_setval(DEV_IO3, noda_gpio, level, on);
     noda_set(iot, prop_switch, on);
     noda_set(iot, prop_light, on);
     noda_set(iot, prop_DebugInfo, 
             on ? DEBUG_INFO_SWITCH_ON : DEBUG_INFO_SWITCH_OFF);
+
+    noda_dev_setval(DEV_IO3, noda_gpio, level, on);
+
     g_light_on = on;
 }
 

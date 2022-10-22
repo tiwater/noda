@@ -7,13 +7,8 @@
 #include <noda/device/gpio.h>
 #include "noda_iot.h"
 
-#if 0
 #define _SSID "Tiwater"
 #define _PSWD "Ti210223"
-#else
-#define _SSID "3082"
-#define _PSWD "buyaolela886"
-#endif
 
 /*************************************************************************
   * 系统默认使用总线(BUS)管理协议复用，若项目不需要启用，请使用此声明
