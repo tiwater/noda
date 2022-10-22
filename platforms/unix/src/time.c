@@ -1,6 +1,14 @@
 #include "noda/time.h"
 #include <sys/select.h>
 
+static inline clock_t noda_timenow(void) {
+    return clock();
+}
+
+static inline clock_t noda_timediff(clock_t t0, clock_t t1) {
+    return (t0 < t1 ? 0 : LONG_MAX) + t1 - t0;
+}
+
 void noda_delay(clock_t ms) {
     static clock_t prev, curr;
 
