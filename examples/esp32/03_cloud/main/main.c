@@ -8,9 +8,9 @@
 #include "noda_iot.h"
 
 /* 请填充测试所需的 WiFi ssid */
-#define _SSID ""
+#define _SSID "TP-LINK_FF1E"
 /* 请填充测试所需的 WiFi password */
-#define _PSWD ""
+#define _PSWD "abcD1234"
 
 /*************************************************************************
   * 系统默认使用总线(BUS)管理协议复用，若项目不需要启用，请使用此声明
@@ -36,8 +36,8 @@ NODA_DEVICE_ID_MAP {
   ************************************************************************/
 NODA_DEVICE_LIST {
     NODA_DEVICE_ADD(DEV_IOT, noda_iot, .ssid=_SSID, .pswd=_PSWD);
-    NODA_DEVICE_ADD(DEV_IO1, noda_gpio, .pin=1, .mode=NODA_GPIO_MODE_INPUT);
-    NODA_DEVICE_ADD(DEV_IO3, noda_gpio, .pin=3, .mode=NODA_GPIO_MODE_OUTPUT);
+    NODA_DEVICE_ADD(DEV_IO1, noda_gpio, .pin=16, .mode=NODA_GPIO_MODE_INPUT);
+    NODA_DEVICE_ADD(DEV_IO3, noda_gpio, .pin=7, .mode=NODA_GPIO_MODE_OUTPUT);
     // TODO 更多设备注册
 }
 
