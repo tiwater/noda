@@ -15,15 +15,14 @@ static void sntp_sync(void) {
     time_t now = 0;
     struct tm timeinfo = { 0 };
 
-    // FIXME
+    setenv("TZ", "CST-8", 1);
+    tzset();
+
     while (timeinfo.tm_year < (2019 - 1900)) {
         vTaskDelay(100 / portTICK_PERIOD_MS);
         time(&now);
         localtime_r(&now, &timeinfo);
     }
-
-    setenv("TZ", "CST-8", 1);
-    tzset();
 
     strftime(buf, sizeof(buf), "%c", &timeinfo);
     noda_logi("data/time in CST-8 is: %s", buf);
