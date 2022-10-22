@@ -4,6 +4,7 @@ esp32对接Ticos-SDK例程
 ## 编译环境搭建
 
 如果已经安装esp-idf工具，请跳过此步骤；否则，请先安装esp-idf工具：
+注：本例程需要esp-idf更新到最新主线(>=5.0dev)
 
 ```bash
 $ git clone https://github.com/espressif/esp-idf

@@ -4,6 +4,7 @@
 #include <ti_core.h>
 #include <ti_iot.h>
 #include "ti_iot_api.h"
+#include "ti_iot_hal.h"
 
 #define IOT_CONFIG_IOTHUB_FQDN            "hub.ticos.cn"
 #define IOT_CONFIG_DEVICE_ID              "TEST002"

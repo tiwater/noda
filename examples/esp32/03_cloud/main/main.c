@@ -89,7 +89,7 @@ int noda_onloop() {
 
     noda_gpio_t* io_1 = noda_dev(DEV_IO1, noda_gpio);
     if (noda_isdirty(io_1, level)) {
-        if (noda_get(io_1, level)) {
+        if (!noda_get(io_1, level)) {
             switch_light();
         }
     }
