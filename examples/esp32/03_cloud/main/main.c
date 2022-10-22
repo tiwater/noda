@@ -7,8 +7,10 @@
 #include <noda/device/gpio.h>
 #include "noda_iot.h"
 
-#define _SSID "Tiwater"
-#define _PSWD "Ti210223"
+/* 请填充测试所需的 WiFi ssid */
+#define _SSID ""
+/* 请填充测试所需的 WiFi password */
+#define _PSWD ""
 
 /*************************************************************************
   * 系统默认使用总线(BUS)管理协议复用，若项目不需要启用，请使用此声明
@@ -33,7 +35,7 @@ NODA_DEVICE_ID_MAP {
   * NODA_DEVICE_ADD首参为标识号，为设备唯一标识
   ************************************************************************/
 NODA_DEVICE_LIST {
-    NODA_DEVICE_ADD(DEV_IOT, noda_iot, .wifi_ssid=_SSID, .wifi_pswd=_PSWD);
+    NODA_DEVICE_ADD(DEV_IOT, noda_iot, .ssid=_SSID, .pswd=_PSWD);
     NODA_DEVICE_ADD(DEV_IO1, noda_gpio, .pin=1, .mode=NODA_GPIO_MODE_INPUT);
     NODA_DEVICE_ADD(DEV_IO3, noda_gpio, .pin=3, .mode=NODA_GPIO_MODE_OUTPUT);
     // TODO 更多设备注册
@@ -55,20 +57,12 @@ int noda_onclean(void) {
     return NODA_OK;
 }
 
-/*************************************************************************
-  * 生命周期函数，按照一定时间间隔(NODA_HEARTBEAT_MILLIS)触发
-  ************************************************************************/
-#define DEBUG_INFO_SWITCH_ON "switch is on !!!"
-#define DEBUG_INFO_SWITCH_OFF "switch is off !!!"
-
 static bool g_light_on;
 
 static void set_light(bool on) {
     noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);
     noda_set(iot, prop_switch, on);
-    noda_set(iot, prop_light, on);
-    noda_set(iot, prop_DebugInfo, 
-            on ? DEBUG_INFO_SWITCH_ON : DEBUG_INFO_SWITCH_OFF);
+    noda_set(iot, prop_led, on);
 
     noda_dev_setval(DEV_IO3, noda_gpio, level, on);
 
@@ -79,6 +73,9 @@ static inline void switch_light(void) {
     set_light(!g_light_on);
 }
 
+/*************************************************************************
+  * 生命周期函数，按照一定时间间隔(NODA_HEARTBEAT_MILLIS)触发
+  ************************************************************************/
 int noda_onloop() {
     
     noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);

@@ -7,11 +7,17 @@
 #ifndef __TI_THING_MODEL_H
 #define __TI_THING_MODEL_H
 
+#include <_ti_cfg_prefix.h>
+
+#include <noda/common.h>
+
 typedef enum {${TELEMETRY_ENUM}} ti_iot_telemetry_t;
 
 typedef enum {${PROPERTY_ENUM}} ti_iot_property_t;
 
 typedef enum {${COMMAND_ENUM}} ti_iot_command_t;
 ${FUNC_DECS}
+
+#include <_ti_cfg_suffix.h>
 
 #endif // __TI_THING_MODEL_H

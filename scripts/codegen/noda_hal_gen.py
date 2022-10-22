@@ -4,92 +4,109 @@ import os, sys, re, argparse
 from datetime import datetime
 from string import Template
 
-def type_to_iot_val_enum(t):
-    ''' 根据实际数据类型返回对应的TICOS_IOT_VAL_TYPE '''
-    if t == 'float':
-        return 'TICOS_IOT_VAL_TYPE_FLOAT'
-    elif t == 'int':
-        return 'TICOS_IOT_VAL_TYPE_INTEGER'
-    elif t == 'str':
-        return 'TICOS_IOT_VAL_TYPE_STRING'
-    else:
-        raise Exception('类型名不存在：%s', t);
+TELE = 'telemetry'
+PROP = 'property'
+CMMD = 'command'
 
-def gen_func_head_getter(cls_name, _key, _id, _type):
-    return '\n' + _type + ' ti_iot_' + _key + '_' + _id + '(void)'
+NAME = 'name'
+TYPE = '@type'
+SCHEMA = 'schema'
 
-def gen_func_head_setter(cls_name, _key, _id, _type):
-    return '\nint ti_iot_' + _key + '_' + _id + '(' + _type + ' ' + _id + ')'
+''' IOT数据类型 到 c语言类型 的字典 '''
+iot_type_map = {
+    "boolean":  "bool",
+    "integer":  "int",
+    "float"  :  "float",
+    "double" :  "float", # TODO 需要后期支持
+    "string" :  "const char*",
+    "enum"   :  "int",   # TODO 是否可以映射short类型?
+    "timestamp":"time_t",
+    "duration" :"time_t" }
+
+def type_to_c_type(t):
+    ''' 根据iot_type_map字典返回 c语言类型 '''
+    return iot_type_map[t]
+
+def gen_iot_val_type(t):
+    return 'TICOS_IOT_VAL_TYPE_' + t.upper()
+
+def gen_func_name_getter(_key, _id):
+    return ' ti_iot_' + _key + '_' + _id + '_send'
+
+def gen_func_name_setter(_key, _id):
+    return 'ti_iot_' + _key + '_' + _id + '_recv'
+
+def gen_func_head_getter(_key, _id, _type):
+    return '\n' + _type + gen_func_name_getter(_key, _id) + '(void)'
+
+def gen_func_head_setter(_key, _id, _type):
+    return '\nint %s(%s %s_)' %(gen_func_name_setter(_key, _id), _type, _id)
 
 def gen_func_body_getter(cls_name, _key, _id, _type):
     ''' 根据物模型json内容返回对应的getter函数内容 '''
-    return ' {' \
-        + '\n    ' + cls_name + '_t* iot = noda_dev(0, ' + cls_name + ');' \
-        + '\n    return noda_cache_get(iot, ' + _key + '_' +  _id + ');' \
-        + '\n}\n'
+    body = '\n    ' + cls_name + '_t* iot = noda_dev(0, ' + cls_name + ');' \
+         + '\n    return noda_cache_get(iot, ' + _key[:4] + '_' +  _id + ');'
+    return ' {' + body + '\n}\n'
 
 def gen_func_body_setter(cls_name, _key, _id, _type):
     ''' 根据物模型json内容返回对应的setter函数内容 '''
-    return ' {' \
-        + '\n    ' + cls_name + '_t* iot = noda_dev(0, ' + cls_name + ');' \
-        + '\n    noda_cache_set(iot, ' + _key + '_' + _id + ', ' + _id + ');' \
-        + '\n    return 0;\n}\n'
+    body = '\n    ' + cls_name + '_t* iot = noda_dev(0, ' + cls_name + ');' \
+         + '\n    noda_cache_set(iot, ' + _key[:4] + '_' + _id + ', ' + _id + '_);'
+    return ' {' + body + '\n    return 0;\n}\n'
 
-def gen_func_decs(s, _key, cls_name, need_getter, need_setter):
+def gen_func_decs(item, cls_name, need_getter, need_setter):
     ''' 根据物模型json内容返回对应的函数声明 '''
     decs = ''
-    for item in s[_key]:
-        _i = item['id']
-        _t = item['type']
-        if need_getter:
-            decs += gen_func_head_getter(cls_name, _key, _i, _t) + ';'
-        if need_setter:
-            decs += gen_func_head_setter(cls_name, _key, _i, _t) + ';'
+    _k = item[TYPE]
+    _i = item[NAME]
+    _t = type_to_c_type(item[SCHEMA])
+    if need_getter:
+        decs += gen_func_head_getter(_k, _i, _t) + ';'
+    if need_setter:
+        decs += gen_func_head_setter(_k, _i, _t) + ';'
     return decs
 
-def gen_func_defs(s, _key, cls_name, need_getter, need_setter):
+def gen_func_defs(item, cls_name, need_getter, need_setter):
     ''' 根据物模型json内容返回对应的函数定义 '''
     defs = ''
-    for item in s[_key]:
-        _i = item['id']
-        _t = item['type']
-        if need_getter:
-            head = gen_func_head_getter(cls_name, _key, _i, _t)
-            defs += head + gen_func_body_getter(cls_name, _key, _i, _t)
-        if need_setter:
-            head = gen_func_head_setter(cls_name, _key, _i, _t)
-            defs += head + gen_func_body_setter(cls_name, _key, _i, _t)
+    _k = item[TYPE]
+    _i = item[NAME]
+    _t = type_to_c_type(item[SCHEMA])
+    if need_getter:
+        head = gen_func_head_getter(_k, _i, _t)
+        defs += head + gen_func_body_getter(cls_name, _k, _i, _t)
+    if need_setter:
+        head = gen_func_head_setter(_k, _i, _t)
+        defs += head + gen_func_body_setter(cls_name, _k, _i, _t)
     return defs
 
-def gen_table(s, _key):
+def gen_table(item, need_getter, need_setter):
     ''' 根据物模型json内容返回对应的方法表成员注册 '''
-    tab = ''
-    for item in s[_key]:
-        _i = item['id']
-        _t = item['type']
-        _e = type_to_iot_val_enum(_t)
-        tab += '\n    { \"%s\", %s, ti_iot_%s_%s },' %(_i, _e, _key, _i)
-    if tab:
-        tab += '\n'
+    _k = item[TYPE]
+    _i = item[NAME]
+    _t = item[SCHEMA]
+    _e = gen_iot_val_type(_t)
+    getter = gen_func_name_getter(_k, _i)
+    setter = gen_func_name_setter(_k, _i)
+    if need_getter:
+        if need_setter:
+            return '\n    { \"%s\", %s, %s, %s },' %(_i, _e, getter, setter)
+        else:
+            return '\n    { \"%s\", %s, %s },' %(_i, _e, getter)
     else:
-        tab = ' NULL '
-    return tab
+        return '\n    { \"%s\", %s, %s },' %(_i, _e, setter)
 
-def gen_enum(s, _key):
+def gen_enum(item):
     ''' 根据物模型json文件返回对应的物模型枚举列表 '''
-    _enum = ''
-    for item in s[_key]:
-        _i = item['id']
-        _enum += '\n    TICOS_IOT_' + _key.upper() + '_' + _i + ','
-    return _enum + '\n    TICOS_IOT_' + _key.upper() + '_MAX,\n'
+    _k = item[TYPE].upper()
+    _i = item[NAME]
+    return '\n    TICOS_IOT_' + _k + '_' + _i + ','
 
-def gen_public_vars(s, _key):
-    _vars = ''
-    for item in s[_key]:
-        _i = item['id']
-        _t = item['type']
-        _vars += _t + ' ' + _key + '_' + _i + ';'
-    return _vars
+def gen_public_vars(item):
+    _k = item[TYPE]
+    _i = item[NAME]
+    _t = type_to_c_type(item[SCHEMA])
+    return  _t + ' ' + _k[:4] + '_' + _i + ';'
 
 def gen_iot(cls_name, date, tmpl_dir, json_file):
     ''' 根据物模型json文件返回对应的物模型接口文件 '''
@@ -101,10 +118,6 @@ def gen_iot(cls_name, date, tmpl_dir, json_file):
 
     if not raw:
         raise Exception('物模型文件异常')
-
-    tele_key = 'telemetry'
-    prop_key = 'property'
-    cmmd_key = 'command'
 
     func_decs = ''
     tele_enum = ''
@@ -118,21 +131,28 @@ def gen_iot(cls_name, date, tmpl_dir, json_file):
 
     public_vars = ''
 
-    func_decs += gen_func_decs(raw, tele_key, cls_name, True, False)
-    func_defs += gen_func_defs(raw, tele_key, cls_name, True, False)
-    tele_tabs += gen_table(raw, tele_key)
-    tele_enum += gen_enum(raw, tele_key)
-    public_vars += gen_public_vars(raw, tele_key)
-    func_decs += gen_func_decs(raw, prop_key, cls_name, True, True)
-    func_defs += gen_func_defs(raw, prop_key, cls_name, True, True)
-    prop_tabs += gen_table(raw, prop_key)
-    prop_enum += gen_enum(raw, prop_key)
-    public_vars += gen_public_vars(raw, prop_key)
-    func_decs += gen_func_decs(raw, cmmd_key, cls_name, False, True)
-    func_defs += gen_func_defs(raw, cmmd_key, cls_name, False, True)
-    cmmd_tabs += gen_table(raw, cmmd_key)
-    cmmd_enum += gen_enum(raw, cmmd_key)
-    public_vars += gen_public_vars(raw, cmmd_key)
+    for item in raw[0]['contents']:
+        item[TYPE] = item[TYPE].lower()
+        _type = item[TYPE]
+        if _type == TELE:
+            func_decs += gen_func_decs(item, cls_name, True, False)
+            func_defs += gen_func_defs(item, cls_name, True, False)
+            tele_tabs += gen_table(item, True, False)
+            tele_enum += gen_enum(item)
+        elif _type == PROP:
+            func_decs += gen_func_decs(item, cls_name, True, True)
+            func_defs += gen_func_defs(item, cls_name, True, True)
+            prop_tabs += gen_table(item, True, True)
+            prop_enum += gen_enum(item)
+        elif _type == CMMD:
+            func_decs += gen_func_decs(item, cls_name, False, True)
+            func_defs += gen_func_defs(item, cls_name, False, True)
+            cmmd_tabs += gen_table(item, False, True)
+            cmmd_enum += gen_enum(item)
+        public_vars += gen_public_vars(item)
+    tele_enum += gen_enum({ TYPE:TELE, NAME:'MAX'}) + '\n'
+    prop_enum += gen_enum({ TYPE:PROP, NAME:'MAX'}) + '\n'
+    cmmd_enum += gen_enum({ TYPE:CMMD, NAME:'MAX'}) + '\n'
 
     dot_c_lines = []
     with open(tmpl_dir + 'iot_c', 'r') as f:

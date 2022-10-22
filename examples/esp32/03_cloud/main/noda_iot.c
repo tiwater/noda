@@ -1,12 +1,11 @@
 /*************************************************************************
   * @class noda_iot 代码文件
-  * @generate date: 2022-10-19 16:42:13
+  * @generate date: 2022-10-22 23:53:41
   ************************************************************************/
 
 #include "noda_iot.h"
 #include "noda_wifi.h"
 #include "ti_iot_api.h"
-#include "noda/log.h"
 
 /*************************************************************************
   * noda_iot_open：noda_iot必须实现的类成员函数，负责设备“打开”操作，
@@ -14,7 +13,7 @@
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_iot_open(noda_iot_t* self) {
-    wifi_start_as_sta(self->wifi_ssid, self->wifi_pswd);
+    wifi_start_as_sta(self->ssid, self->pswd);
     ti_iot_cloud_start();
     return NODA_OK;
 }
@@ -55,8 +54,7 @@ int noda_iot_power_mode_changed(noda_iot_t* self, noda_power_mode_t mode) {
   ************************************************************************/
 int noda_iot_sync_from_cache(noda_iot_t* self) {
     noda_sync_from_cache(self, prop_switch);
-    noda_sync_from_cache(self, prop_light);
-    noda_sync_from_cache(self, prop_DebugInfo);
+    noda_sync_from_cache(self, prop_led);
     return NODA_OK;
 }
 
@@ -69,8 +67,7 @@ int noda_iot_sync_from_cache(noda_iot_t* self) {
   ************************************************************************/
 int noda_iot_post_to_cache(noda_iot_t* self) {
     noda_post_to_cache(self, prop_switch);
-    noda_post_to_cache(self, prop_light);
-    noda_post_to_cache(self, prop_DebugInfo);
+    noda_post_to_cache(self, prop_led);
     return NODA_OK;
 }
 
@@ -97,8 +94,7 @@ int noda_iot_sync_cache_from_dev(noda_iot_t* self) {
   ************************************************************************/
 int noda_iot_post_cache_to_dev(noda_iot_t* self) {
     if (noda_cache_isdirty(self, prop_switch)
-     || noda_cache_isdirty(self, prop_light)
-     || noda_cache_isdirty(self, prop_DebugInfo)) {
+     || noda_cache_isdirty(self, prop_led)) {
         ti_iot_property_report();
     }
     return NODA_OK;
