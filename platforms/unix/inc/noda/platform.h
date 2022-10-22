@@ -10,7 +10,6 @@ int main(int argc, char** argv) {
     noda_err_t rt = noda_startup();
     if (NODA_OK == rt) {
         while (noda_loop() == NODA_OK);
-        noda_cleanup();
     }
     return rt;
 }

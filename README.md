@@ -30,11 +30,11 @@ $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda
 
 ### unix
 
-以noda项目目录下platforms/unix/examples/00_hello例程为例：
+以noda项目目录下examples/unix/00_hello例程为例：
 
 ```bash
 $ export NODA_PATH=您的noda项目根目录
-$ cd ${NODA_PATH}/platforms/unix/examples/00_hello
+$ cd ${NODA_PATH}/examples/examples/00_hello
 $ cmake -B build
 $ cd build
 $ make
@@ -52,13 +52,13 @@ $ . ./install.sh                            # 安装工具链，本步骤仅需�
 $ . ./export.sh                             # 在本终端建立工具链运行环境，每个新建终端都需要执行一次
 ```
 
-以noda项目目录下platforms/esp32/examples/00_hello例程为例：
+以noda项目目录下examples/esp32/00_hello例程为例：
 
 ```bash
 $ export NODA_PATH=您的noda项目根目录
-$ cd ${NODA_PATH}/platforms/esp32/examples/00_hello
+$ cd ${NODA_PATH}/examples/esp32/00_hello
 $ idf.py --list-targets                     # 查看可选编译目标平台
-$ idf.py set-target esp32c3                 # 设置编译目标平台，此处选择了 esp32c3
+$ idf.py set-target esp32s3                 # 设置编译目标平台，此处选择了 esp32s3
 $ idf.py build                              # 编译项目
 $ idf.py flash -p /dev/ttyACM0 -b 921600    # 以921600的波特率向/dev/ttyACM0端口烧录固件，波特率与端口请根据实际情况填写
 $ idf.py monitor -p /dev/ttyACM0 -b 115200  # 以115200的波特率打开/dev/ttyACM0端口查看固件的打印信息，波特率与端口请根据实际情况填写
