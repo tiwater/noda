@@ -8,9 +8,9 @@
 #include "noda_iot.h"
 
 /* 请填充测试所需的 WiFi ssid */
-#define _SSID "TP-LINK_FF1E"
+#define _SSID ""
 /* 请填充测试所需的 WiFi password */
-#define _PSWD "abcD1234"
+#define _PSWD ""
 
 /*************************************************************************
   * 系统默认使用总线(BUS)管理协议复用，若项目不需要启用，请使用此声明
