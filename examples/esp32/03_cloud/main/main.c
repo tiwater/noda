@@ -7,8 +7,13 @@
 #include <noda/device/gpio.h>
 #include "noda_iot.h"
 
+#if 0
 #define _SSID "Tiwater"
 #define _PSWD "Ti210223"
+#else
+#define _SSID "3082"
+#define _PSWD "buyaolela886"
+#endif
 
 /*************************************************************************
   * 系统默认使用总线(BUS)管理协议复用，若项目不需要启用，请使用此声明
@@ -89,7 +94,7 @@ int noda_onloop() {
 
     noda_gpio_t* io_1 = noda_dev(DEV_IO1, noda_gpio);
     if (noda_isdirty(io_1, level)) {
-        if (noda_get(io_1, level)) {
+        if (!noda_get(io_1, level)) {
             switch_light();
         }
     }
