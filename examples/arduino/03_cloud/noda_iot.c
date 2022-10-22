@@ -4,6 +4,7 @@
   ************************************************************************/
 
 #include "noda_iot.h"
+#include "noda_wifi.h"
 #include "ti_iot_api.h"
 #include "noda/log.h"
 
@@ -13,8 +14,7 @@
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_iot_open(noda_iot_t* self) {
-    /* 填充代码内容后请删除NODA_UNUSED函数调用 */
-    NODA_UNUSED(self);
+    wifi_start_as_sta(self->wifi_ssid, self->wifi_pswd);
     ti_iot_cloud_start();
     return NODA_OK;
 }
@@ -28,6 +28,7 @@ int noda_iot_close(noda_iot_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     ti_iot_cloud_stop();
+    wifi_stop();
     return NODA_OK;
 }
 

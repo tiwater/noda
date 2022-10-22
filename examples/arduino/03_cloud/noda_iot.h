@@ -16,9 +16,8 @@ extern "C" {
   * noda_iot类定义
   ************************************************************************/
 NODA_DEVICE_CLASS_BEGIN(noda_iot);
-    uint32_t pid;
-    uint32_t did;
-    uint32_t skey;
+    const char* wifi_ssid;
+    const char* wifi_pswd;
     NODA_VAR(bool, prop_switch);
     NODA_VAR(int, prop_light);
     NODA_VAR(const char*, prop_DebugInfo);
