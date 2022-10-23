@@ -14,8 +14,14 @@
 extern "C" {
 #endif
 
-int noda_onstart(void);
-int noda_onclean(void);
+#define noda_onboot \
+    noda_onboot_internal(void); \
+    uint8_t noda_bus_center_nbus(void) { return NODA_NBUS; } \
+    noda_bus_t* noda_bus_list[NODA_NBUS]; \
+    uint8_t noda_device_center_ndev(void) { return NODA_NDEV; } \
+    noda_device_t* noda_device_list[NODA_NDEV]; \
+    int noda_onboot_internal
+
 int noda_onloop(void);
 
 #ifdef __cplusplus

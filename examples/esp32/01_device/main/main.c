@@ -9,45 +9,27 @@
 #include <noda/device/gpio.h>
 
 /*************************************************************************
-  * 系统默认使用总线(BUS)管理协议复用，若项目不需要启用，请使用此声明
+  * 向工程注册总线标识号，请将此标识号列表成员作为NODA_BUS_ADD首参
   ************************************************************************/
-NODA_NO_BUS;
+NODA_BUS_ID_BEGIN
+    // TODO 更多总线标识号
+NODA_BUS_ID_END
 
 /*************************************************************************
-  * 向工程注册设备标识号，系统将按此标识号列表的顺序对设备进行自动排序
-  * 请将此标识号列表成员作为NODA_DEVICE_ADD首参
-  * 开发者可据此标识号使用noda_isdirty/noda_getval/noda_setval读写设备数据
+  * 向工程注册设备标识号，请将此标识号列表成员作为NODA_DEVICE_ADD首参
   ************************************************************************/
-NODA_DEVICE_ID_MAP {
+NODA_DEV_ID_BEGIN
     DEV_IO1,
     DEV_IO3,
     // TODO 更多设备标识号
-    NODA_NDEV,  /* 此行负责告知系统设备总数，请勿用于NODA_DEVICE_ADD首参 */
-};
+NODA_DEV_ID_END
 
 /*************************************************************************
-  * 向工程注册需要用到的设备
-  * NODA_DEVICE_ADD首参为标识号，为设备唯一标识
+  * 生命周期函数，负责系统启动后的自定义初始化工作
   ************************************************************************/
-NODA_DEVICE_LIST {
-    NODA_DEVICE_ADD(DEV_IO1, noda_gpio, .pin=1, .mode=NODA_GPIO_MODE_INPUT);
-    NODA_DEVICE_ADD(DEV_IO3, noda_gpio, .pin=3, .mode=NODA_GPIO_MODE_OUTPUT);
-    // TODO 更多设备注册
-}
-
-/*************************************************************************
-  * 生命周期函数，可以在此执行用户自定义的初始化操作
-  ************************************************************************/
-int noda_onstart(void) {
-    noda_logd("noda_onstart");
-    return NODA_OK;
-}
-
-/*************************************************************************
-  * 生命周期函数，可以在此执行用户自定义的清理操作
-  ************************************************************************/
-int noda_onclean(void) {
-    noda_logd("noda_onclean");
+int noda_onboot(void) {
+    NODA_DEV_ADD(DEV_IO1, noda_gpio, .pin=1, .mode=NODA_GPIO_MODE_INPUT);
+    NODA_DEV_ADD(DEV_IO3, noda_gpio, .pin=3, .mode=NODA_GPIO_MODE_OUTPUT);
     return NODA_OK;
 }
 

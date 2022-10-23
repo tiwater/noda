@@ -2,9 +2,7 @@ cmake_minimum_required (VERSION 3.20)
 project (00_hello)
 
 # compiling flags
-add_definitions (-std=c11)
-add_definitions (-pedantic -pedantic-errors)
-add_definitions (-pipe -fPIC)
+set (CMAKE_C_STANDARD 11)
 add_definitions (-Wall -Werror -Wextra -Wstrict-prototypes)
 
 if (NOT DEFINED ENV{NODA_PATH})

@@ -8,18 +8,12 @@
 extern "C" {
 #endif
 
-#define NODA_NO_BUS \
-    uint8_t noda_bus_center_nbus(void) { return 0; } \
-    void noda_bus_list_setup(void) {} \
-    noda_bus_t* noda_bus_list[1]
+#define NODA_BUS_ID_BEGIN \
+    enum noda_bus_id_t {
 
-#define NODA_BUS_ID_MAP \
-    enum noda_bus_id_t
-
-#define NODA_BUS_LIST \
-    uint8_t noda_bus_center_nbus(void) { return NODA_NBUS; } \
-    noda_bus_t* noda_bus_list[NODA_NBUS]; \
-    void noda_bus_list_setup(void)
+#define NODA_BUS_ID_END \
+    NODA_NBUS, \
+    };
 
 #define NODA_BUS_ADD(_id, bus, ...) \
     do { \
