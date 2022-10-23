@@ -64,4 +64,23 @@ $ idf.py flash -p /dev/ttyACM0 -b 921600    # 以921600的波特率向/dev/ttyAC
 $ idf.py monitor -p /dev/ttyACM0 -b 115200  # 以115200的波特率打开/dev/ttyACM0端口查看固件的打印信息，波特率与端口请根据实际情况填写
 ```
 
+### arduino
+
+如果已经安装arduino-cli或arduino-ide，请跳过此步骤；否则，请先安装两者其中之一：
+
+```bash
+$                                           # 施工中 ... ...
+```
+
+以noda项目目录下examples/arduino/00_hello例程为例：
+注：以下为使用arduino-cli的编译及运行示例，使用arduino-ide的开发者请直接打开项目examples/arduino内例程即可
+
+```bash
+$ export NODA_PATH=您的noda项目根目录
+$ cd ${NODA_PATH}/examples/arduino                          # 进入例程列表目录
+$ arduino-cli compile --fqbn esp32:esp32:esp32s3 00_hello   # 编译00_hello工程，请根据实际版型填写--fqbn参数
+$ arduino-cli upload --fqbn esp32:esp32:esp32s3 00_hello    # 向/dev/ttyACM0端口烧录固件
+$ arduino-cli monitor -p /dev/ttyACM0                       # 打开/dev/ttyACM0端口查看固件的打印信息
+```
+
 施工中 ... ...
