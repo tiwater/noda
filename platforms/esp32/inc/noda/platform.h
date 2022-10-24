@@ -5,7 +5,7 @@
 #include "noda/internal.h"
 
 void app_main(void) {
-    noda_err_t rt = noda_startup();
+    noda_err_t rt = noda_boot();
     if (NODA_OK == rt) {
         while (noda_loop() == NODA_OK);
     }

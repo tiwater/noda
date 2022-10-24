@@ -1,7 +1,10 @@
 /*************************************************************************
-  * @class noda_iot 头文件
-  * @generate date: 2022-10-22 23:53:41
-  ************************************************************************/
+* @file noda_iot
+* @brief 设备接口头文件
+* @author
+* @date 2022-10-24 16:56:15
+* @copyright
+************************************************************************/
 
 #ifndef __NODA_IOT_H
 #define __NODA_IOT_H
@@ -15,12 +18,12 @@ extern "C" {
 /*************************************************************************
   * noda_iot类定义
   ************************************************************************/
-NODA_DEVICE_CLASS_BEGIN(noda_iot);
+NODA_DEV_CLASS_BEGIN(noda_iot);
     const char* ssid;
     const char* pswd;
     NODA_VAR(bool, prop_switch);
     NODA_VAR(bool, prop_led);
-NODA_DEVICE_CLASS_END();
+NODA_DEV_CLASS_END();
 
 #ifdef __cplusplus
 }

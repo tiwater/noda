@@ -1,7 +1,10 @@
 /*************************************************************************
-  * @file ti_thingmodel.c 物模型代码文件
-  * @generate date: ${GEN_DATE}
-  * 此文件为自动生成，请不要更改文件内容
+  * @file ti_thingmodel.c
+  * @brief 物模型接口实现
+  * @author
+  * @details 此文件为自动生成，请不要更改文件内容
+  * @date: ${DATE_TIME}
+  * @copyright
   ************************************************************************/
 
 #include "ti_thingmodel.h"

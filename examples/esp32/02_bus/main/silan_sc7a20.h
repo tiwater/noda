@@ -1,7 +1,10 @@
 /*************************************************************************
-  * @class silan_sc7a20 头文件
-  * @generate date: 2022-10-08 10:07:30
-  ************************************************************************/
+* @file silan_sc7a20
+* @brief 设备接口头文件
+* @author
+* @date 2022-10-24 16:56:15
+* @copyright
+************************************************************************/
 
 #ifndef __SILAN_SC7A20_H
 #define __SILAN_SC7A20_H
@@ -15,14 +18,14 @@ extern "C" {
 /*************************************************************************
   * silan_sc7a20类定义
   ************************************************************************/
-NODA_DEVICE_CLASS_BEGIN(silan_sc7a20);
+NODA_DEV_CLASS_BEGIN(silan_sc7a20);
     uint8_t     bus;
     uint8_t     addr;
     uint16_t    rw_wait_ms;
     NODA_VAR(float, x);
     NODA_VAR(float, y);
     NODA_VAR(float, z);
-NODA_DEVICE_CLASS_END();
+NODA_DEV_CLASS_END();
 
 #ifdef __cplusplus
 }

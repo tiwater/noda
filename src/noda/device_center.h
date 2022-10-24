@@ -8,23 +8,17 @@
 extern "C" {
 #endif
 
-#define NODA_NO_DEVICE \
-    uint8_t noda_device_center_ndev(void) { return 0; } \
-    void noda_device_list_setup(void) {} \
-    noda_device_t* noda_device_list[1]
+#define NODA_DEV_ID_BEGIN \
+    enum noda_device_id_t {
 
-#define NODA_DEVICE_ID_MAP \
-    enum noda_device_id_t
+#define NODA_DEV_ID_END \
+    NODA_NDEV, \
+    };
 
-#define NODA_DEVICE_LIST  \
-    uint8_t noda_device_center_ndev(void) { return NODA_NDEV; } \
-    noda_device_t* noda_device_list[NODA_NDEV]; \
-    void noda_device_list_setup(void)
-
-#define NODA_DEVICE_ADD(_id, dev, ...) \
+#define NODA_DEV_ADD(_id, dev, ...) \
     do { \
         static dev##_t dev##_id = { \
-            NODA_DEVICE_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ \
+            NODA_DEV_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ \
         }; \
         noda_device_list[_id] = (noda_device_t*)&dev##_id; \
     } while (0)

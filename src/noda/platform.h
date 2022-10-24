@@ -5,7 +5,7 @@
 #include "noda/internal.h"
 
 void setup(void) {
-    noda_startup();
+    noda_boot();
 }
 
 void loop(void) {

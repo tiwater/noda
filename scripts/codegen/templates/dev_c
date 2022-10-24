@@ -1,13 +1,17 @@
 /*************************************************************************
-  * @class ${CLS_NAME} 代码文件
-  * @generate date: ${GEN_DATE}
+  * @file ${CLS_NAME}
+  * @brief 设备接口实现
+  * @author
+  * @date ${DATE_TIME}
+  * @copyright
   ************************************************************************/
 
 #include "${CLS_NAME}.h"
 
 /*************************************************************************
-  * ${CLS_NAME}_open：${CLS_NAME}必须实现的类成员函数，负责设备“打开”操作，
-  * @param self 类实例
+  * @fn ${CLS_NAME}_open
+  * @brief 必须实现的类成员函数，负责设备“打开”操作，
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int ${CLS_NAME}_open(${CLS_NAME}_t* self) {
@@ -17,8 +21,9 @@ int ${CLS_NAME}_open(${CLS_NAME}_t* self) {
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_close：${CLS_NAME}必须实现的类成员函数，负责设备“关闭”操作，
-  * @param self 类实例
+  * @fn ${CLS_NAME}_close
+  * @brief 必须实现的类成员函数，负责设备“关闭”操作，
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int ${CLS_NAME}_close(${CLS_NAME}_t* self) {
@@ -28,10 +33,10 @@ int ${CLS_NAME}_close(${CLS_NAME}_t* self) {
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_power_mode_changed：${CLS_NAME}必须实现的类成员函数，
-  * 系统改变“电源模式”时被动触发，
-  * @param self 类实例
-  * @param mode 更改后的电源模式
+  * @fn ${CLS_NAME}_power_mode_changed
+  * @brief 必须实现的类成员函数，系统改变“电源模式”时被动触发，
+  * @param[in] self 类实例
+  * @param[in] mode 更改后的电源模式
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, noda_power_mode_t mode) {
@@ -42,10 +47,10 @@ int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, noda_power_mode_t mode) 
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_sync_from_cache：${CLS_NAME}必须实现的类成员函数，
-  * 负责设备数据从缓存复制到应用层的复制操作，
-  * 此函数为自动生成，请不要更改函数内容
-  * @param self 类实例
+  * @fn ${CLS_NAME}_sync_from_cache
+  * @brief 必须实现的类成员函数，负责设备数据从缓存复制到应用层的复制操作
+  * @attention 此函数为自动生成，请不要更改函数内容
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int ${CLS_NAME}_sync_from_cache(${CLS_NAME}_t* self) {
@@ -54,10 +59,10 @@ ${SYNC_FROM_CACHE}
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_post_to_cache：${CLS_NAME}必须实现的类成员函数，
-  * 负责设备数据从应用层到缓存的复制操作，
-  * 此函数为自动生成，请不要更改函数内容
-  * @param self 类实例
+  * @fn ${CLS_NAME}_post_to_cache
+  * @brief 必须实现的类成员函数，负责设备数据从应用层到缓存的复制操作
+  * @attention 此函数为自动生成，请不要更改函数内容
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int ${CLS_NAME}_post_to_cache(${CLS_NAME}_t* self) {
@@ -66,9 +71,9 @@ ${POST_TO_CACHE}
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_sync_cache_from_dev：${CLS_NAME}必须实现的类成员函数，
-  * 负责设备数据从传感器到缓存的获取操作，
-  * @param self 类实例
+  * @fn ${CLS_NAME}_sync_cache_from_dev
+  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int ${CLS_NAME}_sync_cache_from_dev(${CLS_NAME}_t* self) {
@@ -81,9 +86,9 @@ int ${CLS_NAME}_sync_cache_from_dev(${CLS_NAME}_t* self) {
 }
 
 /*************************************************************************
-  * ${CLS_NAME}_post_cache_to_dev：${CLS_NAME}必须实现的类成员函数，
-  * 负责设备数据从缓存到传感器的提交操作，
-  * @param self 类实例
+  * @fn ${CLS_NAME}_post_cache_to_dev
+  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int ${CLS_NAME}_post_cache_to_dev(${CLS_NAME}_t* self) {

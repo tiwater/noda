@@ -1,22 +1,19 @@
 /*************************************************************************
-  * 设置noda_onloop函数触发间隔，若不设置，则默认为200毫秒
+  * 设置noda_onloop函数触发间隔，若不配置，则默认为200毫秒
   ************************************************************************/
-#define NODA_HEARTBEAT_MILLIS 250
+#define NODA_HEARTBEAT_MILLIS 1000
 
 #include <noda.h>
 #include <noda/log.h>
-#include <noda/device/gpio.h>
-#include "noda_iot.h"
+#include <noda/bus/i2c.h>
 
-/* 请填充测试所需的 WiFi ssid */
-#define _SSID ""
-/* 请填充测试所需的 WiFi password */
-#define _PSWD ""
+#include "silan_sc7a20.h"
 
 /*************************************************************************
   * 向工程注册总线标识号，请将此标识号列表成员作为NODA_BUS_ADD首参
   ************************************************************************/
 NODA_BUS_ID_BEGIN
+    I2C0,
     // TODO 更多总线标识号
 NODA_BUS_ID_END
 
@@ -24,9 +21,7 @@ NODA_BUS_ID_END
   * 向工程注册设备标识号，请将此标识号列表成员作为NODA_DEVICE_ADD首参
   ************************************************************************/
 NODA_DEV_ID_BEGIN
-    DEV_IOT,
-    DEV_IO1,
-    DEV_IO3,
+    GSENSOR,
     // TODO 更多设备标识号
 NODA_DEV_ID_END
 
@@ -34,45 +29,20 @@ NODA_DEV_ID_END
   * 生命周期函数，负责系统启动后的自定义初始化工作
   ************************************************************************/
 int noda_onboot(void) {
-    NODA_DEV_ADD(DEV_IOT, noda_iot, .ssid=_SSID, .pswd=_PSWD);
-    NODA_DEV_ADD(DEV_IO1, noda_gpio, .pin=16, .mode=NODA_GPIO_MODE_INPUT);
-    NODA_DEV_ADD(DEV_IO3, noda_gpio, .pin=7, .mode=NODA_GPIO_MODE_OUTPUT);
+    NODA_BUS_ADD(I2C0, noda_i2c, .port=0, .sda=7, .scl=6, .freq=100);
+    NODA_DEV_ADD(GSENSOR, silan_sc7a20, .bus=I2C0, .addr=0x19, .rw_wait_ms=1000);
     return NODA_OK;
-}
-
-static bool g_light_on;
-
-static void set_light(bool on) {
-    noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);
-    noda_set(iot, prop_switch, on);
-    noda_set(iot, prop_led, on);
-
-    noda_dev_setval(DEV_IO3, noda_gpio, level, on);
-
-    g_light_on = on;
-}
-
-static inline void switch_light(void) {
-    set_light(!g_light_on);
 }
 
 /*************************************************************************
   * 生命周期函数，按照一定时间间隔(NODA_HEARTBEAT_MILLIS)触发
   ************************************************************************/
 int noda_onloop(void) {
-    
-    noda_iot_t* iot = noda_dev(DEV_IOT, noda_iot);
-    if (noda_isdirty(iot, prop_switch)) {
-        bool on = noda_get(iot, prop_switch);
-        set_light(on);
-    }
-
-    noda_gpio_t* io_1 = noda_dev(DEV_IO1, noda_gpio);
-    if (noda_isdirty(io_1, level)) {
-        if (!noda_get(io_1, level)) {
-            switch_light();
-        }
-    }
-
+    // 输出从GSENSOR设备缓存中得到的三轴数据
+    silan_sc7a20_t* gs = noda_dev(GSENSOR, silan_sc7a20);
+    float x = noda_get(gs, x);
+    float y = noda_get(gs, y);
+    float z = noda_get(gs, z);
+    noda_logd("%s x = %f, y = %f, z = %f", noda_dev_name(GSENSOR), x, y, z);
     return NODA_OK;
 }
