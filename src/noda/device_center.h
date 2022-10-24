@@ -18,7 +18,7 @@ extern "C" {
 #define NODA_DEV_ADD(_id, dev, ...) \
     do { \
         static dev##_t dev##_id = { \
-            NODA_DEVICE_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ \
+            NODA_DEV_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ \
         }; \
         noda_device_list[_id] = (noda_device_t*)&dev##_id; \
     } while (0)

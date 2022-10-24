@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-#define NODA_DEVICE_VTABLE(cls) \
+#define NODA_DEV_VTABLE(cls) \
     int (*open) (struct cls* self); \
     int (*close) (struct cls* self); \
     int (*power_mode_changed) (struct cls* self, noda_power_mode_t mode); \
@@ -18,7 +18,7 @@ extern "C" {
     const char* name; \
     bool opened
 
-#define NODA_DEVICE_SET_VTABLE(cls) \
+#define NODA_DEV_SET_VTABLE(cls) \
     .open = cls##_open, \
     .close = cls##_close, \
     .power_mode_changed = cls##_power_mode_changed, \
@@ -27,7 +27,7 @@ extern "C" {
     .sync_cache_from_dev = cls##_sync_cache_from_dev, \
     .post_cache_to_dev = cls##_post_cache_to_dev
 
-#define NODA_DEVICE_CLASS_BEGIN(cls) \
+#define NODA_DEV_CLASS_BEGIN(cls) \
     struct cls##_t; \
     typedef struct cls##_t cls##_t; \
     int cls##_open(cls##_t* self); \
@@ -38,16 +38,16 @@ extern "C" {
     int cls##_sync_cache_from_dev(cls##_t* self); \
     int cls##_post_cache_to_dev(cls##_t* self); \
     struct cls##_t { \
-        NODA_DEVICE_VTABLE(cls##_t)
+        NODA_DEV_VTABLE(cls##_t)
 
-#define NODA_DEVICE_CLASS_END() }
+#define NODA_DEV_CLASS_END() }
 
 typedef enum {
     NODA_POWER_MODE_UNKNOWN,
 } noda_power_mode_t;
 
 typedef struct noda_device_t {
-    NODA_DEVICE_VTABLE(noda_device_t);
+    NODA_DEV_VTABLE(noda_device_t);
 } noda_device_t;
 
 #define NODA_VAR(type, v)       \

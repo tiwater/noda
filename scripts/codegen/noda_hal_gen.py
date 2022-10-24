@@ -108,7 +108,7 @@ def gen_public_vars(item):
     _t = type_to_c_type(item[SCHEMA])
     return  _t + ' ' + _k[:4] + '_' + _i + ';'
 
-def gen_iot(cls_name, date, tmpl_dir, json_file):
+def gen_iot(cls_name, date_time, tmpl_dir, json_file):
     ''' 根据物模型json文件返回对应的物模型接口文件 '''
     import json
 
@@ -158,7 +158,7 @@ def gen_iot(cls_name, date, tmpl_dir, json_file):
     with open(tmpl_dir + 'iot_c', 'r') as f:
         tmpl = Template(f.read())
         dot_c_lines.append(tmpl.substitute(
-                    GEN_DATE = date,
+                    DATE_TIME = date_time,
                     CLS_NAME = cls_name,
                     FUNC_DEFS = func_defs,
                     TELEMETRY_TABS = tele_tabs,
@@ -171,7 +171,7 @@ def gen_iot(cls_name, date, tmpl_dir, json_file):
     with open(tmpl_dir + 'iot_h', 'r') as f:
         tmpl = Template(f.read())
         dot_h_lines.append(tmpl.substitute(
-                    GEN_DATE = date,
+                    DATE_TIME = date_time,
                     FUNC_DECS = func_decs,
                     TELEMETRY_ENUM = tele_enum,
                     PROPERTY_ENUM = prop_enum,
@@ -181,7 +181,7 @@ def gen_iot(cls_name, date, tmpl_dir, json_file):
 
     return public_vars
 
-def gen_hal(cls_name, date, tmpl_dir, private_vars='', public_vars=''):
+def gen_hal(cls_name, date_time, tmpl_dir, private_vars='', public_vars=''):
     cls_name_upper_case = cls_name.upper()
 
     prvs = private_vars.replace('; ', ';').strip()
@@ -194,7 +194,7 @@ def gen_hal(cls_name, date, tmpl_dir, private_vars='', public_vars=''):
     with open(tmpl_dir + 'dev_h', 'r') as f:
         tmpl = Template(f.read())
         dot_h_lines.append(tmpl.substitute(
-                GEN_DATE = date,
+                DATE_TIME = date_time,
                 CLS_NAME = cls_name,
                 CLS_NAME_UPPER_CASE = cls_name_upper_case,
                 CLS_MEMBER_VAR_LIST = prvs + puvs))
@@ -209,7 +209,7 @@ def gen_hal(cls_name, date, tmpl_dir, private_vars='', public_vars=''):
     with open(tmpl_dir + 'dev_c', 'r') as f:
         tmpl = Template(f.read())
         dot_c_lines.append(tmpl.substitute(
-                GEN_DATE = date,
+                DATE_TIME = date_time,
                 CLS_NAME = cls_name,
                 SYNC_FROM_CACHE = sync_from_cache,
                 POST_TO_CACHE = post_to_cache))
@@ -220,15 +220,15 @@ def gen_hal(cls_name, date, tmpl_dir, private_vars='', public_vars=''):
 def generate(name, private_vars='', public_vars='', json_file=''):
     if not name:
         raise Exception('类型名(--name)参数必须填写')
-    datetime_mark = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     py_dir = os.path.dirname(os.path.abspath(__file__))
     tmpl_dir = py_dir + '/templates/'
 
     if json_file:
-        public_vars += gen_iot(name, datetime_mark, tmpl_dir, json_file)
+        public_vars += gen_iot(name, date_time, tmpl_dir, json_file)
 
     if private_vars or public_vars:
-        gen_hal(name, datetime_mark, tmpl_dir, private_vars, public_vars)
+        gen_hal(name, date_time, tmpl_dir, private_vars, public_vars)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='noda_hal_gen')

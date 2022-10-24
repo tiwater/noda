@@ -1,15 +1,18 @@
 /*************************************************************************
-  * @class noda_gpio 代码文件
-  * @generate date: 2022-10-06 21:35:04
+  * @file noda_gpio
+  * @brief 设备接口实现
+  * @author
+  * @date 2022-10-24 16:56:15
+  * @copyright
   ************************************************************************/
 
 #include "noda/device/gpio.h"
-#include "noda/log.h"
 #include <Arduino.h>
 
 /*************************************************************************
-  * noda_gpio_open：noda_io必须实现的类成员函数，负责设备“打开”操作，
-  * @param self 类实例
+  * @fn noda_gpio_open
+  * @brief 必须实现的类成员函数，负责设备“打开”操作，
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_gpio_open(noda_gpio_t* self) {
@@ -27,21 +30,22 @@ int noda_gpio_open(noda_gpio_t* self) {
 }
 
 /*************************************************************************
-  * noda_gpio_close：noda_io必须实现的类成员函数，负责设备“关闭”操作，
-  * @param self 类实例
+  * @fn noda_gpio_close
+  * @brief 必须实现的类成员函数，负责设备“关闭”操作，
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_gpio_close(noda_gpio_t* self) {
-    // TODO
+    /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     return NODA_OK;
 }
 
 /*************************************************************************
-  * noda_gpio_power_mode_changed：noda_io必须实现的类成员函数，
-  * 系统改变“电源模式”时被动触发，
-  * @param self 类实例
-  * @param mode 更改后的电源模式
+  * @fn noda_gpio_power_mode_changed
+  * @brief 必须实现的类成员函数，系统改变“电源模式”时被动触发，
+  * @param[in] self 类实例
+  * @param[in] mode 更改后的电源模式
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_gpio_power_mode_changed(noda_gpio_t* self, noda_power_mode_t mode) {
@@ -52,10 +56,10 @@ int noda_gpio_power_mode_changed(noda_gpio_t* self, noda_power_mode_t mode) {
 }
 
 /*************************************************************************
-  * noda_gpio_sync_from_cache：noda_gpio必须实现的类成员函数，
-  * 负责设备数据从缓存复制到应用层的复制操作，
-  * 此函数为自动生成，请不要更改函数内容
-  * @param self 类实例
+  * @fn noda_gpio_sync_from_cache
+  * @brief 必须实现的类成员函数，负责设备数据从缓存复制到应用层的复制操作
+  * @attention 此函数为自动生成，请不要更改函数内容
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_gpio_sync_from_cache(noda_gpio_t* self) {
@@ -64,10 +68,10 @@ int noda_gpio_sync_from_cache(noda_gpio_t* self) {
 }
 
 /*************************************************************************
-  * noda_gpio_post_to_cache：noda_io必须实现的类成员函数，
-  * 负责设备数据从应用层到缓存的复制操作，
-  * 此函数为自动生成，请不要更改函数内容
-  * @param self 类实例
+  * @fn noda_gpio_post_to_cache
+  * @brief 必须实现的类成员函数，负责设备数据从应用层到缓存的复制操作
+  * @attention 此函数为自动生成，请不要更改函数内容
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_gpio_post_to_cache(noda_gpio_t* self) {
@@ -76,9 +80,9 @@ int noda_gpio_post_to_cache(noda_gpio_t* self) {
 }
 
 /*************************************************************************
-  * noda_gpio_sync_cache_from_dev：noda_gpio必须实现的类成员函数，
-  * 负责设备数据从传感器到缓存的获取操作，
-  * @param self 类实例
+  * @fn noda_gpio_sync_cache_from_dev
+  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_gpio_sync_cache_from_dev(noda_gpio_t* self) {
@@ -90,9 +94,9 @@ int noda_gpio_sync_cache_from_dev(noda_gpio_t* self) {
 }
 
 /*************************************************************************
-  * noda_gpio_post_cache_to_dev：noda_gpio必须实现的类成员函数，
-  * 负责设备数据从缓存到传感器的提交操作，
-  * @param self 类实例
+  * @fn noda_gpio_post_cache_to_dev
+  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
+  * @param[in] self 类实例
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_gpio_post_cache_to_dev(noda_gpio_t* self) {

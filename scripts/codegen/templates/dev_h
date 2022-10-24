@@ -1,6 +1,9 @@
 /*************************************************************************
-  * @class ${CLS_NAME} 头文件
-  * @generate date: ${GEN_DATE}
+  * @file ${CLS_NAME}
+  * @brief 设备接口头文件
+  * @author
+  * @date ${DATE_TIME}
+  * @copyright
   ************************************************************************/
 
 #ifndef __${CLS_NAME_UPPER_CASE}_H
@@ -15,9 +18,9 @@ extern "C" {
 /*************************************************************************
   * ${CLS_NAME}类定义
   ************************************************************************/
-NODA_DEVICE_CLASS_BEGIN(${CLS_NAME});
+NODA_DEV_CLASS_BEGIN(${CLS_NAME});
 ${CLS_MEMBER_VAR_LIST}
-NODA_DEVICE_CLASS_END();
+NODA_DEV_CLASS_END();
 
 #ifdef __cplusplus
 }

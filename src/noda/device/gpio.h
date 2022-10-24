@@ -1,6 +1,9 @@
 /*************************************************************************
-  * @class noda_gpio 头文件
-  * @generate date: 2022-10-06 21:11:46
+  * @file noda_gpio
+  * @brief 设备接口头文件
+  * @author
+  * @date 2022-10-24 16:56:15
+  * @copyright
   ************************************************************************/
 
 #ifndef __NODA_GPIO_H
@@ -21,11 +24,11 @@ enum noda_gpio_mode_t {
 /*************************************************************************
   * noda_gpio类定义
   ************************************************************************/
-NODA_DEVICE_CLASS_BEGIN(noda_gpio);
+NODA_DEV_CLASS_BEGIN(noda_gpio);
     noda_pin_t pin;
     enum noda_gpio_mode_t mode;
     NODA_VAR(bool, level);
-NODA_DEVICE_CLASS_END();
+NODA_DEV_CLASS_END();
 
 #ifdef __cplusplus
 }
