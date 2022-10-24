@@ -1,9 +1,31 @@
-# noda
-Ticos IoT OS for c
+# Noda
+Ticos IoT Framework
 
-## 利用noda_hal_gen.py创建IOT物模型代码模板文件(.h, .c)
+本框架提供快速接入 Ticos Cloud 的脚手架工程。
 
-通过内含的noda_hal_gen.py脚本，用户可以创建新的物模型接口代码文件，以下为例子：
+## 快速上手
+
+### Arduino
+
+  1. Arduino IDE 安装
+     - 在 Arduino IDE 中, 选择菜单 `项目`, `加载库`, `管理库...`。
+     - 搜索并安装 `Ticos IoT Framework`。 (当前库还未过审，请参考下面步骤手动安装)
+  2. 手动安装
+     - 将本 [Ticos IoT Framework](https://github.com/tiwater/noda) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
+
+### ESP32-IDF
+
+     - 将本 [Ticos IoT Framework](https://github.com/tiwater/noda) 克隆至你的本地开发环境。
+
+## 脚手架工程创建
+
+脚本施工中 ... ...
+
+请先参考[例程](#项目编译与运行)尝鲜。
+
+## 利用 noda_hal_gen.py 创建 IOT 物模型代码模板文件(.h, .c)
+
+通过内含的 noda_hal_gen.py 脚本，用户可以创建新的物模型接口代码文件，以下为例子：
 
 ```bash
 $ cd ${noda项目根目录}/scripts/codegen
@@ -11,12 +33,12 @@ $ python noda_hal_gen.py --help #查看脚本命令描述
 $ python noda_hal_gen.py --name="noda_iot" --private="uint32_t pid;uint32_t did; uint32_t skey;" --json='templates/thing_model.json'
 ```
 
-创建成功后，请将新生成的.h与.c文件直接复制到您的项目代码目录下，即可正常使用
-实例中thing_model.json文件仅为示例模型，后期需要根据具体模型协议更改脚本
+创建成功后，请将新生成的 .h 与 .c 文件直接复制到您的项目代码目录下，即可正常使用
+示例中 thing_model.json 文件仅为示例模型，后期需要根据具体模型协议更改脚本
 
-## 利用noda_hal_gen.py创建设备接口代码模板文件(.h, .c)
+## 利用 noda_hal_gen.py 创建设备接口代码模板文件(.h, .c)
 
-通过内含的noda_hal_gen.py脚本，用户可以创建新的设备接口代码文件，以下为例子：
+通过内含的 noda_hal_gen.py 脚本，用户可以创建新的设备接口代码文件，以下为例子：
 
 ```bash
 $ cd ${noda项目根目录}/scripts/codegen
@@ -24,16 +46,16 @@ $ python noda_hal_gen.py --help #查看脚本命令描述
 $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda; uint8_t addr; uint8_t freq;" --public="float x; float y; float z;"
 ```
 
-创建成功后，请将新生成的.h与.c文件直接复制到您的项目代码目录下，即可正常使用
+创建成功后，请将新生成的 .h 与 .c 文件直接复制到您的项目代码目录下，即可正常使用
 
 ## 项目编译与运行
 
 ### unix
 
-以noda项目目录下examples/unix/00_hello例程为例：
+以 noda 项目目录下 examples/unix/00_hello 例程为例：
 
 ```bash
-$ export NODA_PATH=您的noda项目根目录
+$ export NODA_PATH=您的 noda 项目根目录
 $ cd ${NODA_PATH}/examples/examples/00_hello
 $ cmake -B build
 $ cd build
@@ -43,7 +65,7 @@ $ ./00_hello
 
 ### esp32
 
-如果已经安装esp-idf工具，请跳过此步骤；否则，请先安装esp-idf工具：
+如果已经安装 esp-idf 工具，请跳过此步骤；否则，请先安装 esp-idf 工具：
 
 ```bash
 $ git clone https://github.com/espressif/esp-idf
@@ -52,16 +74,16 @@ $ . ./install.sh                            # 安装工具链，本步骤仅需�
 $ . ./export.sh                             # 在本终端建立工具链运行环境，每个新建终端都需要执行一次
 ```
 
-以noda项目目录下examples/esp32/00_hello例程为例：
+以 noda 项目目录下 examples/esp32/00_hello 例程为例：
 
 ```bash
-$ export NODA_PATH=您的noda项目根目录
+$ export NODA_PATH=您的 noda 项目根目录
 $ cd ${NODA_PATH}/examples/esp32/00_hello
 $ idf.py --list-targets                     # 查看可选编译目标平台
 $ idf.py set-target esp32s3                 # 设置编译目标平台，此处选择了 esp32s3
 $ idf.py build                              # 编译项目
-$ idf.py flash -p /dev/ttyACM0 -b 921600    # 以921600的波特率向/dev/ttyACM0端口烧录固件，波特率与端口请根据实际情况填写
-$ idf.py monitor -p /dev/ttyACM0 -b 115200  # 以115200的波特率打开/dev/ttyACM0端口查看固件的打印信息，波特率与端口请根据实际情况填写
+$ idf.py flash -p /dev/ttyACM0 -b 921600    # 以 921600 的波特率向 /dev/ttyACM0 端口烧录固件，波特率与端口请根据实际情况填写
+$ idf.py monitor -p /dev/ttyACM0 -b 115200  # 以 115200 的波特率打开 /dev/ttyACM0 端口查看固件的打印信息，波特率与端口请根据实际情况填写
 ```
 
 ### arduino
