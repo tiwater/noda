@@ -2,4 +2,6 @@ build
 sdkconfig
 sdkconfig.old
 
+__pycache__
+
 *.swp

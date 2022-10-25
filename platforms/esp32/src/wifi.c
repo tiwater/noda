@@ -1,6 +1,7 @@
-#include "noda_wifi.h"
+#include "noda/nil/wifi.h"
+
 #include <string.h>
-#include <noda/log.h>
+
 #include <esp_event.h>
 #include <esp_sntp.h>
 #include <esp_wifi.h>
@@ -9,6 +10,8 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/event_groups.h>
+
+#include "noda/log.h"
 
 static void sntp_sync(void) {
     char buf[64];

@@ -55,7 +55,7 @@ $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda
 ```bash
 $ cd ${noda项目根目录}/scripts/codegen
 $ python noda_proj_gen.py --help #查看脚本命令描述
-$ python noda_proj_gen.py --name="my_noda_project" --platform="unix"
+$ python -B noda_proj_gen.py --name="my_noda_project" --platform="unix"
 $ cd my_noda_project
 $ cmake -B build
 $ cd build
