@@ -74,7 +74,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
     }
 }
 
-void wifi_start_as_sta(const char* ssid, const char* pswd) {
+void noda_wifi_start_as_sta(const char* ssid, const char* pswd) {
     s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_netif_init());
@@ -129,7 +129,7 @@ void wifi_start_as_sta(const char* ssid, const char* pswd) {
     sntp_start();
 }
 
-void wifi_stop(void) {
+void noda_wifi_stop(void) {
     esp_wifi_stop();
     esp_wifi_deinit();
 }

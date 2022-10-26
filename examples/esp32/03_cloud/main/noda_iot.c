@@ -8,7 +8,9 @@
 
 #include "noda_iot.h"
 #include "noda/nil/wifi.h"
-#include "ti_iot_api.h"
+#include "noda_mqtt.h"
+
+#include <ti_iot_api.h>
 
 /*************************************************************************
   * @fn noda_iot_open
@@ -17,8 +19,8 @@
   * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
   ************************************************************************/
 int noda_iot_open(noda_iot_t* self) {
-    wifi_start_as_sta(self->ssid, self->pswd);
-    ti_iot_cloud_start();
+    noda_wifi_start_as_sta(self->ssid, self->pswd);
+    noda_mqtt_start(self->fqdn, self->product_id, self->device_id);
     return NODA_OK;
 }
 
@@ -31,8 +33,8 @@ int noda_iot_open(noda_iot_t* self) {
 int noda_iot_close(noda_iot_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
-    ti_iot_cloud_stop();
-    wifi_stop();
+    noda_mqtt_stop();
+    noda_wifi_stop();
     return NODA_OK;
 }
 

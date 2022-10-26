@@ -21,6 +21,9 @@ extern "C" {
 NODA_DEV_CLASS_BEGIN(noda_iot);
     const char* ssid;
     const char* pswd;
+    const char* fqdn;
+    const char* product_id;
+    const char* device_id;
     NODA_VAR(bool, prop_switch);
     NODA_VAR(bool, prop_led);
 NODA_DEV_CLASS_END();
