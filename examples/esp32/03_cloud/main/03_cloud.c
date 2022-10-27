@@ -13,7 +13,7 @@
 /* 请填充测试所需的 WiFi password */
 #define _PSWD ""
 /* 请填充测试所需的 mqtt fqdn */
-#define _FQDN "hub.ticos.cn"
+#define _FQDN "mqtt://hub.ticos.cn"
 /* 请填充测试所需的 product id */
 #define _PRD_ID "HITXM3K4IE"
 /* 请填充测试所需的 device id */
