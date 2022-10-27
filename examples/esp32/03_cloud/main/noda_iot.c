@@ -20,7 +20,12 @@
   ************************************************************************/
 int noda_iot_open(noda_iot_t* self) {
     noda_wifi_start_as_sta(self->ssid, self->pswd);
-    noda_mqtt_start(self->fqdn, self->product_id, self->device_id);
+    ti_iot_client_init(self->fqdn, self->product_id, self->device_id);
+    noda_mqtt_client_set_on_recv_cb(ti_iot_property_receive);
+    noda_mqtt_client_start(self->fqdn,
+                           ti_iot_mqtt_client_id(),
+                           ti_iot_mqtt_username(),
+                           self->device_id);
     return NODA_OK;
 }
 
@@ -33,7 +38,9 @@ int noda_iot_open(noda_iot_t* self) {
 int noda_iot_close(noda_iot_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
-    noda_mqtt_stop();
+    noda_mqtt_client_stop();
+    noda_mqtt_client_set_on_recv_cb(NULL);
+    ti_iot_client_deinit();
     noda_wifi_stop();
     return NODA_OK;
 }
@@ -105,4 +112,8 @@ int noda_iot_post_cache_to_dev(noda_iot_t* self) {
         ti_iot_property_report();
     }
     return NODA_OK;
+}
+
+int ti_iot_mqtt_client_publish(const char* topic, const char* data, size_t len) {
+    return noda_mqtt_client_publish(topic, data, len) ? 0 : 1;
 }
