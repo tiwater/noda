@@ -1,5 +1,5 @@
 /*************************************************************************
-  * @file ti_thingmodel.h
+  * @file ticos_thingmodel.h
   * @brief 物模型接口头文件
   * @author
   * @details 此文件为自动生成，请不要更改文件内容
@@ -7,20 +7,24 @@
   * @copyright
   ************************************************************************/
 
-#ifndef __TI_THING_MODEL_H
-#define __TI_THING_MODEL_H
-
-#include <_ti_cfg_prefix.h>
+#ifndef __TICOS_THING_MODEL_H
+#define __TICOS_THING_MODEL_H
 
 #include <noda/common.h>
 
-typedef enum {${TELEMETRY_ENUM}} ti_iot_telemetry_t;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-typedef enum {${PROPERTY_ENUM}} ti_iot_property_t;
+typedef enum {${TELEMETRY_ENUM}} ticos_telemetry_t;
 
-typedef enum {${COMMAND_ENUM}} ti_iot_command_t;
+typedef enum {${PROPERTY_ENUM}} ticos_property_t;
+
+typedef enum {${COMMAND_ENUM}} ticos_command_t;
 ${FUNC_DECS}
 
-#include <_ti_cfg_suffix.h>
+#ifdef __cplusplus
+}
+#endif
 
-#endif // __TI_THING_MODEL_H
+#endif // __TICOS_THING_MODEL_H
