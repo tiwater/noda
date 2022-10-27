@@ -15,7 +15,7 @@ set (NODA_USE_FREERTOS TRUE)
 if (DEFINED ENV{TIOT_PATH})
 set (TIOT_SRC_DIR $ENV{TIOT_PATH}/src)
 else ()
-set (TIOT_SRC_DIR ${NODA_PATH}/../ticos-sdk-for-c-arduino/src)
+set (TIOT_SRC_DIR ${NODA_PATH}/../ticos-sdk-for-c/src)
 endif ()
 aux_source_directory (${TIOT_SRC_DIR}   TIOT_SRCS)
 
