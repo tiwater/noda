@@ -1,6 +1,7 @@
-#include "noda_wifi.h"
+#include "noda/nil/wifi.h"
+
 #include <string.h>
-#include <noda/log.h>
+
 #include <esp_event.h>
 #include <esp_sntp.h>
 #include <esp_wifi.h>
@@ -9,6 +10,8 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/event_groups.h>
+
+#include "noda/log.h"
 
 static void sntp_sync(void) {
     char buf[64];
@@ -71,7 +74,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
     }
 }
 
-void wifi_start_as_sta(const char* ssid, const char* pswd) {
+void noda_wifi_start_as_sta(const char* ssid, const char* pswd) {
     s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_netif_init());
@@ -126,7 +129,7 @@ void wifi_start_as_sta(const char* ssid, const char* pswd) {
     sntp_start();
 }
 
-void wifi_stop(void) {
+void noda_wifi_stop(void) {
     esp_wifi_stop();
     esp_wifi_deinit();
 }

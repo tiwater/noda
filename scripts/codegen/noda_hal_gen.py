@@ -108,12 +108,12 @@ def gen_public_vars(item):
     _t = type_to_c_type(item[SCHEMA])
     return  _t + ' ' + _k[:4] + '_' + _i + ';'
 
-def gen_iot(cls_name, date_time, tmpl_dir, json_file):
+def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
     ''' 根据物模型json文件返回对应的物模型接口文件 '''
     import json
 
     raw = None
-    with open(json_file, 'r') as f:
+    with open(thingmodel, 'r') as f:
         raw = json.load(f)
 
     if not raw:
@@ -164,7 +164,7 @@ def gen_iot(cls_name, date_time, tmpl_dir, json_file):
                     TELEMETRY_TABS = tele_tabs,
                     PROPERTY_TABS = prop_tabs,
                     COMMAND_TABS = cmmd_tabs))
-    with open('ti_thingmodel.c', 'w') as f:
+    with open(to + '/ti_thingmodel.c', 'w') as f:
         f.writelines(dot_c_lines)
 
     dot_h_lines = []
@@ -176,12 +176,12 @@ def gen_iot(cls_name, date_time, tmpl_dir, json_file):
                     TELEMETRY_ENUM = tele_enum,
                     PROPERTY_ENUM = prop_enum,
                     COMMAND_ENUM = cmmd_enum))
-    with open('ti_thingmodel.h', 'w') as f:
+    with open(to + '/ti_thingmodel.h', 'w') as f:
         f.writelines(dot_h_lines)
 
     return public_vars
 
-def gen_hal(cls_name, date_time, tmpl_dir, private_vars='', public_vars=''):
+def gen_hal(cls_name, date_time, tmpl_dir, private_vars='', public_vars='', to='.'):
     cls_name_upper_case = cls_name.upper()
 
     prvs = private_vars.replace('; ', ';').strip()
@@ -198,7 +198,7 @@ def gen_hal(cls_name, date_time, tmpl_dir, private_vars='', public_vars=''):
                 CLS_NAME = cls_name,
                 CLS_NAME_UPPER_CASE = cls_name_upper_case,
                 CLS_MEMBER_VAR_LIST = prvs + puvs))
-    with open(r'%s.h' % cls_name, 'w') as f:
+    with open(r'%s/%s.h' % (to, cls_name), 'w') as f:
         f.writelines(dot_h_lines)
 
     regex = r'NODA_VAR.*,'
@@ -214,27 +214,28 @@ def gen_hal(cls_name, date_time, tmpl_dir, private_vars='', public_vars=''):
                 SYNC_FROM_CACHE = sync_from_cache,
                 POST_TO_CACHE = post_to_cache))
 
-    with open(r'%s.c' % cls_name, 'w') as f:
+    with open(r'%s/%s.c' % (to, cls_name), 'w') as f:
         f.writelines(dot_c_lines)
 
-def generate(name, private_vars='', public_vars='', json_file=''):
+def generate(name, private_vars='', public_vars='', thingmodel='', to='.'):
     if not name:
         raise Exception('类型名(--name)参数必须填写')
     date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     py_dir = os.path.dirname(os.path.abspath(__file__))
     tmpl_dir = py_dir + '/templates/'
 
-    if json_file:
-        public_vars += gen_iot(name, date_time, tmpl_dir, json_file)
+    if thingmodel:
+        public_vars += gen_iot(name, date_time, tmpl_dir, thingmodel, to)
 
     if private_vars or public_vars:
-        gen_hal(name, date_time, tmpl_dir, private_vars, public_vars)
+        gen_hal(name, date_time, tmpl_dir, private_vars, public_vars, to)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='noda_hal_gen')
     parser.add_argument('--name', type=str, help='class name')
     parser.add_argument('--private', type=str, default='', help='private vars')
     parser.add_argument('--public', type=str, default='', help='public vars')
-    parser.add_argument('--json', type=str, default='', help='iot json file')
+    parser.add_argument('--thingmodel', type=str, default='', help='the json file path of thing model')
+    parser.add_argument('--to', type=str, default='.', help='target directory')
     args = parser.parse_args()
-    generate(args.name, args.private, args.public, args.json)
+    generate(args.name, args.private, args.public, args.thingmodel, args.to)

@@ -1,4 +1,4 @@
-#include "noda_wifi.h"
+#include "noda/nil/wifi.h"
 #include "WiFi.h"
 #include "time.h"
 
@@ -20,7 +20,7 @@ static void sync_sntp(void) {
     }
 }
 
-void wifi_start_as_sta(const char* ssid, const char* pswd) {
+void noda_wifi_start_as_sta(const char* ssid, const char* pswd) {
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, pswd);
     while (WiFi.status() != WL_CONNECTED) {
@@ -30,6 +30,6 @@ void wifi_start_as_sta(const char* ssid, const char* pswd) {
     sync_sntp();
 }
 
-void wifi_stop(void) {
+void noda_wifi_stop(void) {
     WiFi.disconnect(true);
 }

@@ -7,8 +7,8 @@
 extern "C" {
 #endif
 
-void wifi_start_as_sta(const char* ssid, const char* pswd);
-void wifi_stop(void);
+void noda_wifi_start_as_sta(const char* ssid, const char* pswd);
+void noda_wifi_stop(void);
 
 #ifdef __cplusplus
 }

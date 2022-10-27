@@ -12,6 +12,13 @@ endif ()
 set (NODA_PLATFORM esp32)
 set (NODA_USE_FREERTOS TRUE)
 
+if (DEFINED ENV{TIOT_PATH})
+set (TIOT_SRC_DIR $ENV{TIOT_PATH}/src)
+else ()
+set (TIOT_SRC_DIR ${NODA_PATH}/../ticos-sdk-for-c-arduino/src)
+endif ()
+aux_source_directory (${TIOT_SRC_DIR}   TIOT_SRCS)
+
 aux_source_directory (${CMAKE_SOURCE_DIR}/main   PROJ_SRCS)
 
 include (${NODA_PATH}/scripts/cmake/noda.cmake)

@@ -48,6 +48,20 @@ $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda
 
 创建成功后，请将新生成的 .h 与 .c 文件直接复制到您的项目代码目录下，即可正常使用
 
+## 利用 noda_proj_gen.py 新建项目工程
+
+通过内含的 noda_proj_gen.py 脚本，用户可以新建开箱即用的项目工程，以下为例子：
+
+```bash
+$ cd ${noda项目根目录}/scripts/codegen
+$ python noda_proj_gen.py --help #查看脚本命令描述
+$ python -B noda_proj_gen.py --name="my_noda_project" --platform="unix"
+$ cd my_noda_project
+$ cmake -B build
+$ cd build
+$ make
+```
+
 ## 项目编译与运行
 
 ### unix
