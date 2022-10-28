@@ -1,10 +1,10 @@
-/*************************************************************************
-  * @file silan_sc7a20
-  * @brief 设备接口实现
-  * @author
-  * @date 2022-10-24 16:56:15
-  * @copyright
-  ************************************************************************/
+/************************************************************************
+ * @file silan_sc7a20
+ * @brief 设备接口实现
+ * @author
+ * @date 2022-10-24 16:56:15
+ * @copyright
+ ************************************************************************/
 
 #include "silan_sc7a20.h"
 #include "noda/bus_center.h"
@@ -107,12 +107,12 @@ static float sb2accel(uint8_t msb, uint8_t lsb, uint8_t range) {
     return temp * range * 1000.0 / 2048;
 }
 
-/*************************************************************************
-  * @fn silan_sc7a20_open
-  * @brief 必须实现的类成员函数，负责设备“打开”操作，
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn silan_sc7a20_open
+ * @brief 必须实现的类成员函数，负责设备“打开”操作，
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int silan_sc7a20_open(silan_sc7a20_t* self) {
     if (noda_bus_opened(self->bus)) {
         if (!self->opened) {
@@ -135,25 +135,25 @@ int silan_sc7a20_open(silan_sc7a20_t* self) {
     return self->opened ? NODA_OK : NODA_FAIL;
 }
 
-/*************************************************************************
-  * @fn silan_sc7a20_close
-  * @brief 必须实现的类成员函数，负责设备“关闭”操作，
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn silan_sc7a20_close
+ * @brief 必须实现的类成员函数，负责设备“关闭”操作，
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int silan_sc7a20_close(silan_sc7a20_t* self) {
     // TODO
     self->opened = false;
     return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn silan_sc7a20_power_mode_changed
-  * @brief 必须实现的类成员函数，系统改变“电源模式”时被动触发，
-  * @param[in] self 类实例
-  * @param[in] mode 更改后的电源模式
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn silan_sc7a20_power_mode_changed
+ * @brief 必须实现的类成员函数，系统改变“电源模式”时被动触发，
+ * @param[in] self 类实例
+ * @param[in] mode 更改后的电源模式
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int silan_sc7a20_power_mode_changed(silan_sc7a20_t* self, noda_power_mode_t mode) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
@@ -161,13 +161,13 @@ int silan_sc7a20_power_mode_changed(silan_sc7a20_t* self, noda_power_mode_t mode
     return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn silan_sc7a20_sync_from_cache
-  * @brief 必须实现的类成员函数，负责设备数据从缓存复制到应用层的复制操作
-  * @attention 此函数为自动生成，请不要更改函数内容
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn silan_sc7a20_sync_from_cache
+ * @brief 必须实现的类成员函数，负责设备数据从缓存复制到应用层的复制操作
+ * @attention 此函数为自动生成，请不要更改函数内容
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int silan_sc7a20_sync_from_cache(silan_sc7a20_t* self) {
     noda_sync_from_cache(self, x);
     noda_sync_from_cache(self, y);
@@ -175,13 +175,13 @@ int silan_sc7a20_sync_from_cache(silan_sc7a20_t* self) {
     return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn silan_sc7a20_post_to_cache
-  * @brief 必须实现的类成员函数，负责设备数据从应用层到缓存的复制操作
-  * @attention 此函数为自动生成，请不要更改函数内容
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn silan_sc7a20_post_to_cache
+ * @brief 必须实现的类成员函数，负责设备数据从应用层到缓存的复制操作
+ * @attention 此函数为自动生成，请不要更改函数内容
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int silan_sc7a20_post_to_cache(silan_sc7a20_t* self) {
     noda_post_to_cache(self, x);
     noda_post_to_cache(self, y);
@@ -189,12 +189,12 @@ int silan_sc7a20_post_to_cache(silan_sc7a20_t* self) {
     return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn silan_sc7a20_sync_cache_from_dev
-  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn silan_sc7a20_sync_cache_from_dev
+ * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int silan_sc7a20_sync_cache_from_dev(silan_sc7a20_t* self) {
     uint8_t buf[6] = { 0 };
     uint8_t range = SILAN_SC7A20_RANGE_4G;
@@ -211,12 +211,12 @@ int silan_sc7a20_sync_cache_from_dev(silan_sc7a20_t* self) {
     return err;
 }
 
-/*************************************************************************
-  * @fn silan_sc7a20_post_cache_to_dev
-  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn silan_sc7a20_post_cache_to_dev
+ * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int silan_sc7a20_post_cache_to_dev(silan_sc7a20_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED调用 */
     NODA_UNUSED(self);

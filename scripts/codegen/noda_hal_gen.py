@@ -102,7 +102,8 @@ def gen_enum(item):
     _i = item[NAME]
     return '\n    TICOS_' + _k + '_' + _i + ','
 
-def gen_public_vars(item):
+def gen_puvs(item):
+    ''' 根据物模型json文件返回对应的成员变量 '''
     _k = item[TYPE]
     _i = item[NAME]
     _t = type_to_c_type(item[SCHEMA])
@@ -113,11 +114,14 @@ def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
     import json
 
     raw = None
-    with open(thingmodel, 'r') as f:
-        raw = json.load(f)
+    if thingmodel.endswith('.json'):
+        with open(thingmodel, 'r') as f:
+            raw = json.load(f)
+    else:
+        raw = json.loads(thingmodel)
 
     if not raw:
-        raise Exception('物模型文件异常')
+        raise Exception('物模型解析异常')
 
     func_decs = ''
     tele_enum = ''
@@ -129,7 +133,7 @@ def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
     prop_tabs = ''
     cmmd_tabs = ''
 
-    public_vars = ''
+    puvs = ''
 
     for item in raw[0]['contents']:
         item[TYPE] = item[TYPE].lower()
@@ -149,7 +153,7 @@ def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
             func_defs += gen_func_defs(item, cls_name, False, True)
             cmmd_tabs += gen_table(item, False, True)
             cmmd_enum += gen_enum(item)
-        public_vars += gen_public_vars(item)
+        puvs += gen_puvs(item)
     tele_enum += gen_enum({ TYPE:TELE, NAME:'MAX'}) + '\n'
     prop_enum += gen_enum({ TYPE:PROP, NAME:'MAX'}) + '\n'
     cmmd_enum += gen_enum({ TYPE:CMMD, NAME:'MAX'}) + '\n'
@@ -179,16 +183,15 @@ def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
     with open(to + '/ticos_thingmodel.h', 'w') as f:
         f.writelines(dot_h_lines)
 
-    return public_vars
+    return puvs
 
-def gen_hal(cls_name, date_time, tmpl_dir, private_vars='', public_vars='', to='.'):
+def gen_hal(cls_name, date_time, tmpl_dir, prvs='', puvs='',
+            inc_list='', on_open='', on_close='', from_dev='', to_dev='',
+            to='.'):
     cls_name_upper_case = cls_name.upper()
 
-    prvs = private_vars.replace('; ', ';').strip()
-    prvs = '' if not prvs else '    ' + prvs.replace(';', ';\n    ')[:-4]
-    puvs = public_vars.replace('; ', ';').strip()
-    puvs = puvs.replace(' ', ', ')
-    puvs = '' if not puvs else '    NODA_VAR(' + puvs.replace(';', ');\n    NODA_VAR(')[:-14]
+    prvs = re.sub(r'(.*?);', r'    \1;\n', prvs)
+    puvs = re.sub(r'(.*?) (\w+);', r'    NODA_VAR(\1, \2);\n', puvs)
 
     dot_h_lines = []
     with open(tmpl_dir + 'dev_h', 'r') as f:
@@ -202,40 +205,75 @@ def gen_hal(cls_name, date_time, tmpl_dir, private_vars='', public_vars='', to='
         f.writelines(dot_h_lines)
 
     regex = r'NODA_VAR.*,'
-    sync_from_cache = re.sub(regex, 'noda_sync_from_cache(self,', puvs)
-    post_to_cache = re.sub(regex, 'noda_post_to_cache(self,', puvs)
+    from_cache = re.sub(regex, 'noda_sync_from_cache(self,', puvs)
+    to_cache = re.sub(regex, 'noda_post_to_cache(self,', puvs)
 
     dot_c_lines = []
     with open(tmpl_dir + 'dev_c', 'r') as f:
         tmpl = Template(f.read())
         dot_c_lines.append(tmpl.substitute(
-                DATE_TIME = date_time,
-                CLS_NAME = cls_name,
-                SYNC_FROM_CACHE = sync_from_cache,
-                POST_TO_CACHE = post_to_cache))
+                DATE_TIME   = date_time,
+                CLS_NAME    = cls_name,
+                INC_LIST    = inc_list,
+                ON_OPEN     = on_open,
+                ON_CLOSE    = on_close,
+                FROM_CACHE  = from_cache,
+                TO_CACHE    = to_cache,
+                FROM_DEV    = from_dev,
+                TO_DEV      = to_dev))
 
     with open(r'%s/%s.c' % (to, cls_name), 'w') as f:
         f.writelines(dot_c_lines)
 
-def generate(name, private_vars='', public_vars='', thingmodel='', to='.'):
+def generate(name, private='', public='', thingmodel='', to='.'):
     if not name:
         raise Exception('类型名(--name)参数必须填写')
     date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     py_dir = os.path.dirname(os.path.abspath(__file__))
     tmpl_dir = py_dir + '/templates/'
 
-    if thingmodel:
-        public_vars += gen_iot(name, date_time, tmpl_dir, thingmodel, to)
+    prvs        = private
+    puvs        = public
 
-    if private_vars or public_vars:
-        gen_hal(name, date_time, tmpl_dir, private_vars, public_vars, to)
+    inc_list    = ''
+    on_open     = '    NODA_UNUSED(self);\n'
+    on_close    = '    NODA_UNUSED(self);\n'
+    from_dev    = '    NODA_UNUSED(self);\n'
+    to_dev      = '    NODA_UNUSED(self);\n'
+    dirty_cond  = ''
+
+    if thingmodel:
+        iot_puvs = gen_iot(name, date_time, tmpl_dir, thingmodel, to)
+        if iot_puvs:
+            dirty_cond = re.sub('.*? (\w+);', r'noda_cache_isdirty(self, \1)\n     || ', iot_puvs)[:-9]
+            puvs += iot_puvs
+    prvs = prvs.replace('; ', ';').strip()
+    puvs = puvs.replace('; ', ';').strip()
+    if thingmodel:
+        # FIXME 临时填充，后继应该以更优雅方式自动填充
+        inc_list  = '#include <noda/nil/wifi.h>\n' \
+                    '#include <ticos_api.h>\n'
+        on_open   = '    noda_wifi_start_as_sta(self->ssid, self->pswd);\n' \
+                    '    ticos_cloud_start(self->pid, self->did, self->skey);\n'
+        on_close += '    ticos_cloud_stop();\n' \
+                    '    noda_wifi_stop();\n'
+        from_dev  = '' if not puvs else \
+                    '    if (%s) {\n' \
+                    '        ticos_property_report();\n' \
+                    '    }\n' \
+                    % (dirty_cond)
+
+    if prvs or puvs:
+        gen_hal(name, date_time, tmpl_dir, prvs, puvs,
+                inc_list, on_open, on_close, to_dev, from_dev,
+                to)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='noda_hal_gen')
     parser.add_argument('--name', type=str, help='class name')
     parser.add_argument('--private', type=str, default='', help='private vars')
     parser.add_argument('--public', type=str, default='', help='public vars')
-    parser.add_argument('--thingmodel', type=str, default='', help='the json file path of thing model')
+    parser.add_argument('--thingmodel', type=str, default='', help='json file|data of thing model')
     parser.add_argument('--to', type=str, default='.', help='target directory')
     args = parser.parse_args()
     generate(args.name, args.private, args.public, args.thingmodel, args.to)

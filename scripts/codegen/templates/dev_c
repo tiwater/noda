@@ -1,44 +1,40 @@
-/*************************************************************************
-  * @file ${CLS_NAME}
-  * @brief 设备接口实现
-  * @author
-  * @date ${DATE_TIME}
-  * @copyright
-  ************************************************************************/
+/************************************************************************
+ * @file ${CLS_NAME}
+ * @brief 设备接口实现
+ * @author
+ * @date ${DATE_TIME}
+ * @copyright
+ ************************************************************************/
 
 #include "${CLS_NAME}.h"
-
-/*************************************************************************
-  * @fn ${CLS_NAME}_open
-  * @brief 必须实现的类成员函数，负责设备“打开”操作，
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+${INC_LIST}
+/************************************************************************
+ * @fn ${CLS_NAME}_open
+ * @brief 必须实现的类成员函数，负责设备“打开”操作，
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int ${CLS_NAME}_open(${CLS_NAME}_t* self) {
-    /* 填充代码内容后请删除NODA_UNUSED函数调用 */
-    NODA_UNUSED(self);
-    return NODA_OK;
+${ON_OPEN}    return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn ${CLS_NAME}_close
-  * @brief 必须实现的类成员函数，负责设备“关闭”操作，
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn ${CLS_NAME}_close
+ * @brief 必须实现的类成员函数，负责设备“关闭”操作，
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int ${CLS_NAME}_close(${CLS_NAME}_t* self) {
-    /* 填充代码内容后请删除NODA_UNUSED函数调用 */
-    NODA_UNUSED(self);
-    return NODA_OK;
+${ON_CLOSE}    return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn ${CLS_NAME}_power_mode_changed
-  * @brief 必须实现的类成员函数，系统改变“电源模式”时被动触发，
-  * @param[in] self 类实例
-  * @param[in] mode 更改后的电源模式
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn ${CLS_NAME}_power_mode_changed
+ * @brief 必须实现的类成员函数，系统改变“电源模式”时被动触发，
+ * @param[in] self 类实例
+ * @param[in] mode 更改后的电源模式
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, noda_power_mode_t mode) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
@@ -46,58 +42,44 @@ int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, noda_power_mode_t mode) 
     return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn ${CLS_NAME}_sync_from_cache
-  * @brief 必须实现的类成员函数，负责设备数据从缓存复制到应用层的复制操作
-  * @attention 此函数为自动生成，请不要更改函数内容
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn ${CLS_NAME}_sync_from_cache
+ * @brief 必须实现的类成员函数，负责设备数据从缓存复制到应用层的复制操作
+ * @attention 此函数为自动生成，请不要更改函数内容
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int ${CLS_NAME}_sync_from_cache(${CLS_NAME}_t* self) {
-${SYNC_FROM_CACHE}
-    return NODA_OK;
+${FROM_CACHE}    return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn ${CLS_NAME}_post_to_cache
-  * @brief 必须实现的类成员函数，负责设备数据从应用层到缓存的复制操作
-  * @attention 此函数为自动生成，请不要更改函数内容
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn ${CLS_NAME}_post_to_cache
+ * @brief 必须实现的类成员函数，负责设备数据从应用层到缓存的复制操作
+ * @attention 此函数为自动生成，请不要更改函数内容
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int ${CLS_NAME}_post_to_cache(${CLS_NAME}_t* self) {
-${POST_TO_CACHE}
-    return NODA_OK;
+${TO_CACHE}    return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn ${CLS_NAME}_sync_cache_from_dev
-  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn ${CLS_NAME}_sync_cache_from_dev
+ * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int ${CLS_NAME}_sync_cache_from_dev(${CLS_NAME}_t* self) {
-    /* 填充代码内容后请删除NODA_UNUSED调用 */
-    NODA_UNUSED(self);
-    // 用法用例
-    // bool lv = true;
-    // noda_cache_set(self, level, lv); // 填充设备数据到相应缓存区
-    return NODA_OK;
+${FROM_DEV}    return NODA_OK;
 }
 
-/*************************************************************************
-  * @fn ${CLS_NAME}_post_cache_to_dev
-  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
-  * @param[in] self 类实例
-  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
-  ************************************************************************/
+/************************************************************************
+ * @fn ${CLS_NAME}_post_cache_to_dev
+ * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
+ * @param[in] self 类实例
+ * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ ************************************************************************/
 int ${CLS_NAME}_post_cache_to_dev(${CLS_NAME}_t* self) {
-    /* 填充代码内容后请删除NODA_UNUSED调用 */
-    NODA_UNUSED(self);
-    // 用法用例
-    // if (noda_cacheisdirty(self, level)) {  // 检查缓存数值已经被应用层更新
-    //    bool level = noda_cache_get(self, level); // 从缓存获取数值
-    //    noda_logd("%s level update to %d", self->name, level); // 提交到设备
-    // }
-    return NODA_OK;
+${TO_DEV}    return NODA_OK;
 }

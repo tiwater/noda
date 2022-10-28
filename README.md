@@ -3,25 +3,33 @@ Ticos IoT Framework
 
 本框架提供快速接入 Ticos Cloud 的脚手架工程。
 
-## 快速上手
+## 工具链安装
 
 ### Arduino
 
   1. Arduino IDE 安装
      - 在 Arduino IDE 中, 选择菜单 `项目`, `加载库`, `管理库...`。
-     - 搜索并安装 `Ticos IoT Framework`。 (当前库还未过审，请参考下面步骤手动安装)
+     - 搜索并安装 `Ticos Framework`。 (当前库还未过审，请参考下面步骤手动安装)
   2. 手动安装
-     - 将本 [Ticos IoT Framework](https://github.com/tiwater/noda) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
+     - 将本 [Ticos Framework](https://github.com/tiwater/noda) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
 
 ### ESP32-IDF
 
-     - 将本 [Ticos IoT Framework](https://github.com/tiwater/noda) 克隆至你的本地开发环境。
+     - 将本 [Ticos Framework](https://github.com/tiwater/noda) 克隆至你的本地开发环境。
 
 ## 脚手架工程创建
 
-脚本施工中 ... ...
+以下为使用arduino-cli的编译及运行示例，使用Arduino IDE的开发者请直接打开项目
+注意：项目生成后请打开ino文件填写产品ID等必要的设备信息
 
-请先参考[例程](#项目编译与运行)尝鲜。
+```bash
+$ cd ${noda项目根目录}/scripts/codegen                          # 此步骤非必要，仅为后继命令长度短一点
+$ python3 -B create_noda_project_with_ticos.py --name='hello_ticos' --thingmodel='templates/thing_model.json'
+                                                                # --help 查看更多配置项
+$ arduino-cli compile --fqbn esp32:esp32:esp32s3 hello_ticos    # 编译工程，请根据实际版型填写--fqbn参数
+$ arduino-cli upload --fqbn esp32:esp32:esp32s3 hello_ticos     # 向/dev/ttyACM0端口烧录固件
+$ arduino-cli monitor -p /dev/ttyACM0                           # 打开/dev/ttyACM0端口查看固件的打印信息
+```
 
 ## 利用 noda_hal_gen.py 创建 IOT 物模型代码模板文件(.h, .c)
 
