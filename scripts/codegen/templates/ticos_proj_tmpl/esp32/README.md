@@ -3,6 +3,7 @@ Ticos-SDK 项目模板 for esp-idf
 
 ## 编译环境搭建
 
+  1. ESP-IDF
 如果已经安装esp-idf工具，请跳过此步骤；否则，请先安装esp-idf工具：
 注：本例程需要esp-idf更新到最新主线(>=5.0dev)
 
@@ -12,6 +13,8 @@ $ cd esp-idf
 $ . ./install.sh                            # 安装工具链，本步骤仅需要执行一次
 $ . ./export.sh                             # 在本终端建立工具链运行环境，每个新建终端都需要执行一次
 ```
+  2. 将 [Ticos Framework](https://github.com/tiwater/noda) 克隆至你的本地，并添加环境变量NODA_PATH，将变量值配置为此目录
+  3. 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至你的本地，并添加环境变量TICOS_PATH，将变量值配置为此目录
 
 ## 编译 & 运行
 
