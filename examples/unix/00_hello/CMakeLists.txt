@@ -5,7 +5,7 @@ project (00_hello)
 set (CMAKE_C_STANDARD 11)
 add_definitions (-Wall -Werror -Wextra -Wstrict-prototypes)
 
-if (NOT DEFINED ENV{NODA_PATH})
+if (DEFINED ENV{NODA_PATH})
 set (NODA_PATH $ENV{NODA_PATH})
 else ()
 set (NODA_PATH ${CMAKE_SOURCE_DIR}/../../..)

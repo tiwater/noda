@@ -3,25 +3,43 @@ Ticos IoT Framework
 
 本框架提供快速接入 Ticos Cloud 的脚手架工程。
 
-## 快速上手
+## 工具链安装
 
 ### Arduino
 
   1. Arduino IDE 安装
      - 在 Arduino IDE 中, 选择菜单 `项目`, `加载库`, `管理库...`。
-     - 搜索并安装 `Ticos IoT Framework`。 (当前库还未过审，请参考下面步骤手动安装)
+     - 搜索并安装 `Ticos Framework`。 (当前库还未过审，请参考下面步骤手动安装)
   2. 手动安装
-     - 将本 [Ticos IoT Framework](https://github.com/tiwater/noda) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
+     - 将 [Ticos Framework](https://github.com/tiwater/noda) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
+     - 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
 
-### ESP32-IDF
+### ESP-IDF
 
-     - 将本 [Ticos IoT Framework](https://github.com/tiwater/noda) 克隆至你的本地开发环境。
+  1. ESP-IDF 安装
+
+```bash
+$ git clone https://github.com/espressif/esp-idf
+$ cd esp-idf
+$ . ./install.sh                            # 安装工具链，本步骤仅需要执行一次
+$ . ./export.sh                             # 在本终端建立工具链运行环境，每个新建终端都需要执行一次
+```
+  2. 将 [Ticos Framework](https://github.com/tiwater/noda) 克隆至你的本地，并添加环境变量NODA_PATH，将变量值配置为此目录
+  3. 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至你的本地，并添加环境变量TICOS_PATH，将变量值配置为此目录
 
 ## 脚手架工程创建
 
-脚本施工中 ... ...
+以下为使用arduino-cli的编译及运行示例，使用Arduino IDE的开发者请直接打开项目
+注意：项目生成后请打开ino文件填写产品ID等必要的设备信息
 
-请先参考[例程](#项目编译与运行)尝鲜。
+```bash
+$ cd ${noda项目根目录}/scripts/codegen                          # 此步骤非必要，仅为后继命令长度短一点
+$ python3 -B create_ticos_proj.py --help                        # 查看完整配置项
+$ python3 -B create_ticos_proj.py --name='hello_ticos' --thingmodel='templates/thing_model.json'
+$ arduino-cli compile --fqbn esp32:esp32:esp32s3 hello_ticos    # 编译工程，请根据实际版型填写--fqbn参数
+$ arduino-cli upload --fqbn esp32:esp32:esp32s3 hello_ticos     # 向/dev/ttyACM0端口烧录固件
+$ arduino-cli monitor -p /dev/ttyACM0                           # 打开/dev/ttyACM0端口查看固件的打印信息
+```
 
 ## 利用 noda_hal_gen.py 创建 IOT 物模型代码模板文件(.h, .c)
 
@@ -29,8 +47,8 @@ Ticos IoT Framework
 
 ```bash
 $ cd ${noda项目根目录}/scripts/codegen
-$ python noda_hal_gen.py --help #查看脚本命令描述
-$ python noda_hal_gen.py --name="noda_iot" --private="uint32_t pid;uint32_t did; uint32_t skey;" --json='templates/thing_model.json'
+$ python3 noda_hal_gen.py --help #查看脚本命令描述
+$ python3 noda_hal_gen.py --name="noda_iot" --private="uint32_t pid;uint32_t did; uint32_t skey;" --json='templates/thing_model.json'
 ```
 
 创建成功后，请将新生成的 .h 与 .c 文件直接复制到您的项目代码目录下，即可正常使用
@@ -42,8 +60,8 @@ $ python noda_hal_gen.py --name="noda_iot" --private="uint32_t pid;uint32_t did;
 
 ```bash
 $ cd ${noda项目根目录}/scripts/codegen
-$ python noda_hal_gen.py --help #查看脚本命令描述
-$ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda; uint8_t addr; uint8_t freq;" --public="float x; float y; float z;"
+$ python3 noda_hal_gen.py --help #查看脚本命令描述
+$ python3 noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda; uint8_t addr; uint8_t freq;" --public="float x; float y; float z;"
 ```
 
 创建成功后，请将新生成的 .h 与 .c 文件直接复制到您的项目代码目录下，即可正常使用
@@ -54,8 +72,8 @@ $ python noda_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda
 
 ```bash
 $ cd ${noda项目根目录}/scripts/codegen
-$ python noda_proj_gen.py --help #查看脚本命令描述
-$ python -B noda_proj_gen.py --name="my_noda_project" --platform="unix"
+$ python3 noda_proj_gen.py --help #查看脚本命令描述
+$ python3 -B noda_proj_gen.py --name="my_noda_project" --platform="unix"
 $ cd my_noda_project
 $ cmake -B build
 $ cd build
@@ -79,15 +97,6 @@ $ ./00_hello
 
 ### esp32
 
-如果已经安装 esp-idf 工具，请跳过此步骤；否则，请先安装 esp-idf 工具：
-
-```bash
-$ git clone https://github.com/espressif/esp-idf
-$ cd esp-idf
-$ . ./install.sh                            # 安装工具链，本步骤仅需要执行一次
-$ . ./export.sh                             # 在本终端建立工具链运行环境，每个新建终端都需要执行一次
-```
-
 以 noda 项目目录下 examples/esp32/00_hello 例程为例：
 
 ```bash
@@ -102,12 +111,6 @@ $ idf.py monitor -p /dev/ttyACM0 -b 115200  # 以 115200 的波特率打开 /dev
 
 ### arduino
 
-如果已经安装arduino-cli或arduino-ide，请跳过此步骤；否则，请先安装两者其中之一：
-
-```bash
-$                                           # 施工中 ... ...
-```
-
 以noda项目目录下examples/arduino/00_hello例程为例：
 注：以下为使用arduino-cli的编译及运行示例，使用arduino-ide的开发者请直接打开项目examples/arduino内例程即可
 
@@ -118,5 +121,3 @@ $ arduino-cli compile --fqbn esp32:esp32:esp32s3 00_hello   # 编译00_hello工�
 $ arduino-cli upload --fqbn esp32:esp32:esp32s3 00_hello    # 向/dev/ttyACM0端口烧录固件
 $ arduino-cli monitor -p /dev/ttyACM0                       # 打开/dev/ttyACM0端口查看固件的打印信息
 ```
-
-施工中 ... ...

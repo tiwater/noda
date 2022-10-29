@@ -7,6 +7,7 @@
 extern "C" {
 #endif
 
+extern void noda_register_onexit(int (*onexit) (void));
 extern int noda_onboot_internal(void);
 extern int noda_onloop(void);
 

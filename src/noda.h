@@ -14,6 +14,8 @@
 extern "C" {
 #endif
 
+void noda_register_onexit(int (*onexit) (void));
+
 #define noda_onboot \
     noda_onboot_internal(void); \
     uint8_t noda_bus_center_nbus(void) { return NODA_NBUS; } \
