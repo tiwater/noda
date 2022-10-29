@@ -12,12 +12,12 @@ endif ()
 set (NODA_PLATFORM esp32)
 set (NODA_USE_FREERTOS TRUE)
 
-if (DEFINED ENV{TICOS_PATH})
-set (TICOS_SRC_DIR $ENV{TICOS_PATH}/src)
+if (DEFINED ENV{TICOS_SDK_PATH})
+set (TICOS_SDK_SRC_PATH $ENV{TICOS_SDK_PATH}/src)
 else ()
-set (TICOS_SRC_DIR ${NODA_PATH}/../ticos-sdk-for-c/src)
+set (TICOS_SDK_SRC_PATH ${NODA_PATH}/../ticos-sdk-for-c/src)
 endif ()
-aux_source_directory (${TICOS_SRC_DIR}   TICOS_SRCS)
+aux_source_directory (${TICOS_SDK_SRC_PATH}   TICOS_SRCS)
 
 aux_source_directory (${CMAKE_SOURCE_DIR}/main   PROJ_SRCS)
 
