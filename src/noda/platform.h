@@ -3,6 +3,7 @@
 
 #include "noda/common.h"
 #include "noda/internal.h"
+#include <Arduino.h>
 
 void setup(void) {
     noda_boot();
