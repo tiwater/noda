@@ -5,9 +5,9 @@
 #include "noda/internal.h"
 
 void app_main(void) {
-    noda_err_t rt = noda_boot();
+    ticos_err_t rt = ticos_boot();
     if (NODA_OK == rt) {
-        while (noda_loop() == NODA_OK);
+        while (ticos_loop() == NODA_OK);
     }
 }
 

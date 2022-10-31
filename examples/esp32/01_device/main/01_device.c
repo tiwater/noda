@@ -1,5 +1,5 @@
 /************************************************************************
- * 设置noda_onloop函数触发间隔，若不设置，则默认为200毫秒
+ * 设置ticos_onloop函数触发间隔，若不设置，则默认为200毫秒
  ************************************************************************/
 #define NODA_HEARTBEAT_MILLIS 250
 
@@ -27,22 +27,22 @@ NODA_DEV_ID_END
 /************************************************************************
  * 生命周期函数，负责系统启动后的自定义初始化工作
  ************************************************************************/
-int noda_onboot(void) {
-    NODA_DEV_ADD(DEV_IO1, noda_gpio, .pin=1, .mode=NODA_GPIO_MODE_INPUT);
-    NODA_DEV_ADD(DEV_IO3, noda_gpio, .pin=3, .mode=NODA_GPIO_MODE_OUTPUT);
+int ticos_onboot(void) {
+    NODA_DEV_ADD(DEV_IO1, ticos_gpio, .pin=1, .mode=NODA_GPIO_MODE_INPUT);
+    NODA_DEV_ADD(DEV_IO3, ticos_gpio, .pin=3, .mode=NODA_GPIO_MODE_OUTPUT);
     return NODA_OK;
 }
 
 /************************************************************************
  * 生命周期函数，按照一定时间间隔(NODA_HEARTBEAT_MILLIS)触发
  ************************************************************************/
-int noda_onloop(void) {
+int ticos_onloop(void) {
     // 检查DEV_IO1设备缓存中的level值是否已被更新
-    noda_gpio_t* io_1 = noda_dev(DEV_IO1, noda_gpio);
-    if (noda_isdirty(io_1, level)) {
-        bool level = noda_get(io_1, level);
+    ticos_gpio_t* io_1 = ticos_dev(DEV_IO1, ticos_gpio);
+    if (ticos_isdirty(io_1, level)) {
+        bool level = ticos_get(io_1, level);
         // 当DEV_IO1电平变化时将DEV_IO3设置为反相
-        noda_dev_setval(DEV_IO3, noda_gpio, level, !level);
+        ticos_dev_setval(DEV_IO3, ticos_gpio, level, !level);
     }
     return NODA_OK;
 }

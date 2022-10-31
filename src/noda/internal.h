@@ -7,13 +7,13 @@
 extern "C" {
 #endif
 
-extern void noda_register_onexit(int (*onexit) (void));
-extern int noda_onboot_internal(void);
-extern int noda_onloop(void);
+extern void ticos_register_onexit(int (*onexit) (void));
+extern int ticos_onboot_internal(void);
+extern int ticos_onloop(void);
 
-int noda_boot(void);
-int noda_loop_internal(clock_t millis);
-#define noda_loop() noda_loop_internal(NODA_HEARTBEAT_MILLIS)
+int ticos_boot(void);
+int ticos_loop_internal(clock_t millis);
+#define ticos_loop() ticos_loop_internal(NODA_HEARTBEAT_MILLIS)
 
 #ifdef __cplusplus
 }

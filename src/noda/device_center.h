@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 #define NODA_DEV_ID_BEGIN \
-    enum noda_device_id_t {
+    enum ticos_device_id_t {
 
 #define NODA_DEV_ID_END \
     NODA_NDEV, \
@@ -20,32 +20,32 @@ extern "C" {
         static dev##_t dev##_id = { \
             NODA_DEV_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ \
         }; \
-        noda_device_list[_id] = (noda_device_t*)&dev##_id; \
+        ticos_device_list[_id] = (ticos_device_t*)&dev##_id; \
     } while (0)
 
-int noda_device_center_startup(void);
-int noda_device_center_cleanup(void);
-int noda_device_center_sync(void);
-int noda_device_center_post(void);
-int noda_device_center_dump(void);
-uint8_t noda_device_center_ndev(void);
+int ticos_device_center_startup(void);
+int ticos_device_center_cleanup(void);
+int ticos_device_center_sync(void);
+int ticos_device_center_post(void);
+int ticos_device_center_dump(void);
+uint8_t ticos_device_center_ndev(void);
 
-extern noda_device_t* noda_device_list[];
+extern ticos_device_t* ticos_device_list[];
 
-#define noda_dev(id, type)    \
-    ((type##_t*)(noda_device_list[id]))
+#define ticos_dev(id, type)    \
+    ((type##_t*)(ticos_device_list[id]))
 
-#define noda_dev_name(id)        \
-    (noda_device_list[id]->name)
+#define ticos_dev_name(id)        \
+    (ticos_device_list[id]->name)
 
-#define noda_dev_isdirty(id, type, var)   \
-    (((type##_t*) noda_device_list[id])->_##var##_dirty)
+#define ticos_dev_isdirty(id, type, var)   \
+    (((type##_t*) ticos_device_list[id])->_##var##_dirty)
 
-#define noda_dev_getval(id, type, var)  \
-    (((type##_t*) noda_device_list[id])->_##var##_var)
+#define ticos_dev_getval(id, type, var)  \
+    (((type##_t*) ticos_device_list[id])->_##var##_var)
 
-#define noda_dev_setval(id, type, var, val) \
-    (((type##_t*) noda_device_list[id])->_##var##_var = val)
+#define ticos_dev_setval(id, type, var, val) \
+    (((type##_t*) ticos_device_list[id])->_##var##_var = val)
 
 #ifdef __cplusplus
 }

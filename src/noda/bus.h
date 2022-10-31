@@ -33,9 +33,9 @@ extern "C" {
 
 #define NODA_BUS_CLASS_END() }
 
-typedef struct noda_bus_t {
-    NODA_BUS_VTABLE(noda_bus_t);
-} noda_bus_t;
+typedef struct ticos_bus_t {
+    NODA_BUS_VTABLE(ticos_bus_t);
+} ticos_bus_t;
 
 #ifdef __cplusplus
 }

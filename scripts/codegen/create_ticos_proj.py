@@ -1,10 +1,10 @@
 # coding=utf-8
 import os, sys, shutil, argparse
 
-from noda_hal_gen import generate as hal_generator
+from ticos_hal_gen import generate as hal_generator
 
 MAIN_C  = 'tmpl_main'
-DEVNAME = 'noda_iot'
+DEVNAME = 'ticos_iot'
 PRIVATE = 'const char* ssid;' \
           'const char* pswd;' \
           'const char* fqdn;' \

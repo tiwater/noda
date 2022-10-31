@@ -7,19 +7,19 @@
 extern "C" {
 #endif
 
-struct noda_task_t;
-typedef struct noda_task_t noda_task_t;
+struct ticos_task_t;
+typedef struct ticos_task_t ticos_task_t;
 
-typedef void* (*noda_task_runner_t) (struct noda_task_t* task);
+typedef void* (*ticos_task_runner_t) (struct ticos_task_t* task);
 
-struct noda_task_t {
-    noda_task_runner_t runner;
+struct ticos_task_t {
+    ticos_task_runner_t runner;
     volatile bool running;
 };
 
-noda_task_t* noda_task_create(const char* name, noda_task_runner_t runner);
-void noda_task_destroy(noda_task_t* task);
-#define noda_task_running(task)     ((task) ? (task)->running : false)
+ticos_task_t* ticos_task_create(const char* name, ticos_task_runner_t runner);
+void ticos_task_destroy(ticos_task_t* task);
+#define ticos_task_running(task)     ((task) ? (task)->running : false)
 
 #ifdef __cplusplus
 }

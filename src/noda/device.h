@@ -10,7 +10,7 @@ extern "C" {
 #define NODA_DEV_VTABLE(cls) \
     int (*open) (struct cls* self); \
     int (*close) (struct cls* self); \
-    int (*power_mode_changed) (struct cls* self, noda_power_mode_t mode); \
+    int (*power_mode_changed) (struct cls* self, ticos_power_mode_t mode); \
     int (*sync_from_cache) (struct cls* self); \
     int (*post_to_cache) (struct cls* self); \
     int (*sync_cache_from_dev) (struct cls* self); \
@@ -32,7 +32,7 @@ extern "C" {
     typedef struct cls##_t cls##_t; \
     int cls##_open(cls##_t* self); \
     int cls##_close(cls##_t* self); \
-    int cls##_power_mode_changed(cls##_t* self, noda_power_mode_t mode); \
+    int cls##_power_mode_changed(cls##_t* self, ticos_power_mode_t mode); \
     int cls##_sync_from_cache(cls##_t* self); \
     int cls##_post_to_cache(cls##_t* self); \
     int cls##_sync_cache_from_dev(cls##_t* self); \
@@ -44,11 +44,11 @@ extern "C" {
 
 typedef enum {
     NODA_POWER_MODE_UNKNOWN,
-} noda_power_mode_t;
+} ticos_power_mode_t;
 
-typedef struct noda_device_t {
-    NODA_DEV_VTABLE(noda_device_t);
-} noda_device_t;
+typedef struct ticos_device_t {
+    NODA_DEV_VTABLE(ticos_device_t);
+} ticos_device_t;
 
 #define NODA_VAR(type, v)       \
     type _##v##_var;            \
@@ -56,37 +56,37 @@ typedef struct noda_device_t {
     bool _##v##_dirty;          \
     bool _##v##_cache_dirty
 
-#define noda_isdirty(self, v)   \
+#define ticos_isdirty(self, v)   \
     ((self)->_##v##_dirty)
 
-#define noda_get(self, v)       \
+#define ticos_get(self, v)       \
     ((self)->_##v##_dirty = false, (self)->_##v##_var)
 
-#define noda_set(self, v, d)    \
+#define ticos_set(self, v, d)    \
     if ((self)->_##v##_var != (d)) {  \
         (self)->_##v##_dirty = true;\
         (self)->_##v##_var = (d);     \
     }
 
-#define noda_iscachedirty(self, v)  \
-    noda_isdirty((self), v##_cache)
+#define ticos_iscachedirty(self, v)  \
+    ticos_isdirty((self), v##_cache)
 
-#define noda_sync_from_cache(self, v)                       \
-    if ((self)->_##v##_var != noda_get((self), v##_cache))  \
-        noda_set((self), v, (self)->_##v##_cache_var)
+#define ticos_sync_from_cache(self, v)                       \
+    if ((self)->_##v##_var != ticos_get((self), v##_cache))  \
+        ticos_set((self), v, (self)->_##v##_cache_var)
 
-#define noda_post_to_cache(self, v)                         \
-    if ((self)->_##v##_cache_var != noda_get((self), v))    \
-        noda_set((self), v##_cache, (self)->_##v##_var)
+#define ticos_post_to_cache(self, v)                         \
+    if ((self)->_##v##_cache_var != ticos_get((self), v))    \
+        ticos_set((self), v##_cache, (self)->_##v##_var)
 
-#define noda_cache_isdirty(self, v) \
-    noda_isdirty((self), v##_cache)
+#define ticos_cache_isdirty(self, v) \
+    ticos_isdirty((self), v##_cache)
 
-#define noda_cache_set(self, v, d)    \
-    noda_set((self), v##_cache, (d))
+#define ticos_cache_set(self, v, d)    \
+    ticos_set((self), v##_cache, (d))
 
-#define noda_cache_get(self, v) \
-    noda_get((self), v##_cache)
+#define ticos_cache_get(self, v) \
+    ticos_get((self), v##_cache)
 
 #ifdef __cplusplus
 }

@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 #define NODA_BUS_ID_BEGIN \
-    enum noda_bus_id_t {
+    enum ticos_bus_id_t {
 
 #define NODA_BUS_ID_END \
     NODA_NBUS, \
@@ -20,20 +20,20 @@ extern "C" {
         static bus##_t bus##_id = { \
             NODA_BUS_SET_VTABLE(bus), .name = #_id, __VA_ARGS__ \
         }; \
-        noda_bus_list[_id] = (noda_bus_t*)&bus##_id; \
+        ticos_bus_list[_id] = (ticos_bus_t*)&bus##_id; \
     } while (0)
 
-int noda_bus_center_startup(void);
-int noda_bus_center_cleanup(void);
-uint8_t noda_bus_center_nbus(void);
+int ticos_bus_center_startup(void);
+int ticos_bus_center_cleanup(void);
+uint8_t ticos_bus_center_nbus(void);
 
-extern noda_bus_t* noda_bus_list[];
+extern ticos_bus_t* ticos_bus_list[];
 
-#define noda_bus(id)        (noda_bus_list[id])
+#define ticos_bus(id)        (ticos_bus_list[id])
 
-#define noda_bus_name(id)   (noda_bus_list[id]->name)
+#define ticos_bus_name(id)   (ticos_bus_list[id]->name)
 
-#define noda_bus_opened(id) (noda_bus_list[id]->opened)
+#define ticos_bus_opened(id) (ticos_bus_list[id]->opened)
 
 #ifdef __cplusplus
 }

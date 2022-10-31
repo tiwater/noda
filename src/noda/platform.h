@@ -6,11 +6,11 @@
 #include <Arduino.h>
 
 void setup(void) {
-    noda_boot();
+    ticos_boot();
 }
 
 void loop(void) {
-    noda_loop();
+    ticos_loop();
 }
 
 #endif // __NODA_PLATFORM_H

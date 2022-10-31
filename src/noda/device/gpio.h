@@ -1,5 +1,5 @@
 /*************************************************************************
-  * @file noda_gpio
+  * @file ticos_gpio
   * @brief 设备接口头文件
   * @author
   * @date 2022-10-24 16:56:15
@@ -15,18 +15,18 @@
 extern "C" {
 #endif
 
-enum noda_gpio_mode_t {
+enum ticos_gpio_mode_t {
     NODA_GPIO_MODE_DISABLE,
     NODA_GPIO_MODE_INPUT,
     NODA_GPIO_MODE_OUTPUT,
 };
 
 /*************************************************************************
-  * noda_gpio类定义
+  * ticos_gpio类定义
   ************************************************************************/
-NODA_DEV_CLASS_BEGIN(noda_gpio);
-    noda_pin_t pin;
-    enum noda_gpio_mode_t mode;
+NODA_DEV_CLASS_BEGIN(ticos_gpio);
+    ticos_pin_t pin;
+    enum ticos_gpio_mode_t mode;
     NODA_VAR(bool, level);
 NODA_DEV_CLASS_END();
 

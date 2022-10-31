@@ -1,5 +1,5 @@
 /************************************************************************
- * @file noda_iot
+ * @file ticos_iot
  * @brief 设备接口头文件
  * @author
  * @date 2022-10-28 23:58:46
@@ -16,9 +16,9 @@ extern "C" {
 #endif
 
 /************************************************************************
- * noda_iot类定义
+ * ticos_iot类定义
  ************************************************************************/
-NODA_DEV_CLASS_BEGIN(noda_iot);
+NODA_DEV_CLASS_BEGIN(ticos_iot);
     const char* ssid;
     const char* pswd;
     const char* fqdn;

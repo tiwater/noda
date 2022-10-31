@@ -8,12 +8,12 @@ extern "C" {
 #endif
 
 /*************************************************************************
-  * noda_i2c类定义
+  * ticos_i2c类定义
   ************************************************************************/
-NODA_BUS_CLASS_BEGIN(noda_i2c);
+NODA_BUS_CLASS_BEGIN(ticos_i2c);
     const uint8_t       port;
-    const noda_pin_t    sda;
-    const noda_pin_t    scl;
+    const ticos_pin_t    sda;
+    const ticos_pin_t    scl;
     uint16_t            freq;
 NODA_BUS_CLASS_END();
 

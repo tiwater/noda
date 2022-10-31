@@ -12,12 +12,12 @@
 extern "C" {
 #endif
 
-typedef uint8_t noda_pin_t;
+typedef uint8_t ticos_pin_t;
 
 typedef enum {
     NODA_FAIL = -1,
     NODA_OK,
-} noda_err_t;
+} ticos_err_t;
 
 #ifdef __cplusplus
 }

@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-void noda_delay(clock_t ms);
+void ticos_delay(clock_t ms);
 
 #ifdef __cplusplus
 }

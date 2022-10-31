@@ -35,7 +35,7 @@ ${ON_CLOSE}    return NODA_OK;
  * @param[in] mode 更改后的电源模式
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, noda_power_mode_t mode) {
+int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, ticos_power_mode_t mode) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     NODA_UNUSED(mode);

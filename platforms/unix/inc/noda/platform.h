@@ -7,9 +7,9 @@
 int main(int argc, char** argv) {
     NODA_UNUSED(argc);
     NODA_UNUSED(argv);
-    noda_err_t rt = noda_boot();
+    ticos_err_t rt = ticos_boot();
     if (NODA_OK == rt) {
-        while (noda_loop() == NODA_OK);
+        while (ticos_loop() == NODA_OK);
     }
     return rt;
 }

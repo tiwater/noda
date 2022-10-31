@@ -82,12 +82,12 @@ enum silan_sc7a20_range_t {
 };
 
 static inline int _write_byte(silan_sc7a20_t* self, uint8_t reg, uint8_t data) {
-    return noda_bus(self->bus)->write_byte(noda_bus(self->bus),
+    return ticos_bus(self->bus)->write_byte(ticos_bus(self->bus),
             self->addr, reg, data, self->rw_wait_ms);
 }
 
 static inline int _read(silan_sc7a20_t* self, uint8_t reg, uint8_t* data, size_t len) {
-    return noda_bus(self->bus)->read(noda_bus(self->bus),
+    return ticos_bus(self->bus)->read(ticos_bus(self->bus),
            self->addr, reg, data, len, self->rw_wait_ms);
 }
 
@@ -114,10 +114,10 @@ static float sb2accel(uint8_t msb, uint8_t lsb, uint8_t range) {
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
 int silan_sc7a20_open(silan_sc7a20_t* self) {
-    if (noda_bus_opened(self->bus)) {
+    if (ticos_bus_opened(self->bus)) {
         if (!self->opened) {
             uint8_t id = 0;
-            noda_err_t err = _read_byte(self, _CHIP_ID_ADDR, &id);
+            ticos_err_t err = _read_byte(self, _CHIP_ID_ADDR, &id);
             if (NODA_OK == err && id == _CHIP_ID_VALUE) {
                 err &= _write_byte(self, _CTRL1, 0x4F);   // 50Hz，低功耗，使能x, y, z轴
                 err &= _write_byte(self, _CTRL2, 0x81);   // 中断事件自动复位，配置AOI1高通滤波
@@ -154,7 +154,7 @@ int silan_sc7a20_close(silan_sc7a20_t* self) {
  * @param[in] mode 更改后的电源模式
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int silan_sc7a20_power_mode_changed(silan_sc7a20_t* self, noda_power_mode_t mode) {
+int silan_sc7a20_power_mode_changed(silan_sc7a20_t* self, ticos_power_mode_t mode) {
     /* 填充代码内容后请删除NODA_UNUSED函数调用 */
     NODA_UNUSED(self);
     NODA_UNUSED(mode);
@@ -169,9 +169,9 @@ int silan_sc7a20_power_mode_changed(silan_sc7a20_t* self, noda_power_mode_t mode
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
 int silan_sc7a20_sync_from_cache(silan_sc7a20_t* self) {
-    noda_sync_from_cache(self, x);
-    noda_sync_from_cache(self, y);
-    noda_sync_from_cache(self, z);
+    ticos_sync_from_cache(self, x);
+    ticos_sync_from_cache(self, y);
+    ticos_sync_from_cache(self, z);
     return NODA_OK;
 }
 
@@ -183,9 +183,9 @@ int silan_sc7a20_sync_from_cache(silan_sc7a20_t* self) {
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
 int silan_sc7a20_post_to_cache(silan_sc7a20_t* self) {
-    noda_post_to_cache(self, x);
-    noda_post_to_cache(self, y);
-    noda_post_to_cache(self, z);
+    ticos_post_to_cache(self, x);
+    ticos_post_to_cache(self, y);
+    ticos_post_to_cache(self, z);
     return NODA_OK;
 }
 
@@ -198,15 +198,15 @@ int silan_sc7a20_post_to_cache(silan_sc7a20_t* self) {
 int silan_sc7a20_sync_cache_from_dev(silan_sc7a20_t* self) {
     uint8_t buf[6] = { 0 };
     uint8_t range = SILAN_SC7A20_RANGE_4G;
-    noda_err_t err = _read(self, _OUT_X_L | 0x80, buf, 6);
+    ticos_err_t err = _read(self, _OUT_X_L | 0x80, buf, 6);
     if (NODA_OK == err) {
         float x = sb2accel(buf[1], buf[0], range);
         float y = sb2accel(buf[3], buf[2], range);
         float z = sb2accel(buf[5], buf[4], range);
 
-        noda_cache_set(self, x, x);
-        noda_cache_set(self, y, y);
-        noda_cache_set(self, z, z);
+        ticos_cache_set(self, x, x);
+        ticos_cache_set(self, y, y);
+        ticos_cache_set(self, z, z);
     }
     return err;
 }
@@ -221,9 +221,9 @@ int silan_sc7a20_post_cache_to_dev(silan_sc7a20_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED调用 */
     NODA_UNUSED(self);
     // 用法用例
-    // if (noda_cache_isdirty(self, level)) {  // 检查缓存数值已经被应用层更新
-    //    bool level = noda_cache_get(self, level); // 从缓存获取数值
-    //    noda_logd("%s level update to %d", self->name, level); // 提交到设备
+    // if (ticos_cache_isdirty(self, level)) {  // 检查缓存数值已经被应用层更新
+    //    bool level = ticos_cache_get(self, level); // 从缓存获取数值
+    //    ticos_logd("%s level update to %d", self->name, level); // 提交到设备
     // }
     return NODA_OK;
 }
