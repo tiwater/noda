@@ -52,6 +52,7 @@ static bool g_light_on;
 
 static void set_light(bool on) {
     ticos_iot_t* iot = ticos_dev(DEV_IOT, ticos_iot);
+    // 设置属性值
     ticos_set(iot, prop_switch, on);
     ticos_set(iot, prop_led, on);
 
