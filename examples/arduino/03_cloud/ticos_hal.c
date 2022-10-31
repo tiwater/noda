@@ -86,6 +86,7 @@ int ticos_hal_mqtt_start(const char* mqtt_uri,
         .broker.address.port    = mqtt_port,
         .credentials.client_id  = mqtt_client_id,
         .credentials.username   = mqtt_user_name,
+        .credentials.authentication.password = passwd,
         .session.keepalive = 30,
 #endif
     };
