@@ -76,12 +76,12 @@ int ticos_gpio_post_to_cache(ticos_gpio_t* self) {
 }
 
 /************************************************************************
- * @fn ticos_gpio_sync_cache_from_dev
+ * @fn ticos_gpio_sync_from_dev
  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
  * @param[in] self 类实例
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int ticos_gpio_sync_cache_from_dev(ticos_gpio_t* self) {
+int ticos_gpio_sync_from_dev(ticos_gpio_t* self) {
     if (self->mode & NODA_GPIO_MODE_INPUT) {
         bool lv = gpio_get_level(self->pin);
         ticos_cache_set(self, level, lv);
@@ -90,12 +90,12 @@ int ticos_gpio_sync_cache_from_dev(ticos_gpio_t* self) {
 }
 
 /************************************************************************
- * @fn ticos_gpio_post_cache_to_dev
+ * @fn ticos_gpio_post_to_dev
  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
  * @param[in] self 类实例
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int ticos_gpio_post_cache_to_dev(ticos_gpio_t* self) {
+int ticos_gpio_post_to_dev(ticos_gpio_t* self) {
     if ((self->mode & NODA_GPIO_MODE_OUTPUT)
         && ticos_cache_isdirty(self, level)) {
        bool level = ticos_cache_get(self, level);

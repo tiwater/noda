@@ -5,25 +5,25 @@
 
 static ticos_task_t* s_task;
 
-static int ticos_device_center_sync_cache_from_dev(void) {
+static int ticos_device_center_sync_from_dev(void) {
     ticos_device_t* const* devs = ticos_device_list;
     ticos_device_t* dev;
     for (int i = 0, n = ticos_device_center_ndev(); i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
-            dev->sync_cache_from_dev(dev);
+            dev->sync_from_dev(dev);
         }
     }
     return NODA_OK;
 }
 
-static int ticos_device_center_post_cache_to_dev(void) {
+static int ticos_device_center_post_to_dev(void) {
     ticos_device_t* const* devs = ticos_device_list;
     ticos_device_t* dev;
     for (int i = 0, n = ticos_device_center_ndev(); i < n; ++i) {
         dev = devs[i];
         if (dev->opened) {
-            dev->post_cache_to_dev(dev);
+            dev->post_to_dev(dev);
         }
     }
     return NODA_OK;
@@ -44,9 +44,9 @@ static void* _runner(ticos_task_t* task) {
         }
     }
     while (ticos_task_running(task)) {
-        ticos_device_center_post_cache_to_dev();
+        ticos_device_center_post_to_dev();
         ticos_delay(20);
-        ticos_device_center_sync_cache_from_dev();
+        ticos_device_center_sync_from_dev();
     }
     for (int i = 0, n = ticos_device_center_ndev(); i < n; ++i) {
         dev = devs[i];

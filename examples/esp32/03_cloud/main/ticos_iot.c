@@ -76,23 +76,23 @@ int ticos_iot_post_to_cache(ticos_iot_t* self) {
 }
 
 /*************************************************************************
- * @fn ticos_iot_sync_cache_from_dev
+ * @fn ticos_iot_sync_from_dev
  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
  * @param[in] self 类实例
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int ticos_iot_sync_cache_from_dev(ticos_iot_t* self) {
+int ticos_iot_sync_from_dev(ticos_iot_t* self) {
     NODA_UNUSED(self);
     return NODA_OK;
 }
 
 /*************************************************************************
- * @fn ticos_iot_post_cache_to_dev
+ * @fn ticos_iot_post_to_dev
  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
  * @param[in] self 类实例
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int ticos_iot_post_cache_to_dev(ticos_iot_t* self) {
+int ticos_iot_post_to_dev(ticos_iot_t* self) {
     if (ticos_cache_isdirty(self, prop_switch)
      || ticos_cache_isdirty(self, prop_led)) {
         ticos_property_report();

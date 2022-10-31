@@ -65,21 +65,21 @@ ${TO_CACHE}    return NODA_OK;
 }
 
 /************************************************************************
- * @fn ${CLS_NAME}_sync_cache_from_dev
+ * @fn ${CLS_NAME}_sync_from_dev
  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
  * @param[in] self 类实例
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int ${CLS_NAME}_sync_cache_from_dev(${CLS_NAME}_t* self) {
+int ${CLS_NAME}_sync_from_dev(${CLS_NAME}_t* self) {
 ${FROM_DEV}    return NODA_OK;
 }
 
 /************************************************************************
- * @fn ${CLS_NAME}_post_cache_to_dev
+ * @fn ${CLS_NAME}_post_to_dev
  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
  * @param[in] self 类实例
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int ${CLS_NAME}_post_cache_to_dev(${CLS_NAME}_t* self) {
+int ${CLS_NAME}_post_to_dev(${CLS_NAME}_t* self) {
 ${TO_DEV}    return NODA_OK;
 }

@@ -13,8 +13,8 @@ extern "C" {
     int (*power_mode_changed) (struct cls* self, ticos_power_mode_t mode); \
     int (*sync_from_cache) (struct cls* self); \
     int (*post_to_cache) (struct cls* self); \
-    int (*sync_cache_from_dev) (struct cls* self); \
-    int (*post_cache_to_dev) (struct cls* self); \
+    int (*sync_from_dev) (struct cls* self); \
+    int (*post_to_dev) (struct cls* self); \
     const char* name; \
     bool opened
 
@@ -24,8 +24,8 @@ extern "C" {
     .power_mode_changed = cls##_power_mode_changed, \
     .sync_from_cache = cls##_sync_from_cache, \
     .post_to_cache = cls##_post_to_cache, \
-    .sync_cache_from_dev = cls##_sync_cache_from_dev, \
-    .post_cache_to_dev = cls##_post_cache_to_dev
+    .sync_from_dev = cls##_sync_from_dev, \
+    .post_to_dev = cls##_post_to_dev
 
 #define NODA_DEV_CLASS_BEGIN(cls) \
     struct cls##_t; \
@@ -35,8 +35,8 @@ extern "C" {
     int cls##_power_mode_changed(cls##_t* self, ticos_power_mode_t mode); \
     int cls##_sync_from_cache(cls##_t* self); \
     int cls##_post_to_cache(cls##_t* self); \
-    int cls##_sync_cache_from_dev(cls##_t* self); \
-    int cls##_post_cache_to_dev(cls##_t* self); \
+    int cls##_sync_from_dev(cls##_t* self); \
+    int cls##_post_to_dev(cls##_t* self); \
     struct cls##_t { \
         NODA_DEV_VTABLE(cls##_t)
 

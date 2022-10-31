@@ -190,12 +190,12 @@ int silan_sc7a20_post_to_cache(silan_sc7a20_t* self) {
 }
 
 /************************************************************************
- * @fn silan_sc7a20_sync_cache_from_dev
+ * @fn silan_sc7a20_sync_from_dev
  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
  * @param[in] self 类实例
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int silan_sc7a20_sync_cache_from_dev(silan_sc7a20_t* self) {
+int silan_sc7a20_sync_from_dev(silan_sc7a20_t* self) {
     uint8_t buf[6] = { 0 };
     uint8_t range = SILAN_SC7A20_RANGE_4G;
     ticos_err_t err = _read(self, _OUT_X_L | 0x80, buf, 6);
@@ -212,12 +212,12 @@ int silan_sc7a20_sync_cache_from_dev(silan_sc7a20_t* self) {
 }
 
 /************************************************************************
- * @fn silan_sc7a20_post_cache_to_dev
+ * @fn silan_sc7a20_post_to_dev
  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
  * @param[in] self 类实例
  * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
  ************************************************************************/
-int silan_sc7a20_post_cache_to_dev(silan_sc7a20_t* self) {
+int silan_sc7a20_post_to_dev(silan_sc7a20_t* self) {
     /* 填充代码内容后请删除NODA_UNUSED调用 */
     NODA_UNUSED(self);
     // 用法用例
