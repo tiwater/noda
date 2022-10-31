@@ -1,9 +1,9 @@
-#include "noda/task.h"
+#include "ticos/task.h"
 
 #include <pthread.h>
 #include <stdlib.h>
 
-#include "noda/log.h"
+#include "ticos/log.h"
 
 typedef struct {
     ticos_task_runner_t runner;
@@ -21,7 +21,7 @@ static void* _runner(void* task) {
 }
 
 ticos_task_t* ticos_task_create(const char* name, ticos_task_runner_t runner) {
-    NODA_UNUSED(name);
+    TICOS_UNUSED(name);
     internal_task_t* task = calloc(1, sizeof(internal_task_t));
     if (task) {
         task->runner = runner;

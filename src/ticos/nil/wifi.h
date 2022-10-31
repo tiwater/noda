@@ -1,7 +1,7 @@
-#ifndef __NODA_WIFI_H
-#define __NODA_WIFI_H
+#ifndef __TICOS_WIFI_H
+#define __TICOS_WIFI_H
 
-#include "noda/common.h"
+#include "ticos/common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,4 +14,4 @@ void ticos_wifi_stop(void);
 }
 #endif
 
-#endif // __NODA_WIFI_H
+#endif // __TICOS_WIFI_H

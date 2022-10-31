@@ -9,7 +9,7 @@
 
 #include "ticos_thingmodel.h"
 #include <ticos_thingmodel_type.h>
-#include <noda/device_center.h>
+#include <ticos/device_center.h>
 #include "${CLS_NAME}.h"
 ${FUNC_DEFS}
 const ticos_telemetry_info_t ticos_telemetry_tab[] = {${TELEMETRY_TABS}

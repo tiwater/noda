@@ -6,10 +6,10 @@
  * @copyright
  ************************************************************************/
 
-#ifndef __NODA_IOT_H
-#define __NODA_IOT_H
+#ifndef __TICOS_IOT_H
+#define __TICOS_IOT_H
 
-#include "noda/device.h"
+#include "ticos/device.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,19 +18,19 @@ extern "C" {
 /************************************************************************
  * ticos_iot类定义
  ************************************************************************/
-NODA_DEV_CLASS_BEGIN(ticos_iot);
+TICOS_DEV_CLASS_BEGIN(ticos_iot);
     const char* ssid;
     const char* pswd;
     const char* fqdn;
     const char* pid;
     const char* did;
     const char* skey;
-    NODA_VAR(bool, prop_switch);
-    NODA_VAR(bool, prop_led);
-NODA_DEV_CLASS_END();
+    TICOS_VAR(bool, prop_switch);
+    TICOS_VAR(bool, prop_led);
+TICOS_DEV_CLASS_END();
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __NODA_IOT_H
+#endif // __TICOS_IOT_H

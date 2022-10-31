@@ -1,5 +1,5 @@
-#include "noda/bus_center.h"
-#include "noda/log.h"
+#include "ticos/bus_center.h"
+#include "ticos/log.h"
 
 int ticos_bus_center_startup(void) {
     uint8_t nbus = ticos_bus_center_nbus();
@@ -10,7 +10,7 @@ int ticos_bus_center_startup(void) {
         for (int i = 0; i < nbus; ++i) {
             bus = buss[i];
             if (!bus->opened) {
-                if (NODA_OK == bus->open(bus)) {
+                if (TICOS_OK == bus->open(bus)) {
                     ticos_logd("bus %d:%s open", i, bus->name);
                 } else {
                     ticos_loge("fail to open bus %d:%s", i, bus->name);
@@ -18,7 +18,7 @@ int ticos_bus_center_startup(void) {
             }
         }
     }
-    return NODA_OK;
+    return TICOS_OK;
 }
 
 int ticos_bus_center_cleanup(void) {
@@ -29,7 +29,7 @@ int ticos_bus_center_cleanup(void) {
         for (int i = 0; i < nbus; ++i) {
             bus = buss[i];
             if (bus->opened) {
-                if (NODA_OK == bus->close(bus)) {
+                if (TICOS_OK == bus->close(bus)) {
                     ticos_logd("bus %d:%s close", i, bus->name);
                 } else {
                     ticos_loge("fail to close bus %d:%s", i, bus->name);
@@ -38,5 +38,5 @@ int ticos_bus_center_cleanup(void) {
         }
         ticos_logd("bus center cleanup");
     }
-    return NODA_OK;
+    return TICOS_OK;
 }

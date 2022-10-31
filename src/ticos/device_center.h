@@ -1,24 +1,24 @@
-#ifndef __NODA_DEVICE_CENTER_H
-#define __NODA_DEVICE_CENTER_H
+#ifndef __TICOS_DEVICE_CENTER_H
+#define __TICOS_DEVICE_CENTER_H
 
-#include "noda/common.h"
-#include "noda/device.h"
+#include "ticos/common.h"
+#include "ticos/device.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define NODA_DEV_ID_BEGIN \
+#define TICOS_DEV_ID_BEGIN \
     enum ticos_device_id_t {
 
-#define NODA_DEV_ID_END \
-    NODA_NDEV, \
+#define TICOS_DEV_ID_END \
+    TICOS_NDEV, \
     };
 
-#define NODA_DEV_ADD(_id, dev, ...) \
+#define TICOS_DEV_ADD(_id, dev, ...) \
     do { \
         static dev##_t dev##_id = { \
-            NODA_DEV_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ \
+            TICOS_DEV_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ \
         }; \
         ticos_device_list[_id] = (ticos_device_t*)&dev##_id; \
     } while (0)
@@ -51,4 +51,4 @@ extern ticos_device_t* ticos_device_list[];
 }
 #endif
 
-#endif // __NODA_DEVICE_CENTER_H
+#endif // __TICOS_DEVICE_CENTER_H

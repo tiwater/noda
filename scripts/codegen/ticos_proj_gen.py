@@ -15,7 +15,7 @@ def gen_proj_cmake_file(name, tmpl_file, to_path):
     with open(tmpl_file, 'r') as f:
         tmpl = Template(f.read())
         lines.append(tmpl.safe_substitute(
-                    NODA_PROJ_NAME = name))
+                    TICOS_PROJ_NAME = name))
     with open(to_path + '/' + file_name, 'w') as f:
         f.writelines(lines)
 

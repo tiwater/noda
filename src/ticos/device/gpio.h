@@ -6,32 +6,32 @@
   * @copyright
   ************************************************************************/
 
-#ifndef __NODA_GPIO_H
-#define __NODA_GPIO_H
+#ifndef __TICOS_GPIO_H
+#define __TICOS_GPIO_H
 
-#include "noda/device.h"
+#include "ticos/device.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 enum ticos_gpio_mode_t {
-    NODA_GPIO_MODE_DISABLE,
-    NODA_GPIO_MODE_INPUT,
-    NODA_GPIO_MODE_OUTPUT,
+    TICOS_GPIO_MODE_DISABLE,
+    TICOS_GPIO_MODE_INPUT,
+    TICOS_GPIO_MODE_OUTPUT,
 };
 
 /*************************************************************************
   * ticos_gpio类定义
   ************************************************************************/
-NODA_DEV_CLASS_BEGIN(ticos_gpio);
+TICOS_DEV_CLASS_BEGIN(ticos_gpio);
     ticos_pin_t pin;
     enum ticos_gpio_mode_t mode;
-    NODA_VAR(bool, level);
-NODA_DEV_CLASS_END();
+    TICOS_VAR(bool, level);
+TICOS_DEV_CLASS_END();
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __NODA_GPIO_H
+#endif // __TICOS_GPIO_H

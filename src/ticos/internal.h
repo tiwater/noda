@@ -1,7 +1,7 @@
-#ifndef __NODA_INTERNAL_H
-#define __NODA_INTERNAL_H
+#ifndef __TICOS_INTERNAL_H
+#define __TICOS_INTERNAL_H
 
-#include "noda/common.h"
+#include "ticos/common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,10 +13,10 @@ extern int ticos_onloop(void);
 
 int ticos_boot(void);
 int ticos_loop_internal(clock_t millis);
-#define ticos_loop() ticos_loop_internal(NODA_HEARTBEAT_MILLIS)
+#define ticos_loop() ticos_loop_internal(TICOS_HEARTBEAT_MILLIS)
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __NODA_INTERNAL_H
+#endif // __TICOS_INTERNAL_H

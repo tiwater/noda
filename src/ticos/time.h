@@ -1,7 +1,7 @@
-#ifndef __NODA_TIME_H
-#define __NODA_TIME_H
+#ifndef __TICOS_TIME_H
+#define __TICOS_TIME_H
 
-#include "noda/common.h"
+#include "ticos/common.h"
 #include <limits.h>
 
 #ifdef __cplusplus
@@ -14,4 +14,4 @@ void ticos_delay(clock_t ms);
 }
 #endif
 
-#endif // __NODA_TIME_H
+#endif // __TICOS_TIME_H

@@ -1,4 +1,4 @@
-#include "noda/nil/wifi.h"
+#include "ticos/nil/wifi.h"
 
 #include <string.h>
 
@@ -11,7 +11,7 @@
 #include <freertos/task.h>
 #include <freertos/event_groups.h>
 
-#include "noda/log.h"
+#include "ticos/log.h"
 
 static void sntp_sync(void) {
     char buf[64];

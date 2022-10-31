@@ -1,5 +1,5 @@
-#include "noda/task.h"
-#include "noda/log.h"
+#include "ticos/task.h"
+#include "ticos/log.h"
 
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>

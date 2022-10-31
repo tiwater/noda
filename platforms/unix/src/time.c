@@ -1,4 +1,4 @@
-#include "noda/time.h"
+#include "ticos/time.h"
 #include <sys/select.h>
 
 static inline clock_t ticos_timenow(void) {

@@ -10,7 +10,7 @@
 #ifndef __TICOS_THING_MODEL_H
 #define __TICOS_THING_MODEL_H
 
-#include <noda/common.h>
+#include <ticos/common.h>
 
 #ifdef __cplusplus
 extern "C" {

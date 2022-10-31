@@ -12,20 +12,20 @@ ${INC_LIST}
  * @fn ${CLS_NAME}_open
  * @brief 必须实现的类成员函数，负责设备“打开”操作，
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int ${CLS_NAME}_open(${CLS_NAME}_t* self) {
-${ON_OPEN}    return NODA_OK;
+${ON_OPEN}    return TICOS_OK;
 }
 
 /************************************************************************
  * @fn ${CLS_NAME}_close
  * @brief 必须实现的类成员函数，负责设备“关闭”操作，
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int ${CLS_NAME}_close(${CLS_NAME}_t* self) {
-${ON_CLOSE}    return NODA_OK;
+${ON_CLOSE}    return TICOS_OK;
 }
 
 /************************************************************************
@@ -33,13 +33,13 @@ ${ON_CLOSE}    return NODA_OK;
  * @brief 必须实现的类成员函数，系统改变“电源模式”时被动触发，
  * @param[in] self 类实例
  * @param[in] mode 更改后的电源模式
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, ticos_power_mode_t mode) {
-    /* 填充代码内容后请删除NODA_UNUSED函数调用 */
-    NODA_UNUSED(self);
-    NODA_UNUSED(mode);
-    return NODA_OK;
+    /* 填充代码内容后请删除TICOS_UNUSED函数调用 */
+    TICOS_UNUSED(self);
+    TICOS_UNUSED(mode);
+    return TICOS_OK;
 }
 
 /************************************************************************
@@ -47,10 +47,10 @@ int ${CLS_NAME}_power_mode_changed(${CLS_NAME}_t* self, ticos_power_mode_t mode)
  * @brief 必须实现的类成员函数，负责设备数据从缓存复制到应用层的复制操作
  * @attention 此函数为自动生成，请不要更改函数内容
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int ${CLS_NAME}_sync_from_cache(${CLS_NAME}_t* self) {
-${FROM_CACHE}    return NODA_OK;
+${FROM_CACHE}    return TICOS_OK;
 }
 
 /************************************************************************
@@ -58,28 +58,28 @@ ${FROM_CACHE}    return NODA_OK;
  * @brief 必须实现的类成员函数，负责设备数据从应用层到缓存的复制操作
  * @attention 此函数为自动生成，请不要更改函数内容
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int ${CLS_NAME}_post_to_cache(${CLS_NAME}_t* self) {
-${TO_CACHE}    return NODA_OK;
+${TO_CACHE}    return TICOS_OK;
 }
 
 /************************************************************************
  * @fn ${CLS_NAME}_sync_from_dev
  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int ${CLS_NAME}_sync_from_dev(${CLS_NAME}_t* self) {
-${FROM_DEV}    return NODA_OK;
+${FROM_DEV}    return TICOS_OK;
 }
 
 /************************************************************************
  * @fn ${CLS_NAME}_post_to_dev
  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int ${CLS_NAME}_post_to_dev(${CLS_NAME}_t* self) {
-${TO_DEV}    return NODA_OK;
+${TO_DEV}    return TICOS_OK;
 }

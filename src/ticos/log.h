@@ -1,7 +1,7 @@
-#ifndef __NODA_LOG_H
-#define __NODA_LOG_H
+#ifndef __TICOS_LOG_H
+#define __TICOS_LOG_H
 
-#include "noda/common.h"
+#include "ticos/common.h"
 #include <stdio.h>
 
 #define ticos_print  printf
@@ -18,4 +18,4 @@
 #define ticos_logw(...)  ticos_log_internal("W", __VA_ARGS__)
 #define ticos_loge(...)  ticos_log_internal("E", __VA_ARGS__)
 
-#endif // __NODA_LOG_H
+#endif // __TICOS_LOG_H

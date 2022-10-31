@@ -1,7 +1,7 @@
-#ifndef __NODA_TASK_H
-#define __NODA_TASK_H
+#ifndef __TICOS_TASK_H
+#define __TICOS_TASK_H
 
-#include "noda/common.h"
+#include "ticos/common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,4 +25,4 @@ void ticos_task_destroy(ticos_task_t* task);
 }
 #endif
 
-#endif // __NODA_TASK_H
+#endif // __TICOS_TASK_H

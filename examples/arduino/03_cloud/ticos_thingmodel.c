@@ -9,7 +9,7 @@
 
 #include "ticos_thingmodel.h"
 #include <ticos_thingmodel_type.h>
-#include <noda/device_center.h>
+#include <ticos/device_center.h>
 #include "ticos_iot.h"
 
 bool ticos_property_switch_send(void) {

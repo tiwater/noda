@@ -1,0 +1,10 @@
+set (TICOS_PLATFORM_DIR  ${TICOS_PATH}/platforms/${TICOS_PLATFORM})
+set (TICOS_SOURCE_DIR    ${TICOS_PATH}/src)
+
+aux_source_directory (${TICOS_SOURCE_DIR}/core   CORE_SRCS)
+aux_source_directory (${TICOS_PLATFORM_DIR}/src  PLATFORM_SRCS)
+if (TICOS_USE_FREERTOS)
+aux_source_directory (${TICOS_SOURCE_DIR}/os/freertos OS_SRCS)
+endif ()
+set (FULL_SRCS ${PLATFORM_SRCS} ${OS_SRCS} ${CORE_SRCS})
+set (TICOS_INCS ${TICOS_PLATFORM_DIR}/inc ${TICOS_SOURCE_DIR})

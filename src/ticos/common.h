@@ -1,12 +1,12 @@
-#ifndef __NODA_COMMON_H
-#define __NODA_COMMON_H
+#ifndef __TICOS_COMMON_H
+#define __TICOS_COMMON_H
 
 #include <stdbool.h>
 #include <stdint.h>
 #include <stddef.h>
 #include <time.h>
 
-#define NODA_UNUSED(x) (void) x
+#define TICOS_UNUSED(x) (void) x
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,12 +15,12 @@ extern "C" {
 typedef uint8_t ticos_pin_t;
 
 typedef enum {
-    NODA_FAIL = -1,
-    NODA_OK,
+    TICOS_FAIL = -1,
+    TICOS_OK,
 } ticos_err_t;
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __NODA_COMMON_H
+#endif // __TICOS_COMMON_H
