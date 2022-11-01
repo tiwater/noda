@@ -254,7 +254,7 @@ def generate(name, private='', public='', thingmodel='', to='.'):
         inc_list  = '#include <noda/nil/wifi.h>\n' \
                     '#include <ticos_api.h>\n'
         on_open   = '    noda_wifi_start_as_sta(self->ssid, self->pswd);\n' \
-                    '    ticos_cloud_start(self->pid, self->did, self->skey);\n'
+                    '    ticos_cloud_start(self->product_id, self->device_id, self->secret_key);\n'
         on_close += '    ticos_cloud_stop();\n' \
                     '    noda_wifi_stop();\n'
         from_dev  = '' if not puvs else \

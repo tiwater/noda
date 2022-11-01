@@ -8,9 +8,9 @@ DEVNAME = 'noda_iot'
 PRIVATE = 'const char* ssid;' \
           'const char* pswd;' \
           'const char* fqdn;' \
-          'const char* pid;'  \
-          'const char* did;'  \
-          'const char* skey;'
+          'const char* product_id;'  \
+          'const char* device_id;'  \
+          'const char* secret_key;'
 MQTTHAL = 'ticos_hal.c'
 
 def copy_file(src, dst):
