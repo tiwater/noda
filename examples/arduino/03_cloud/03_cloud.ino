@@ -70,7 +70,7 @@ static inline void switch_light(void) {
  * 生命周期函数，按照一定时间间隔(TICOS_HEARTBEAT_MILLIS)触发
  ************************************************************************/
 int ticos_onloop(void) {
-    
+
     ticos_iot_t* iot = ticos_dev(DEV_IOT, ticos_iot);
     if (ticos_isdirty(iot, prop_switch)) {
         bool on = ticos_get(iot, prop_switch);

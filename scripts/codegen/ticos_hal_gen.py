@@ -19,15 +19,20 @@ iot_type_map = {
     "float"  :  "float",
     "double" :  "float", # TODO 需要后期支持
     "string" :  "const char*",
-    "enum"   :  "int",   # TODO 是否可以映射short类型?
+    "Enum"   :  "int",   # TODO 是否可以映射short类型?
     "timestamp":"time_t",
-    "duration" :"time_t" }
+    "duration" :"time_t"
+}
 
 def type_to_c_type(t):
     ''' 根据iot_type_map字典返回 c语言类型 '''
+    if type(t) == type({}):
+        t = t[TYPE]
     return iot_type_map[t]
 
 def gen_iot_val_type(t):
+    if type(t) == type({}):
+        t = t[TYPE]
     return 'TICOS_VAL_TYPE_' + t.upper()
 
 def gen_func_name_getter(_key, _id):
