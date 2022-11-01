@@ -9,17 +9,17 @@
 #include "noda_iot.h"
 
 /* 请填充测试所需的 WiFi ssid */
-#define _SSID ""
+#define _SSID "3082"
 /* 请填充测试所需的 WiFi password */
-#define _PSWD ""
+#define _PSWD "buyaolela886"
 /* 请填充测试所需的 mqtt fqdn */
 #define _FQDN "mqtt://hub.ticos.cn"
 /* 请填充测试所需的 product id */
-#define _PRD_ID "HITXM3K4IE"
+#define _PRD_ID "BOB45WX7H4"
 /* 请填充测试所需的 device id */
-#define _DEV_ID "SLC1"
+#define _DEV_ID "TEST002"
 /* 请填充测试所需的 security key */
-#define _SKEY   "SKEY"
+#define _SKEY   "7rjQAIYU7DPULJo8YlppEg=="
 
 /************************************************************************
  * 向工程注册总线标识号，请将此标识号列表成员作为NODA_BUS_ADD首参
@@ -42,9 +42,10 @@ NODA_DEV_ID_END
  * 生命周期函数，负责系统启动后的自定义初始化工作
  ************************************************************************/
 int noda_onboot(void) {
-    NODA_DEV_ADD(DEV_IOT, noda_iot, .ssid=_SSID, .pswd=_PSWD, .fqdn=_FQDN, .pid=_PRD_ID, .did=_DEV_ID, .skey=_SKEY);
-    NODA_DEV_ADD(DEV_IO1, noda_gpio, .pin=16, .mode=NODA_GPIO_MODE_INPUT);
-    NODA_DEV_ADD(DEV_IO3, noda_gpio, .pin=7, .mode=NODA_GPIO_MODE_OUTPUT);
+    NODA_DEV_ADD(DEV_IOT, noda_iot, .ssid=_SSID, .pswd=_PSWD, .fqdn=_FQDN,
+                .product_id=_PRD_ID, .device_id=_DEV_ID, .secret_key=_SKEY);
+    NODA_DEV_ADD(DEV_IO1, noda_gpio, .pin=1, .mode=NODA_GPIO_MODE_INPUT);
+    NODA_DEV_ADD(DEV_IO3, noda_gpio, .pin=3, .mode=NODA_GPIO_MODE_OUTPUT);
     return NODA_OK;
 }
 

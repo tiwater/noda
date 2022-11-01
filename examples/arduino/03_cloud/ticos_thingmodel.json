@@ -1,0 +1,36 @@
+[
+    {
+        "@id":"dtmi:ORGMANUAL002:n6ju;1",
+        "@type":"Interface",
+        "@context":"dtmi:dtdl:context;2",
+        "contents":
+        [
+            {
+                "@id":"dtmi:ORGMANUAL002:n6ju:switch;1",
+                "name":"switch",
+                "@type":"Property",
+                "schema":"boolean",
+                "trueName": { "zh":"开" },
+                "writable":true,
+                "falseName": { "zh":"关" },
+                "writable":true,
+                "displayName": { "en":"开关" },
+                "modeName": { "zh":"主模型" }
+            },
+            {
+                "@id":"dtmi:ORGMANUAL002:n6ju:led;1",
+                "name":"led",
+                "unit":"None",
+                "@type":"Property",
+                "schema":"boolean",
+                "trueName": { "zh":"开" },
+                "writable":true,
+                "falseName": { "zh":"关" },
+                "description": { "zh":"" },
+                "displayName": { "zh":"灯" },
+                "modeName": { "zh":"主模型" }
+            }
+        ],
+        "displayName": { "en":"自定义设备" }
+    }
+]

@@ -2,7 +2,7 @@
  * @file noda_iot
  * @brief 设备接口头文件
  * @author
- * @date 2022-10-28 23:58:46
+ * @date 2022-11-01 08:35:39
  * @copyright
  ************************************************************************/
 
@@ -22,9 +22,9 @@ NODA_DEV_CLASS_BEGIN(noda_iot);
     const char* ssid;
     const char* pswd;
     const char* fqdn;
-    const char* pid;
-    const char* did;
-    const char* skey;
+    const char* product_id;
+    const char* device_id;
+    const char* secret_key;
     NODA_VAR(bool, prop_switch);
     NODA_VAR(bool, prop_led);
 NODA_DEV_CLASS_END();
