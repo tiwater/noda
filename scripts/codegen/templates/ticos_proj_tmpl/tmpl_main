@@ -38,7 +38,7 @@ TICOS_DEV_ID_END
  * 生命周期函数，负责系统启动后的自定义初始化工作
  ************************************************************************/
 int ticos_onboot(void) {
-    TICOS_DEV_ADD(DEV_IOT, ticos_iot, .ssid=_SSID, .pswd=_PSWD, .fqdn=_FQDN, .pid=_PRD_ID, .did=_DEV_ID, .skey=_SKEY);
+    TICOS_DEV_ADD(DEV_IOT, ticos_iot, .ssid=_SSID, .pswd=_PSWD, .fqdn=_FQDN, .product_id=_PRD_ID, .device_id=_DEV_ID, .secret_key=_SKEY);
     return TICOS_OK;
 }
 

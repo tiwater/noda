@@ -71,14 +71,14 @@ int ticos_hal_mqtt_start(const char* mqtt_uri,
                          int         mqtt_port,
                          const char* mqtt_client_id,
                          const char* mqtt_user_name,
-                         const char *passwd) {
+                         const char* mqtt_password) {
     esp_mqtt_client_config_t mqtt_config = {
 #if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0, 0)
         .uri        = mqtt_uri,
         .port       = mqtt_port,
         .client_id  = mqtt_client_id,
         .username   = mqtt_user_name,
-        .password = passwd,
+        .password   = mqtt_password,
         .keepalive = 30,
         .event_handle = mqtt_event_handler,
 #else
@@ -86,7 +86,7 @@ int ticos_hal_mqtt_start(const char* mqtt_uri,
         .broker.address.port    = mqtt_port,
         .credentials.client_id  = mqtt_client_id,
         .credentials.username   = mqtt_user_name,
-        .credentials.authentication.password = passwd,
+        .credentials.authentication.password = mqtt_password,
         .session.keepalive = 30,
 #endif
     };
