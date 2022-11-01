@@ -14,13 +14,13 @@ $ . ./install.sh                            # 安装工具链，本步骤仅需�
 $ . ./export.sh                             # 在本终端建立工具链运行环境，每个新建终端都需要执行一次
 ```
   2. 将 [Ticos Framework](https://github.com/tiwater/ticos) 克隆至你的本地，并添加环境变量TICOS_PATH，将变量值配置为此目录
-  3. 将 [Ticos SDK](https://github.com/tiwater/ticos_sdk_for_c) 克隆至你的本地，并添加环境变量TICOS_SDK_PATH，将变量值配置为此目录
+  3. 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至你的本地，并添加环境变量TICOS_SDK_PATH，将变量值配置为此目录
 
 ## 编译 & 运行
 
 ```bash
-$ export TICOS_PATH=${Ticos Framework 项目根目录}
-$ export TICOS_SDK_PATH=${您的ticos_sdk_for_c项目根目录}
+$ export TICOS_PATH=${ Ticos Framework 项目根目录 }
+$ export TICOS_SDK_PATH=${ ticos-sdk-for-c 项目根目录 }
 $ cd ${您的项目根目录}                      # 然后打开main/main.c，修改文件内指定的宏，填写实际的 WiFi ssid/password 等信息
 $ idf.py --list-targets                     # 查看可选编译目标平台
 $ idf.py set-target esp32s3                 # 设置编译目标平台，此处选择了 esp32s3
