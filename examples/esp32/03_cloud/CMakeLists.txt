@@ -15,7 +15,7 @@ set (TICOS_USE_FREERTOS TRUE)
 if (DEFINED ENV{TICOS_SDK_PATH})
 set (TICOS_SDK_SRC_PATH $ENV{TICOS_SDK_PATH}/src)
 else ()
-set (TICOS_SDK_SRC_PATH ${TICOS_PATH}/../ticos-sdk-for-c/src)
+set (TICOS_SDK_SRC_PATH ${TICOS_PATH}/../ticos_sdk_for_c/src)
 endif ()
 aux_source_directory (${TICOS_SDK_SRC_PATH}   TICOS_SRCS)
 
