@@ -9,9 +9,9 @@
 #include "noda_iot.h"
 
 /* 请填充测试所需的 WiFi ssid */
-#define _SSID "3082"
+#define _SSID "SSID"
 /* 请填充测试所需的 WiFi password */
-#define _PSWD "buyaolela886"
+#define _PSWD "PASSWORD"
 /* 请填充测试所需的 mqtt fqdn */
 #define _FQDN "mqtt://hub.ticos.cn"
 /* 请填充测试所需的 product id */
