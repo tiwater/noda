@@ -3,7 +3,7 @@
  ************************************************************************/
 #define TICOS_HEARTBEAT_MILLIS 1000
 
-#include <ticos.h>
+#include <ticos_framework.h>
 #include <ticos/log.h>
 #include <ticos/bus/i2c.h>
 

@@ -1,6 +1,6 @@
 idf_component_register (
         SRCS
-        ${FULL_SRCS}
+        ${FRAMEWORK_SRCS}
         ${PROJ_SRCS}
         INCLUDE_DIRS
         ${TICOS_INCS}

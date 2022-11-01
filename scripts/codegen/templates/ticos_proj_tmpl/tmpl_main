@@ -3,7 +3,7 @@
  ************************************************************************/
 #define TICOS_HEARTBEAT_MILLIS 250
 
-#include <ticos.h>
+#include <ticos_framework.h>
 #include "ticos_iot.h"
 
 /* 请填充测试所需的 WiFi ssid */

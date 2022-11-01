@@ -1,5 +1,5 @@
-#ifndef __TICOS_H
-#define __TICOS_H
+#ifndef __TICOS_FRAMEWORK_H
+#define __TICOS_FRAMEWORK_H
 
 #include "ticos/common.h"
 #include "ticos/internal.h"
@@ -32,4 +32,4 @@ int ticos_onloop(void);
 
 #include <ticos/platform.h>
 
-#endif // __TICOS_H
+#endif // __TICOS_FRAMEWORK_H

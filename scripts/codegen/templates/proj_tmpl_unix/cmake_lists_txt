@@ -16,4 +16,4 @@ include (${TICOS_PATH}/scripts/cmake/ticos.cmake)
 
 aux_source_directory (${CMAKE_SOURCE_DIR} PROJECT_SRCS)
 include_directories (${TICOS_INCS})
-add_executable (${PROJECT_NAME} ${FULL_SRCS} ${PROJECT_SRCS})
+add_executable (${PROJECT_NAME} ${FRAMEWORK_SRCS} ${PROJECT_SRCS})

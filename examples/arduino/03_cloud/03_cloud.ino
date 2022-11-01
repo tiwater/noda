@@ -3,7 +3,7 @@
  ************************************************************************/
 #define TICOS_HEARTBEAT_MILLIS 250
 
-#include <ticos.h>
+#include <ticos_framework.h>
 #include <ticos/log.h>
 #include <ticos/device/gpio.h>
 #include "ticos_iot.h"
@@ -15,11 +15,11 @@
 /* 请填充测试所需的 mqtt fqdn */
 #define _FQDN "mqtt://hub.ticos.cn"
 /* 请填充测试所需的 product id */
-#define _PRD_ID "HITXM3K4IE"
+#define _PRD_ID "PRD_ID"
 /* 请填充测试所需的 device id */
-#define _DEV_ID "SLC1"
+#define _DEV_ID "DEV_ID"
 /* 请填充测试所需的 security key */
-#define _SKEY   "SKEY"
+#define _SKEY   "DEV_KEY"
 
 /************************************************************************
  * 向工程注册总线标识号，请将此标识号列表成员作为TICOS_BUS_ADD首参

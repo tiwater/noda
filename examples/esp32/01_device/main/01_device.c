@@ -3,7 +3,7 @@
  ************************************************************************/
 #define TICOS_HEARTBEAT_MILLIS 250
 
-#include <ticos.h>
+#include <ticos_framework.h>
 #include <ticos/log.h>
 
 #include <ticos/device/gpio.h>
