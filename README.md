@@ -10,8 +10,8 @@
      - 在 Arduino IDE 中, 选择菜单 `项目`, `加载库`, `管理库...`。
      - 搜索并安装 `Ticos Framework`。 (当前库还未过审，请参考下面步骤手动安装)
   2. 手动安装
-     - 将 [Ticos Framework](https://github.com/tiwater/ticos-framework) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
-     - 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
+     - 将 [Ticos Framework](https://github.com/tiwater/ticos_framework) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
+     - 将 [Ticos SDK](https://github.com/tiwater/ticos_sdk_for_c) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
 
 ### ESP-IDF
 
@@ -23,8 +23,8 @@ $ cd esp-idf
 $ . ./install.sh                            # 安装工具链，本步骤仅需要执行一次
 $ . ./export.sh                             # 在本终端建立工具链运行环境，每个新建终端都需要执行一次
 ```
-  2. 将 [Ticos Framework](https://github.com/tiwater/ticos-framework) 克隆至你的本地，并添加环境变量TICOS_PATH，将变量值配置为此目录
-  3. 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至你的本地，并添加环境变量TICOS_SDK_PATH，将变量值配置为此目录
+  2. 将 [Ticos Framework](https://github.com/tiwater/ticos_framework) 克隆至你的本地，并添加环境变量TICOS_PATH，将变量值配置为此目录
+  3. 将 [Ticos SDK](https://github.com/tiwater/ticos_sdk_for_c) 克隆至你的本地，并添加环境变量TICOS_SDK_PATH，将变量值配置为此目录
 
 ## 脚手架工程创建
 
