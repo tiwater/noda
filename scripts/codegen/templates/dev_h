@@ -9,7 +9,7 @@
 #ifndef __${CLS_NAME_UPPER_CASE}_H
 #define __${CLS_NAME_UPPER_CASE}_H
 
-#include "noda/device.h"
+#include "ticos/device.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,8 +18,8 @@ extern "C" {
 /************************************************************************
  * ${CLS_NAME}类定义
  ************************************************************************/
-NODA_DEV_CLASS_BEGIN(${CLS_NAME});
-${CLS_MEMBER_VAR_LIST}NODA_DEV_CLASS_END();
+TICOS_DEV_CLASS_BEGIN(${CLS_NAME});
+${CLS_MEMBER_VAR_LIST}TICOS_DEV_CLASS_END();
 
 #ifdef __cplusplus
 }

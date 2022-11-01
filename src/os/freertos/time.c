@@ -1,8 +1,8 @@
-#include "noda/time.h"
+#include "ticos/time.h"
 
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
-void noda_delay(clock_t ms) {
+void ticos_delay(clock_t ms) {
     vTaskDelay(ms / portTICK_PERIOD_MS);
 }

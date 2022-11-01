@@ -1,4 +1,4 @@
-#include "noda/nil/wifi.h"
+#include "ticos/nil/wifi.h"
 
 #include <string.h>
 
@@ -11,7 +11,7 @@
 #include <freertos/task.h>
 #include <freertos/event_groups.h>
 
-#include "noda/log.h"
+#include "ticos/log.h"
 
 static void sntp_sync(void) {
     char buf[64];
@@ -28,7 +28,7 @@ static void sntp_sync(void) {
     }
 
     strftime(buf, sizeof(buf), "%c", &timeinfo);
-    noda_logi("data/time in CST-8 is: %s", buf);
+    ticos_logi("data/time in CST-8 is: %s", buf);
 }
 
 static void sntp_start(void) {
@@ -61,20 +61,20 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         if (s_retry_num < _MAXIMUM_RETRY) {
             esp_wifi_connect();
             s_retry_num++;
-            noda_logi("retry to connect to the AP");
+            ticos_logi("retry to connect to the AP");
         } else {
             xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
         }
-        noda_logi("connect to the AP fail");
+        ticos_logi("connect to the AP fail");
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
-        noda_logi("got ip:" IPSTR, IP2STR(&event->ip_info.ip));
+        ticos_logi("got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
     }
 }
 
-void noda_wifi_start_as_sta(const char* ssid, const char* pswd) {
+void ticos_wifi_start_as_sta(const char* ssid, const char* pswd) {
     s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_netif_init());
@@ -106,7 +106,7 @@ void noda_wifi_start_as_sta(const char* ssid, const char* pswd) {
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
 
-    noda_logi("wifi_init_sta finished.");
+    ticos_logi("wifi_init_sta finished.");
 
     /* Waiting until either the connection is established (WIFI_CONNECTED_BIT) or connection failed for the maximum
      * number of re-tries (WIFI_FAIL_BIT). The bits are set by event_handler() (see above) */
@@ -119,17 +119,17 @@ void noda_wifi_start_as_sta(const char* ssid, const char* pswd) {
     /* xEventGroupWaitBits() returns the bits before the call returned, hence we can test which event actually
      * happened. */
     if (bits & WIFI_CONNECTED_BIT) {
-        noda_logi("connected to ap SSID:%s password:%s", ssid, pswd);
+        ticos_logi("connected to ap SSID:%s password:%s", ssid, pswd);
     } else if (bits & WIFI_FAIL_BIT) {
-        noda_logi("Failed to connect to SSID:%s, password:%s", ssid, pswd);
+        ticos_logi("Failed to connect to SSID:%s, password:%s", ssid, pswd);
     } else {
-        noda_loge("UNEXPECTED EVENT");
+        ticos_loge("UNEXPECTED EVENT");
     }
 
     sntp_start();
 }
 
-void noda_wifi_stop(void) {
+void ticos_wifi_stop(void) {
     esp_wifi_stop();
     esp_wifi_deinit();
 }

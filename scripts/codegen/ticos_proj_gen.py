@@ -4,10 +4,10 @@ import os, sys, re, argparse
 from datetime import datetime
 from string import Template
 
-from noda_hal_gen import generate as hal_generator
+from ticos_hal_gen import generate as hal_generator
 
 TMPL_MAIN_C = 'main_c'
-IOT_DEVNAME = 'noda_iot'
+IOT_DEVNAME = 'ticos_iot'
 
 def gen_proj_cmake_file(name, tmpl_file, to_path):
     file_name = 'CMakeLists.txt'
@@ -15,7 +15,7 @@ def gen_proj_cmake_file(name, tmpl_file, to_path):
     with open(tmpl_file, 'r') as f:
         tmpl = Template(f.read())
         lines.append(tmpl.safe_substitute(
-                    NODA_PROJ_NAME = name))
+                    TICOS_PROJ_NAME = name))
     with open(to_path + '/' + file_name, 'w') as f:
         f.writelines(lines)
 
@@ -74,7 +74,7 @@ def generate(name, platform, thingmodel=''):
     globals()['gen_%s_proj' % platform](name, tmpl_dir, date_time, thingmodel)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='noda_proj_gen')
+    parser = argparse.ArgumentParser(description='ticos_proj_gen')
     parser.add_argument('--name', type=str, help='project name')
     parser.add_argument('--platform', type=str, help='supported platform: arduino (default) | esp32 | unix')
     parser.add_argument('--thingmodel', type=str, help='the json file path of thing model')

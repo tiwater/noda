@@ -8,9 +8,9 @@
 # Methods and Functions 
 #######################################	
 
-noda_onstart	KEYWORD2
-noda_onclean	KEYWORD2
-noda_onloop	    KEYWORD2
+ticos_onstart	KEYWORD2
+ticos_onclean	KEYWORD2
+ticos_onloop	    KEYWORD2
 
 #######################################
 # Constants

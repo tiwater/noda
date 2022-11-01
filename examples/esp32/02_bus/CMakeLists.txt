@@ -4,16 +4,16 @@ cmake_minimum_required (VERSION 3.20)
 
 include ($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
-if (DEFINED ENV{NODA_PATH})
-set (NODA_PATH $ENV{NODA_PATH})
+if (DEFINED ENV{TICOS_PATH})
+set (TICOS_PATH $ENV{TICOS_PATH})
 else ()
-set (NODA_PATH ${CMAKE_SOURCE_DIR}/../../..)
+set (TICOS_PATH ${CMAKE_SOURCE_DIR}/../../..)
 endif ()
-set (NODA_PLATFORM esp32)
-set (NODA_USE_FREERTOS TRUE)
+set (TICOS_PLATFORM esp32)
+set (TICOS_USE_FREERTOS TRUE)
 
 aux_source_directory (${CMAKE_SOURCE_DIR}/main   PROJ_SRCS)
 
-include (${NODA_PATH}/scripts/cmake/noda.cmake)
+include (${TICOS_PATH}/scripts/cmake/ticos.cmake)
 
 project (02_bus)

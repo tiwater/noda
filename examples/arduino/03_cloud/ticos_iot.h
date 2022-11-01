@@ -1,36 +1,36 @@
 /************************************************************************
- * @file noda_iot
+ * @file ticos_iot
  * @brief 设备接口头文件
  * @author
  * @date 2022-11-01 08:35:39
  * @copyright
  ************************************************************************/
 
-#ifndef __NODA_IOT_H
-#define __NODA_IOT_H
+#ifndef __TICOS_IOT_H
+#define __TICOS_IOT_H
 
-#include "noda/device.h"
+#include "ticos/device.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /************************************************************************
- * noda_iot类定义
+ * ticos_iot类定义
  ************************************************************************/
-NODA_DEV_CLASS_BEGIN(noda_iot);
+TICOS_DEV_CLASS_BEGIN(ticos_iot);
     const char* ssid;
     const char* pswd;
     const char* fqdn;
     const char* product_id;
     const char* device_id;
     const char* secret_key;
-    NODA_VAR(bool, prop_switch);
-    NODA_VAR(bool, prop_led);
-NODA_DEV_CLASS_END();
+    TICOS_VAR(bool, prop_switch);
+    TICOS_VAR(bool, prop_led);
+TICOS_DEV_CLASS_END();
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __NODA_IOT_H
+#endif // __TICOS_IOT_H

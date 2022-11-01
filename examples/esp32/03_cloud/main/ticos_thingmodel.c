@@ -9,28 +9,28 @@
 
 #include "ticos_thingmodel.h"
 #include <ticos_thingmodel_type.h>
-#include <noda/device_center.h>
-#include "noda_iot.h"
+#include <ticos/device_center.h>
+#include "ticos_iot.h"
 
 bool ticos_property_switch_send(void) {
-    noda_iot_t* iot = noda_dev(0, noda_iot);
-    return noda_cache_get(iot, prop_switch);
+    ticos_iot_t* iot = ticos_dev(0, ticos_iot);
+    return ticos_cache_get(iot, prop_switch);
 }
 
 int ticos_property_switch_recv(bool switch_) {
-    noda_iot_t* iot = noda_dev(0, noda_iot);
-    noda_cache_set(iot, prop_switch, switch_);
+    ticos_iot_t* iot = ticos_dev(0, ticos_iot);
+    ticos_cache_set(iot, prop_switch, switch_);
     return 0;
 }
 
 bool ticos_property_led_send(void) {
-    noda_iot_t* iot = noda_dev(0, noda_iot);
-    return noda_cache_get(iot, prop_led);
+    ticos_iot_t* iot = ticos_dev(0, ticos_iot);
+    return ticos_cache_get(iot, prop_led);
 }
 
 int ticos_property_led_recv(bool led_) {
-    noda_iot_t* iot = noda_dev(0, noda_iot);
-    noda_cache_set(iot, prop_led, led_);
+    ticos_iot_t* iot = ticos_dev(0, ticos_iot);
+    ticos_cache_set(iot, prop_led, led_);
     return 0;
 }
 

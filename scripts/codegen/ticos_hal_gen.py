@@ -44,14 +44,14 @@ def gen_func_head_setter(_key, _id, _type):
 
 def gen_func_body_getter(cls_name, _key, _id, _type):
     ''' 根据物模型json内容返回对应的getter函数内容 '''
-    body = '\n    ' + cls_name + '_t* iot = noda_dev(0, ' + cls_name + ');' \
-         + '\n    return noda_cache_get(iot, ' + _key[:4] + '_' +  _id + ');'
+    body = '\n    ' + cls_name + '_t* iot = ticos_dev(0, ' + cls_name + ');' \
+         + '\n    return ticos_cache_get(iot, ' + _key[:4] + '_' +  _id + ');'
     return ' {' + body + '\n}\n'
 
 def gen_func_body_setter(cls_name, _key, _id, _type):
     ''' 根据物模型json内容返回对应的setter函数内容 '''
-    body = '\n    ' + cls_name + '_t* iot = noda_dev(0, ' + cls_name + ');' \
-         + '\n    noda_cache_set(iot, ' + _key[:4] + '_' + _id + ', ' + _id + '_);'
+    body = '\n    ' + cls_name + '_t* iot = ticos_dev(0, ' + cls_name + ');' \
+         + '\n    ticos_cache_set(iot, ' + _key[:4] + '_' + _id + ', ' + _id + '_);'
     return ' {' + body + '\n    return 0;\n}\n'
 
 def gen_func_decs(item, cls_name, need_getter, need_setter):
@@ -191,7 +191,7 @@ def gen_hal(cls_name, date_time, tmpl_dir, prvs='', puvs='',
     cls_name_upper_case = cls_name.upper()
 
     prvs = re.sub(r'(.*?);', r'    \1;\n', prvs)
-    puvs = re.sub(r'(.*?) (\w+);', r'    NODA_VAR(\1, \2);\n', puvs)
+    puvs = re.sub(r'(.*?) (\w+);', r'    TICOS_VAR(\1, \2);\n', puvs)
 
     dot_h_lines = []
     with open(tmpl_dir + 'dev_h', 'r') as f:
@@ -204,9 +204,9 @@ def gen_hal(cls_name, date_time, tmpl_dir, prvs='', puvs='',
     with open(r'%s/%s.h' % (to, cls_name), 'w') as f:
         f.writelines(dot_h_lines)
 
-    regex = r'NODA_VAR.*,'
-    from_cache = re.sub(regex, 'noda_sync_from_cache(self,', puvs)
-    to_cache = re.sub(regex, 'noda_post_to_cache(self,', puvs)
+    regex = r'TICOS_VAR.*,'
+    from_cache = re.sub(regex, 'ticos_sync_from_cache(self,', puvs)
+    to_cache = re.sub(regex, 'ticos_post_to_cache(self,', puvs)
 
     dot_c_lines = []
     with open(tmpl_dir + 'dev_c', 'r') as f:
@@ -236,27 +236,27 @@ def generate(name, private='', public='', thingmodel='', to='.'):
     puvs        = public
 
     inc_list    = ''
-    on_open     = '    NODA_UNUSED(self);\n'
-    on_close    = '    NODA_UNUSED(self);\n'
-    from_dev    = '    NODA_UNUSED(self);\n'
-    to_dev      = '    NODA_UNUSED(self);\n'
+    on_open     = '    TICOS_UNUSED(self);\n'
+    on_close    = '    TICOS_UNUSED(self);\n'
+    from_dev    = '    TICOS_UNUSED(self);\n'
+    to_dev      = '    TICOS_UNUSED(self);\n'
     dirty_cond  = ''
 
     if thingmodel:
         iot_puvs = gen_iot(name, date_time, tmpl_dir, thingmodel, to)
         if iot_puvs:
-            dirty_cond = re.sub('.*? (\w+);', r'noda_cache_isdirty(self, \1)\n     || ', iot_puvs)[:-9]
+            dirty_cond = re.sub('.*? (\w+);', r'ticos_cache_isdirty(self, \1)\n     || ', iot_puvs)[:-9]
             puvs += iot_puvs
     prvs = prvs.replace('; ', ';').strip()
     puvs = puvs.replace('; ', ';').strip()
     if thingmodel:
         # FIXME 临时填充，后继应该以更优雅方式自动填充
-        inc_list  = '#include <noda/nil/wifi.h>\n' \
+        inc_list  = '#include <ticos/nil/wifi.h>\n' \
                     '#include <ticos_api.h>\n'
-        on_open   = '    noda_wifi_start_as_sta(self->ssid, self->pswd);\n' \
+        on_open   = '    ticos_wifi_start_as_sta(self->ssid, self->pswd);\n' \
                     '    ticos_cloud_start(self->product_id, self->device_id, self->secret_key);\n'
         on_close += '    ticos_cloud_stop();\n' \
-                    '    noda_wifi_stop();\n'
+                    '    ticos_wifi_stop();\n'
         from_dev  = '' if not puvs else \
                     '    if (%s) {\n' \
                     '        ticos_property_report();\n' \
@@ -269,7 +269,7 @@ def generate(name, private='', public='', thingmodel='', to='.'):
                 to)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='noda_hal_gen')
+    parser = argparse.ArgumentParser(description='ticos_hal_gen')
     parser.add_argument('--name', type=str, help='class name')
     parser.add_argument('--private', type=str, default='', help='private vars')
     parser.add_argument('--public', type=str, default='', help='public vars')

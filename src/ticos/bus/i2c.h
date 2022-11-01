@@ -1,24 +1,24 @@
-#ifndef __NODA_I2C_H
-#define __NODA_I2C_H
+#ifndef __TICOS_I2C_H
+#define __TICOS_I2C_H
 
-#include "noda/bus.h"
+#include "ticos/bus.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /*************************************************************************
-  * noda_i2c类定义
+  * ticos_i2c类定义
   ************************************************************************/
-NODA_BUS_CLASS_BEGIN(noda_i2c);
+TICOS_BUS_CLASS_BEGIN(ticos_i2c);
     const uint8_t       port;
-    const noda_pin_t    sda;
-    const noda_pin_t    scl;
+    const ticos_pin_t    sda;
+    const ticos_pin_t    scl;
     uint16_t            freq;
-NODA_BUS_CLASS_END();
+TICOS_BUS_CLASS_END();
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __NODA_I2C_H
+#endif // __TICOS_I2C_H

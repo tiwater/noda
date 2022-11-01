@@ -1,10 +1,10 @@
 # coding=utf-8
 import os, sys, shutil, argparse
 
-from noda_hal_gen import generate as hal_generator
+from ticos_hal_gen import generate as hal_generator
 
 MAIN_C  = 'tmpl_main'
-DEVNAME = 'noda_iot'
+DEVNAME = 'ticos_iot'
 PRIVATE = 'const char* ssid;' \
           'const char* pswd;' \
           'const char* fqdn;' \
@@ -47,7 +47,7 @@ def generate(name, platform, thingmodel='', to='.'):
     globals()['gen_for_' + platform](name, tmpl, thingmodel, root)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='noda ticos project generator')
+    parser = argparse.ArgumentParser(description='ticos ticos project generator')
     parser.add_argument('--name', type=str, help='project name')
     parser.add_argument('--platform', type=str, help='supported platform: arduino (default) | esp32')
     parser.add_argument('--thingmodel', type=str, help='json file|data of thing model')

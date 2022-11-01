@@ -7,7 +7,7 @@
  ************************************************************************/
 
 #include "silan_sc7a20.h"
-#include "noda/bus_center.h"
+#include "ticos/bus_center.h"
 
 /**********sc7a20**********/
 #define IIC_ADDR        0x19
@@ -82,12 +82,12 @@ enum silan_sc7a20_range_t {
 };
 
 static inline int _write_byte(silan_sc7a20_t* self, uint8_t reg, uint8_t data) {
-    return noda_bus(self->bus)->write_byte(noda_bus(self->bus),
+    return ticos_bus(self->bus)->write_byte(ticos_bus(self->bus),
             self->addr, reg, data, self->rw_wait_ms);
 }
 
 static inline int _read(silan_sc7a20_t* self, uint8_t reg, uint8_t* data, size_t len) {
-    return noda_bus(self->bus)->read(noda_bus(self->bus),
+    return ticos_bus(self->bus)->read(ticos_bus(self->bus),
            self->addr, reg, data, len, self->rw_wait_ms);
 }
 
@@ -111,14 +111,14 @@ static float sb2accel(uint8_t msb, uint8_t lsb, uint8_t range) {
  * @fn silan_sc7a20_open
  * @brief 必须实现的类成员函数，负责设备“打开”操作，
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int silan_sc7a20_open(silan_sc7a20_t* self) {
-    if (noda_bus_opened(self->bus)) {
+    if (ticos_bus_opened(self->bus)) {
         if (!self->opened) {
             uint8_t id = 0;
-            noda_err_t err = _read_byte(self, _CHIP_ID_ADDR, &id);
-            if (NODA_OK == err && id == _CHIP_ID_VALUE) {
+            ticos_err_t err = _read_byte(self, _CHIP_ID_ADDR, &id);
+            if (TICOS_OK == err && id == _CHIP_ID_VALUE) {
                 err &= _write_byte(self, _CTRL1, 0x4F);   // 50Hz，低功耗，使能x, y, z轴
                 err &= _write_byte(self, _CTRL2, 0x81);   // 中断事件自动复位，配置AOI1高通滤波
                 err &= _write_byte(self, _CTRL3, 0x40);   // 在INT1 上 使能 AOI1 中断
@@ -128,23 +128,23 @@ int silan_sc7a20_open(silan_sc7a20_t* self) {
                 err &= _write_byte(self, _INT1_CFG, 0x7F);// 在INT1 上配置3轴高低事件或者6D方向运动识别使能
                 err &= _write_byte(self, _INT1_THS, 0x03);// 在INT1 上配置中断阈值为3
                 err &= _write_byte(self, _INT1_DUR, 0x03);// 在INT1 上配置中断事件最小持续时间为8 单位步进/以ODR为时钟
-                self->opened = (NODA_OK == err);
+                self->opened = (TICOS_OK == err);
             }
         }
     }
-    return self->opened ? NODA_OK : NODA_FAIL;
+    return self->opened ? TICOS_OK : TICOS_FAIL;
 }
 
 /************************************************************************
  * @fn silan_sc7a20_close
  * @brief 必须实现的类成员函数，负责设备“关闭”操作，
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int silan_sc7a20_close(silan_sc7a20_t* self) {
     // TODO
     self->opened = false;
-    return NODA_OK;
+    return TICOS_OK;
 }
 
 /************************************************************************
@@ -152,13 +152,13 @@ int silan_sc7a20_close(silan_sc7a20_t* self) {
  * @brief 必须实现的类成员函数，系统改变“电源模式”时被动触发，
  * @param[in] self 类实例
  * @param[in] mode 更改后的电源模式
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
-int silan_sc7a20_power_mode_changed(silan_sc7a20_t* self, noda_power_mode_t mode) {
-    /* 填充代码内容后请删除NODA_UNUSED函数调用 */
-    NODA_UNUSED(self);
-    NODA_UNUSED(mode);
-    return NODA_OK;
+int silan_sc7a20_power_mode_changed(silan_sc7a20_t* self, ticos_power_mode_t mode) {
+    /* 填充代码内容后请删除TICOS_UNUSED函数调用 */
+    TICOS_UNUSED(self);
+    TICOS_UNUSED(mode);
+    return TICOS_OK;
 }
 
 /************************************************************************
@@ -166,13 +166,13 @@ int silan_sc7a20_power_mode_changed(silan_sc7a20_t* self, noda_power_mode_t mode
  * @brief 必须实现的类成员函数，负责设备数据从缓存复制到应用层的复制操作
  * @attention 此函数为自动生成，请不要更改函数内容
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int silan_sc7a20_sync_from_cache(silan_sc7a20_t* self) {
-    noda_sync_from_cache(self, x);
-    noda_sync_from_cache(self, y);
-    noda_sync_from_cache(self, z);
-    return NODA_OK;
+    ticos_sync_from_cache(self, x);
+    ticos_sync_from_cache(self, y);
+    ticos_sync_from_cache(self, z);
+    return TICOS_OK;
 }
 
 /************************************************************************
@@ -180,50 +180,50 @@ int silan_sc7a20_sync_from_cache(silan_sc7a20_t* self) {
  * @brief 必须实现的类成员函数，负责设备数据从应用层到缓存的复制操作
  * @attention 此函数为自动生成，请不要更改函数内容
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
 int silan_sc7a20_post_to_cache(silan_sc7a20_t* self) {
-    noda_post_to_cache(self, x);
-    noda_post_to_cache(self, y);
-    noda_post_to_cache(self, z);
-    return NODA_OK;
+    ticos_post_to_cache(self, x);
+    ticos_post_to_cache(self, y);
+    ticos_post_to_cache(self, z);
+    return TICOS_OK;
 }
 
 /************************************************************************
- * @fn silan_sc7a20_sync_cache_from_dev
+ * @fn silan_sc7a20_sync_from_dev
  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
-int silan_sc7a20_sync_cache_from_dev(silan_sc7a20_t* self) {
+int silan_sc7a20_sync_from_dev(silan_sc7a20_t* self) {
     uint8_t buf[6] = { 0 };
     uint8_t range = SILAN_SC7A20_RANGE_4G;
-    noda_err_t err = _read(self, _OUT_X_L | 0x80, buf, 6);
-    if (NODA_OK == err) {
+    ticos_err_t err = _read(self, _OUT_X_L | 0x80, buf, 6);
+    if (TICOS_OK == err) {
         float x = sb2accel(buf[1], buf[0], range);
         float y = sb2accel(buf[3], buf[2], range);
         float z = sb2accel(buf[5], buf[4], range);
 
-        noda_cache_set(self, x, x);
-        noda_cache_set(self, y, y);
-        noda_cache_set(self, z, z);
+        ticos_cache_set(self, x, x);
+        ticos_cache_set(self, y, y);
+        ticos_cache_set(self, z, z);
     }
     return err;
 }
 
 /************************************************************************
- * @fn silan_sc7a20_post_cache_to_dev
+ * @fn silan_sc7a20_post_to_dev
  * @brief 必须实现的类成员函数，负责设备数据从缓存到传感器的提交操作
  * @param[in] self 类实例
- * @return 返回操作结果 NODA_OK: 成功, NODA_FAIL: 失败
+ * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
  ************************************************************************/
-int silan_sc7a20_post_cache_to_dev(silan_sc7a20_t* self) {
-    /* 填充代码内容后请删除NODA_UNUSED调用 */
-    NODA_UNUSED(self);
+int silan_sc7a20_post_to_dev(silan_sc7a20_t* self) {
+    /* 填充代码内容后请删除TICOS_UNUSED调用 */
+    TICOS_UNUSED(self);
     // 用法用例
-    // if (noda_cache_isdirty(self, level)) {  // 检查缓存数值已经被应用层更新
-    //    bool level = noda_cache_get(self, level); // 从缓存获取数值
-    //    noda_logd("%s level update to %d", self->name, level); // 提交到设备
+    // if (ticos_cache_isdirty(self, level)) {  // 检查缓存数值已经被应用层更新
+    //    bool level = ticos_cache_get(self, level); // 从缓存获取数值
+    //    ticos_logd("%s level update to %d", self->name, level); // 提交到设备
     // }
-    return NODA_OK;
+    return TICOS_OK;
 }
