@@ -17,7 +17,7 @@ $ . ./export.sh                             # 在本终端建立工具链运行�
 
 ```bash
 $ export NODA_PATH=您的noda项目根目录
-$ export TICOS_PATH=您的ticos-sdk-for-c项目根目录
+$ export TICOS_SDK_PATH=您的ticos-sdk-for-c项目根目录
 $ cd ${NODA_PATH}/examples/esp32/03_cloud   # 然后打开main/main.c，修改文件内指定的宏，填写实际的 WiFi ssid/password
 $ idf.py --list-targets                     # 查看可选编译目标平台
 $ idf.py set-target esp32s3                 # 设置编译目标平台，此处选择了 esp32s3

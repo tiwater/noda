@@ -5,5 +5,5 @@ idf_component_register (
         ${PROJ_SRCS}
         INCLUDE_DIRS
         ${NODA_INCS}
-        ${TICOS_SRC_DIR}
+        ${TICOS_SDK_SRC_PATH}
         .)
