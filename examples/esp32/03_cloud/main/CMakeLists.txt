@@ -1,9 +1,9 @@
 idf_component_register (
         SRCS
         ${FRAMEWORK_SRCS}
-        ${TICOS_SRCS}
+        ${TICOS_SDK_SRCS}
         ${PROJ_SRCS}
         INCLUDE_DIRS
-        ${TICOS_INCS}
-        ${TICOS_SDK_SRC_PATH}
+        ${FRAMEWORK_INCS}
+        ${TICOS_SDK_INCS}
         .)

@@ -4,24 +4,29 @@ cmake_minimum_required (VERSION 3.20)
 
 include ($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
-if (DEFINED ENV{TICOS_PATH})
-set (TICOS_PATH $ENV{TICOS_PATH})
-else ()
-set (TICOS_PATH ${CMAKE_SOURCE_DIR}/../../..)
-endif ()
 set (TICOS_PLATFORM esp32)
 set (TICOS_USE_FREERTOS TRUE)
 
-if (DEFINED ENV{TICOS_SDK_PATH})
-set (TICOS_SDK_SRC_PATH $ENV{TICOS_SDK_PATH}/src)
+set (TICOS_FRAMEWORK ticos-framework)
+set (TICOS_CLOUD_SDK ticos-sdk-for-c)
+
+message (STATUS "Looking for TICOS_FRAMEWORK_PATH")
+if (DEFINED ENV{TICOS_FRAMEWORK_PATH})
+set (TICOS_FRAMEWORK_PATH $ENV{TICOS_FRAMEWORK_PATH})
+message (STATUS "Found TICOS_FRAMEWORK_PATH from $ENV{TICOS_FRAMEWORK_PATH}")
+elseif (EXISTS ${CMAKE_SOURCE_DIR}/../../../../${TICOS_FRAMEWORK})
+set (TICOS_FRAMEWORK_PATH ${CMAKE_SOURCE_DIR}/../../../../${TICOS_FRAMEWORK})
+message (STATUS "Found TICOS_FRAMEWORK_PATH from the parent direcroty")
+elseif (EXISTS $ENV{HOME}/.ticos/packages/${TICOS_FRAMEWORK})
+set (TICOS_FRAMEWORK_PATH $ENV{HOME}/.ticos/packages/${TICOS_FRAMEWORK})
+message (STATUS "Found TICOS_FRAMEWORK_PATH from the default ticos direcroty")
 else ()
-set (TICOS_SDK_SRC_PATH ${TICOS_PATH}/../ticos-sdk-for-c/src)
+message (FATAL_ERROR "TICOS_FRAMEWORK_PATH not found")
 endif ()
-aux_source_directory (${TICOS_SDK_SRC_PATH}   TICOS_SRCS)
 
-aux_source_directory (${CMAKE_SOURCE_DIR}/main   PROJ_SRCS)
+include (${TICOS_FRAMEWORK_PATH}/scripts/cmake/ticos.cmake)
 
-include (${TICOS_PATH}/scripts/cmake/ticos.cmake)
+aux_source_directory (${CMAKE_SOURCE_DIR}/main  PROJ_SRCS)
 
 project (03_cloud)
 

@@ -16,9 +16,9 @@ $ . ./export.sh                             # 在本终端建立工具链运行�
 ## 编译 & 运行
 
 ```bash
-$ export TICOS_PATH=您的 Ticos Framework 项目根目录
+$ export TICOS_FRAMEWORK_PATH=您的 Ticos Framework 项目根目录
 $ export TICOS_SDK_PATH=您的 ticos-sdk-for-c 项目根目录
-$ cd ${TICOS_PATH}/examples/esp32/03_cloud   # 然后打开main/main.c，修改文件内指定的宏，填写实际的 WiFi ssid/password
+$ cd ${TICOS_FRAMEWORK_PATH}/examples/esp32/03_cloud   # 然后打开main/main.c，修改文件内指定的宏，填写实际的 WiFi ssid/password
 $ idf.py --list-targets                     # 查看可选编译目标平台
 $ idf.py set-target esp32s3                 # 设置编译目标平台，此处选择了 esp32s3
 $ idf.py build                              # 编译项目

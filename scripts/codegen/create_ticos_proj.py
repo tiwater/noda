@@ -5,6 +5,7 @@ from datetime import datetime
 from string import Template
 from create_ticos_hal import generate as hal_generator
 
+INSTLER = 'install.' 'sh' # TODO the file ext name should be detected by os
 MAIN_C  = 'main_c'
 DEVNAME = 'ticos_iot'
 PRIVATE = 'const char* ssid;' \
@@ -43,13 +44,15 @@ def copy_file(src, dst):
     with open(dst, 'w') as f:
         f.write(s)
 
-def gen_cmake_file(name, tmpl_dir, to_path):
+def gen_cmake_file(name, thingmodel, tmpl_dir, to_path):
     file_name = 'CMakeLists.txt'
     lines = []
+    sdk = '' if not thingmodel else 'set (TICOS_CLOUD_SDK ticos-sdk-for-c)\n'
     with open(tmpl_dir + '/' + file_name, 'r') as f:
         tmpl = Template(f.read())
         lines.append(tmpl.safe_substitute(
-                    TICOS_PROJ_NAME = name))
+                    TICOS_PROJ_NAME     = name,
+                    TICOS_USE_CLOUD_SDK = sdk))
     with open(to_path + '/' + file_name, 'w') as f:
         f.writelines(lines)
 
@@ -83,8 +86,9 @@ def gen_codes(name, ext, tmpl, thingmodel, to):
 
 def gen_for_esp32(name, tmpl, thingmodel, to):
     code_path = to + '/main'
-    gen_cmake_file(name, to, to)
-    gen_cmake_file(name, code_path, code_path)
+    copy_file(tmpl + '/tools/' + INSTLER, to + '/' + INSTLER)
+    gen_cmake_file(name, thingmodel, to, to)
+    gen_cmake_file(name, thingmodel, code_path, code_path)
     gen_codes(name, 'c', tmpl, thingmodel, code_path)
 
 def gen_for_arduino(name, tmpl, thingmodel, to):
