@@ -65,7 +65,6 @@ typedef struct ticos_device_t {
         ticos_set((self), v##_cache, (self)->_##v##_var)
 
 /**
-  * @fn ticos_isdirty
   * @brief 判断设备实例的 public 成员变量是否有刷新
   * @param[in] self 设备实例
   * @param[in] v 成员变量，仅接受实例的 public 成员变量
@@ -75,7 +74,6 @@ typedef struct ticos_device_t {
     ((self)->_##v##_dirty)
 
 /**
-  * @fn ticos_get
   * @brief 获取设备实例的 public 成员变量值
   * @param[in] self 设备实例
   * @param[in] v 成员变量，仅接受实例的 public 成员变量
@@ -85,7 +83,6 @@ typedef struct ticos_device_t {
     ((self)->_##v##_dirty = false, (self)->_##v##_var)
 
 /**
-  * @fn ticos_set
   * @brief 设置设备实例的 public 成员变量值
   * @param[in] self 设备实例
   * @param[in] v 成员变量，仅接受实例的 public 成员变量
@@ -98,7 +95,6 @@ typedef struct ticos_device_t {
     }
 
 /**
-  * @fn ticos_cache_isdirty
   * @brief 判断设备实例的 public 成员变量缓存是否有刷新
   * @attention 设备接口实现内部专用，请勿用于外部
   * @param[in] self 设备实例
@@ -109,7 +105,6 @@ typedef struct ticos_device_t {
     ticos_isdirty((self), v##_cache)
 
 /**
-  * @fn ticos_cache_get
   * @brief 获取设备实例的 public 成员变量值缓存
   * @attention 设备接口实现内部专用，请勿用于外部
   * @param[in] self 设备实例
@@ -120,7 +115,6 @@ typedef struct ticos_device_t {
     ticos_get((self), v##_cache)
 
 /**
-  * @fn ticos_cache_set
   * @brief 设置设备实例的 public 成员变量值缓存
   * @attention 设备接口实现内部专用，请勿用于外部
   * @param[in] self 设备实例

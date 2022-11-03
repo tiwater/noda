@@ -16,17 +16,17 @@ extern "C" {
 #endif
 
 /************************************************************************
- * ticos_iot类定义
+ * ticos_iot 类，用于使用 WIFI 的 IOT 设备
  ************************************************************************/
 TICOS_DEV_CLASS_BEGIN(ticos_iot);
-    const char* ssid;
-    const char* pswd;
-    const char* fqdn;
-    const char* product_id;
-    const char* device_id;
-    const char* secret_key;
-    TICOS_VAR(bool, prop_switch);
-    TICOS_VAR(bool, prop_led);
+    const char* ssid;               /**< WIFI ssid */
+    const char* pswd;               /**< WIFI password */
+    const char* fqdn;               /**< mqtt fqdn 完全限定的域名 */
+    const char* product_id;         /**< mqtt 产品 id */
+    const char* device_id;          /**< mqtt 设备 id */
+    const char* secret_key;         /**< mqtt 设备 密钥 */
+    TICOS_VAR(bool, prop_switch);   /**< 物模型可用属性：开关 */
+    TICOS_VAR(bool, prop_led);      /**< 物模型可用属性：led灯 */
 TICOS_DEV_CLASS_END();
 
 #ifdef __cplusplus

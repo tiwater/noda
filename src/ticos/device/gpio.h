@@ -15,19 +15,22 @@
 extern "C" {
 #endif
 
+/*************************************************************************
+  * ticos_gpio_mode，可选的 GPIO 引脚模式
+  ************************************************************************/
 enum ticos_gpio_mode_t {
-    TICOS_GPIO_MODE_DISABLE,
-    TICOS_GPIO_MODE_INPUT,
-    TICOS_GPIO_MODE_OUTPUT,
+    TICOS_GPIO_MODE_DISABLE,    /**< GPIO 模式，将引脚配置为无效 */
+    TICOS_GPIO_MODE_INPUT,      /**< GPIO 模式，将引脚配置为输入 */
+    TICOS_GPIO_MODE_OUTPUT,     /**< GPIO 模式，将引脚配置为输出 */
 };
 
 /*************************************************************************
-  * ticos_gpio类定义
+  * ticos_gpio 类，用于将引脚配置为 GPIO
   ************************************************************************/
 TICOS_DEV_CLASS_BEGIN(ticos_gpio);
-    ticos_pin_t pin;
-    enum ticos_gpio_mode_t mode;
-    TICOS_VAR(bool, level);
+    ticos_pin_t pin;                /**< GPIO 引脚号 */
+    enum ticos_gpio_mode_t mode;    /**< GPIO 引脚模式，可选 TICOS_GPIO_MODE_DISABLE, TICOS_GPIO_MODE_INPUT 或 TICOS_GPIO_MODE_OUTPUT */
+    TICOS_VAR(bool, level);         /**< GPIO 引脚状态，true: 拉高，false: 拉低 */
 TICOS_DEV_CLASS_END();
 
 #ifdef __cplusplus

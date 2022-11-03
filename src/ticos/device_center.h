@@ -24,7 +24,7 @@ extern ticos_device_t* ticos_device_list[];
     TICOS_NDEV, \
     };
 
-#define TICOS_DEV_ADD(_id, dev, ...) \
+#define TICOS_DEV(_id, dev, ...) \
     do { \
         static dev##_t dev##_id = { \
             TICOS_DEV_SET_VTABLE(dev), .name = #_id, __VA_ARGS__ \
@@ -33,7 +33,6 @@ extern ticos_device_t* ticos_device_list[];
     } while (0)
 
 /**
-  * @fn ticos_dev
   * @brief 通过设备 ID 检索 设备句柄
   * @param[in] id 设备 ID
   * @param[in] type 设备类型
@@ -43,7 +42,6 @@ extern ticos_device_t* ticos_device_list[];
     ((type##_t*)(ticos_device_list[id]))
 
 /**
-  * @fn ticos_dev_name
   * @brief 通过设备 ID 检索 设备名
   * @return 设备名
   */
@@ -51,7 +49,6 @@ extern ticos_device_t* ticos_device_list[];
     (ticos_device_list[id]->name)
 
 /**
-  * @fn ticos_dev_isdirty
   * @brief 判断设备实例的 public 成员变量是否有刷新
   * @param[in] id 设备 ID
   * @param[in] type 设备类型
@@ -62,7 +59,6 @@ extern ticos_device_t* ticos_device_list[];
     (((type##_t*) ticos_device_list[id])->_##v##_dirty)
 
 /**
-  * @fn ticos_dev_getval
   * @brief 获取设备实例的 public 成员变量值
   * @param[in] id 设备 ID
   * @param[in] type 设备类型
@@ -73,9 +69,9 @@ extern ticos_device_t* ticos_device_list[];
     (((type##_t*) ticos_device_list[id])->_##v##_var)
 
 /**
-  * @fn ticos_dev_setval
   * @brief 设置设备实例的 public 成员变量值
   * @param[in] self 设备 ID
+  * @param[in] type 设备类型
   * @param[in] v 成员变量，仅接受实例的 public 成员变量
   * @param[in] d 待更新的变量值输入
   */

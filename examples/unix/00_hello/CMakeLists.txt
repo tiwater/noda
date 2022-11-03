@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.20)
 project (00_hello)
 
 # compiling flags
-set (CMAKE_C_STANDARD 11)
+set (CMAKE_C_STANDARD 99)
 add_definitions (-Wall -Werror -Wextra -Wstrict-prototypes)
 
 if (DEFINED ENV{TICOS_PATH})

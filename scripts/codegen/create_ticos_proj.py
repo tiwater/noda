@@ -31,7 +31,8 @@ IOT_DEF = '#include "ticos_iot.h"\n' \
 BUS_IDS = ''
 DEV_IDS = '    DEV_IOT,\n'
 BUS_ADD = ''
-DEV_ADD = '    TICOS_DEV_ADD(DEV_IOT, ticos_iot, .ssid=_SSID, .pswd=_PSWD, .fqdn=_FQDN,\n    .product_id=_PRD_ID, .device_id=_DEV_ID, .secret_key=_SKEY);\n'
+DEV_ADD = '    TICOS_DEV(DEV_IOT, ticos_iot, .ssid=_SSID, .pswd=_PSWD, .fqdn=_FQDN,\n' \
+          '            .product_id=_PRD_ID, .device_id=_DEV_ID, .secret_key=_SKEY);\n'
 
 def copy_file(src, dst):
     s = ''
