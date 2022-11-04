@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
     branches:
-      masa-patch-1
+      masa-patch-1-1
 jobs:
   publish-codegen:
     runs-on: ubuntu-latest
