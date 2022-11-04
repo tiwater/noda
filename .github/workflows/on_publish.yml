@@ -1,0 +1,37 @@
+name: on_ticos_framework_publish
+run-name: ${{ github.actor }} is publishing the codegen path 🚀
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - scripts/codegen
+jobs:
+  publish-codegen:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@master
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Compress codegen
+        run: |
+          echo "🖥️ The workflow is now ready to compress codegen and move it to the project root path."
+          cd scripts
+          zip -r codegen.zip codegen
+          mv codegen.zip ../
+          cd -
+      - run: echo "🚀 Upload the codegen.zip to the artifact"
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: codegen.zip
+          path: codegen.zip
+      - name: Cleanup
+        run: rm codegen.zip
+      - run: echo "🍏 This job's status is ${{ job.status }}."
