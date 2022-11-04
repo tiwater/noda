@@ -6,7 +6,7 @@ on:
       - masa-patch-1-1
     paths:
       - scripts/codegen
-      - .github/workflows
+      - .github/workflows/on_publish.yml
 jobs:
   publish-codegen:
     runs-on: ubuntu-latest
