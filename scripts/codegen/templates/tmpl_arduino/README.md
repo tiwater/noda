@@ -13,11 +13,9 @@ Ticos-SDK 项目模板 for arduino
 ## 编译 & 运行
 
 ```bash
-$ cd ${Ticos Framework 项目根目录}/scripts/codegen                          # 此步骤非必要，仅为后继命令长度短一点
-$ python3 -B create_ticos_proj.py --help                        # 查看完整配置项
-$ python3 -B create_ticos_proj.py --name='hello_ticos' --thingmodel='templates/thing_model.json'
-$ arduino-cli compile --fqbn esp32:esp32:esp32s3 ${本工程路径}  # 编译工程，请根据实际版型填写--fqbn参数
-$ arduino-cli upload --fqbn esp32:esp32:esp32s3 ${本工程路径}   # 向/dev/ttyACM0端口烧录固件
+$ cd ${您的工程的父目录}
+$ arduino-cli compile --fqbn esp32:esp32:esp32s3 ${本工程名}    # 编译工程，请根据实际版型填写--fqbn参数
+$ arduino-cli upload --fqbn esp32:esp32:esp32s3 ${本工程名}     # 向/dev/ttyACM0端口烧录固件
 $ arduino-cli monitor -p /dev/ttyACM0                           # 打开/dev/ttyACM0端口查看固件的打印信息
 ```
 

@@ -10,8 +10,8 @@
      - 在 Arduino IDE 中, 选择菜单 `项目`, `加载库`, `管理库...`。
      - 搜索并安装 `Ticos Framework`。 (当前库还未过审，请参考下面步骤手动安装)
   2. 手动安装
-     - 将 [Ticos Framework](https://github.com/tiwater/ticos-framework) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
-     - 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至 Arduino 库目录，通常该目录在 ～/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
+     - 将 [Ticos Framework](https://github.com/tiwater/ticos-framework) 克隆至 Arduino 库目录，通常该目录在 ~/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
+     - 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至 Arduino 库目录，通常该目录在 ~/Documents/Arduino/libraries，请根据你的开发平台中 Arduino IDE 的配置确定。
 
 ### ESP-IDF
 
@@ -23,8 +23,9 @@ $ cd esp-idf
 $ . ./install.sh                            # 安装工具链，本步骤仅需要执行一次
 $ . ./export.sh                             # 在本终端建立工具链运行环境，每个新建终端都需要执行一次
 ```
-  2. 将 [Ticos Framework](https://github.com/tiwater/ticos-framework) 克隆至你的本地，并添加环境变量TICOS_PATH，将变量值配置为此目录
-  3. 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至你的本地，并添加环境变量TICOS_SDK_PATH，将变量值配置为此目录
+  2. 运行工程目录下 install.sh 脚本自动安装 Ticos 相关工具库；或者手动进行以下两步
+  3. 将 [Ticos Framework](https://github.com/tiwater/ticos-framework) 克隆至你的本地，并添加环境变量TICOS_FRAMEWORK_PATH，将变量值配置为此目录
+  4. 将 [Ticos SDK](https://github.com/tiwater/ticos-sdk-for-c) 克隆至你的本地，并添加环境变量TICOS_SDK_PATH，将变量值配置为此目录
 
 ## 脚手架工程创建
 
@@ -86,8 +87,8 @@ $ make
 以 Ticos framework 项目目录下 examples/unix/00_hello 例程为例：
 
 ```bash
-$ export TICOS_PATH=您的 Ticos Framework 项目根目录
-$ cd ${TICOS_PATH}/examples/examples/00_hello
+$ export TICOS_FRAMEWORK_PATH=您的 Ticos Framework 项目根目录
+$ cd ${TICOS_FRAMEWORK_PATH}/examples/examples/00_hello
 $ cmake -B build
 $ cd build
 $ make
@@ -99,8 +100,8 @@ $ ./00_hello
 以 Ticos framework 项目目录下 examples/esp32/00_hello 例程为例：
 
 ```bash
-$ export TICOS_PATH=您的 Ticos Framework 项目根目录
-$ cd ${TICOS_PATH}/examples/esp32/00_hello
+$ export TICOS_FRAMEWORK_PATH=您的 Ticos Framework 项目根目录
+$ cd ${TICOS_FRAMEWORK_PATH}/examples/esp32/00_hello
 $ idf.py --list-targets                     # 查看可选编译目标平台
 $ idf.py set-target esp32s3                 # 设置编译目标平台，此处选择了 esp32s3
 $ idf.py build                              # 编译项目
@@ -114,8 +115,8 @@ $ idf.py monitor -p /dev/ttyACM0 -b 115200  # 以 115200 的波特率打开 /dev
 注：以下为使用arduino-cli的编译及运行示例，使用arduino-ide的开发者请直接打开项目examples/arduino内例程即可
 
 ```bash
-$ export TICOS_PATH=您的 Ticos Framework 项目根目录
-$ cd ${TICOS_PATH}/examples/arduino                          # 进入例程列表目录
+$ export TICOS_FRAMEWORK_PATH=您的 Ticos Framework 项目根目录
+$ cd ${TICOS_FRAMEWORK_PATH}/examples/arduino                          # 进入例程列表目录
 $ arduino-cli compile --fqbn esp32:esp32:esp32s3 00_hello   # 编译00_hello工程，请根据实际版型填写--fqbn参数
 $ arduino-cli upload --fqbn esp32:esp32:esp32s3 00_hello    # 向/dev/ttyACM0端口烧录固件
 $ arduino-cli monitor -p /dev/ttyACM0                       # 打开/dev/ttyACM0端口查看固件的打印信息

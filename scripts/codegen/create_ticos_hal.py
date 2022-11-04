@@ -274,7 +274,7 @@ def generate(name, private='', public='', thingmodel='', to='.'):
                 to)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='ticos_hal_gen')
+    parser = argparse.ArgumentParser(description='create_ticos_hal')
     parser.add_argument('--name', type=str, help='class name')
     parser.add_argument('--private', type=str, default='', help='private vars')
     parser.add_argument('--public', type=str, default='', help='public vars')

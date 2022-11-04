@@ -29,7 +29,7 @@ TICOS_BUS_ID_BEGIN
 TICOS_BUS_ID_END
 
 /************************************************************************
- * 向工程注册设备标识号，请将此标识号列表成员作为TICOS_DEV_ADD首参
+ * 向工程注册设备标识号，请将此标识号列表成员作为TICOS_DEV首参
  ************************************************************************/
 TICOS_DEV_ID_BEGIN
     DEV_IOT,
@@ -42,10 +42,10 @@ TICOS_DEV_ID_END
  * 生命周期函数，负责系统启动后的自定义初始化工作
  ************************************************************************/
 int ticos_onboot(void) {
-    TICOS_DEV_ADD(DEV_IOT, ticos_iot, .ssid=_SSID, .pswd=_PSWD, .fqdn=_FQDN,
+    TICOS_DEV(DEV_IOT, ticos_iot, .ssid=_SSID, .pswd=_PSWD, .fqdn=_FQDN,
                 .product_id=_PRD_ID, .device_id=_DEV_ID, .secret_key=_SKEY);
-    TICOS_DEV_ADD(DEV_IO1, ticos_gpio, .pin=1, .mode=TICOS_GPIO_MODE_INPUT);
-    TICOS_DEV_ADD(DEV_IO3, ticos_gpio, .pin=3, .mode=TICOS_GPIO_MODE_OUTPUT);
+    TICOS_DEV(DEV_IO1, ticos_gpio, .pin=1, .mode=TICOS_GPIO_MODE_INPUT);
+    TICOS_DEV(DEV_IO3, ticos_gpio, .pin=3, .mode=TICOS_GPIO_MODE_OUTPUT);
     return TICOS_OK;
 }
 

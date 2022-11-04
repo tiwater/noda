@@ -18,7 +18,7 @@ TICOS_BUS_ID_BEGIN
 TICOS_BUS_ID_END
 
 /************************************************************************
- * 向工程注册设备标识号，请将此标识号列表成员作为TICOS_DEV_ADD首参
+ * 向工程注册设备标识号，请将此标识号列表成员作为TICOS_DEV首参
  ************************************************************************/
 TICOS_DEV_ID_BEGIN
     GSENSOR,
@@ -30,7 +30,7 @@ TICOS_DEV_ID_END
  ************************************************************************/
 int ticos_onboot(void) {
     TICOS_BUS_ADD(I2C0, ticos_i2c, .port=0, .sda=7, .scl=6, .freq=100);
-    TICOS_DEV_ADD(GSENSOR, silan_sc7a20, .bus=I2C0, .addr=0x19, .rw_wait_ms=1000);
+    TICOS_DEV(GSENSOR, silan_sc7a20, .bus=I2C0, .addr=0x19, .rw_wait_ms=1000);
     return TICOS_OK;
 }
 
