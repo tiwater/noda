@@ -3,7 +3,9 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
     branches:
-      masa-patch-1-1
+      - masa-patch-1-1
+    paths:
+      - src
 jobs:
   publish-codegen:
     runs-on: ubuntu-latest
@@ -19,10 +21,12 @@ jobs:
           ls ${{ github.workspace }}
       - name: Compress codegen
         run: |
+          echo "🖥️ The workflow is now ready to compress codegen and move it to the project root path."
           cd scripts
           zip -r codegen.zip codegen
           mv codegen.zip ../
           cd -
+      - run: echo "🖥️ Upload the codegen.zip to the artifact"
       - name: Archive production artifacts
         uses: actions/upload-artifact@master
         with:
