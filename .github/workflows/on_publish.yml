@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - scripts/codegen
+      - 'scripts/codegen/**'
+      - '.github/workflows/on_publish.yml'
 jobs:
   publish-codegen:
     runs-on: ubuntu-latest
