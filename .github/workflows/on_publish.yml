@@ -1,12 +1,11 @@
 name: on_ticos_framework_publish
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} is publishing the codegen path 🚀
 on:
   push:
     branches:
-      - masa-patch-1-1
+      - main
     paths:
       - scripts/codegen
-      - .github/workflows/on_publish.yml
 jobs:
   publish-codegen:
     runs-on: ubuntu-latest
@@ -27,7 +26,7 @@ jobs:
           zip -r codegen.zip codegen
           mv codegen.zip ../
           cd -
-      - run: echo "🖥️ Upload the codegen.zip to the artifact"
+      - run: echo "🚀 Upload the codegen.zip to the artifact"
       - name: Archive production artifacts
         uses: actions/upload-artifact@master
         with:
