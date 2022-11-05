@@ -24,13 +24,14 @@ iot_type_map = {
     "duration" :"time_t"
 }
 
-def type_to_c_type(t):
+def schema_to_c_type(t):
     ''' 根据iot_type_map字典返回 c语言类型 '''
     if type(t) == type({}):
         t = t[TYPE]
     return iot_type_map[t]
 
 def gen_iot_val_type(t):
+    ''' 根据实际数据类型返回对应的TICOS_VAL_TYPE '''
     if type(t) == type({}):
         t = t[TYPE]
     return 'TICOS_VAL_TYPE_' + t.upper()
@@ -64,7 +65,7 @@ def gen_func_decs(item, cls_name, need_getter, need_setter):
     decs = ''
     _k = item[TYPE]
     _i = item[NAME]
-    _t = type_to_c_type(item[SCHEMA])
+    _t = schema_to_c_type(item[SCHEMA])
     if need_getter:
         decs += gen_func_head_getter(_k, _i, _t) + ';'
     if need_setter:
@@ -76,7 +77,7 @@ def gen_func_defs(item, cls_name, need_getter, need_setter):
     defs = ''
     _k = item[TYPE]
     _i = item[NAME]
-    _t = type_to_c_type(item[SCHEMA])
+    _t = schema_to_c_type(item[SCHEMA])
     if need_getter:
         head = gen_func_head_getter(_k, _i, _t)
         defs += head + gen_func_body_getter(cls_name, _k, _i, _t)
@@ -111,7 +112,7 @@ def gen_puvs(item):
     ''' 根据物模型json文件返回对应的成员变量 '''
     _k = item[TYPE]
     _i = item[NAME]
-    _t = type_to_c_type(item[SCHEMA])
+    _t = schema_to_c_type(item[SCHEMA])
     return  _t + ' ' + _k[:4] + '_' + _i + ';'
 
 def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
