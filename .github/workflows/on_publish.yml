@@ -14,36 +14,12 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@master
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - name: Compress codegen
-        run: |
-          echo "🖥️ The workflow is now ready to compress codegen and move it to the project root path."
-          cd scripts
-          zip -r codegen.zip codegen
-          mv codegen.zip ../
-          cd -
       - run: echo "🚀 create release"
       - name: Create release
-        id: create_release
-        uses: actions/create-release@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: meeDamian/github-release@master
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      - run: echo "🚀 upload release"
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./codegen.zip
-          asset_name: codegen.zip
-      - name: Cleanup
-        run: rm codegen.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+          gzip: folders
+          files: scripts/codegen/
+          allow_override: true
       - run: echo "🍏 This job's status is ${{ job.status }}."
