@@ -10,7 +10,7 @@
 #include "silan_sc7a20.h"
 
 /************************************************************************
- * 向工程注册总线标识号，请将此标识号列表成员作为TICOS_BUS_ADD首参
+ * 向工程注册总线标识号，请将此标识号列表成员作为TICOS_BUS首参
  ************************************************************************/
 TICOS_BUS_ID_BEGIN
     I2C0,
@@ -29,7 +29,7 @@ TICOS_DEV_ID_END
  * 生命周期函数，负责系统启动后的自定义初始化工作
  ************************************************************************/
 int ticos_onboot(void) {
-    TICOS_BUS_ADD(I2C0, ticos_i2c, .port=0, .sda=7, .scl=6, .freq=100);
+    TICOS_BUS(I2C0, ticos_i2c, .port=0, .sda=7, .scl=6, .freq=100);
     TICOS_DEV(GSENSOR, silan_sc7a20, .bus=I2C0, .addr=0x19, .rw_wait_ms=1000);
     return TICOS_OK;
 }
