@@ -112,7 +112,7 @@ def generate(name, platform, thingmodel='', to='.'):
     globals()['gen_for_' + platform](name, tmpl, thingmodel, root)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='ticos ticos project generator')
+    parser = argparse.ArgumentParser(description='ticos project generator')
     parser.add_argument('--name', type=str, help='project name')
     parser.add_argument('--platform', type=str, help='supported platform: arduino (default) | esp32')
     parser.add_argument('--thingmodel', type=str, help='json file|data of thing model')
