@@ -41,39 +41,39 @@ $ arduino-cli upload --fqbn esp32:esp32:esp32s3 hello_ticos     # 向/dev/ttyACM
 $ arduino-cli monitor -p /dev/ttyACM0                           # 打开/dev/ttyACM0端口查看固件的打印信息
 ```
 
-## 利用 ticos_hal_gen.py 创建 IOT 物模型代码模板文件(.h, .c)
+## 利用 create_ticos_hal.py 创建 IOT 物模型代码模板文件(.h, .c)
 
-通过内含的 ticos_hal_gen.py 脚本，用户可以创建新的物模型接口代码文件，以下为例子：
+通过内含的 create_ticos_hal.py 脚本，用户可以创建新的物模型接口代码文件，以下为例子：
 
 ```bash
 $ cd ${Ticos Framework 项目根目录}/scripts/codegen
-$ python3 ticos_hal_gen.py --help #查看脚本命令描述
-$ python3 ticos_hal_gen.py --name="ticos_iot" --private="uint32_t pid;uint32_t did; uint32_t skey;" --json='templates/thing_model.json'
+$ python3 create_ticos_hal.py --help #查看脚本命令描述
+$ python3 create_ticos_hal.py --name="ticos_iot" --private="uint32_t pid;uint32_t did; uint32_t skey;" --json='templates/thing_model.json'
 ```
 
 创建成功后，请将新生成的 .h 与 .c 文件直接复制到您的项目代码目录下，即可正常使用
 示例中 thing_model.json 文件仅为示例模型，后期需要根据具体模型协议更改脚本
 
-## 利用 ticos_hal_gen.py 创建设备接口代码模板文件(.h, .c)
+## 利用 create_ticos_hal.py 创建设备接口代码模板文件(.h, .c)
 
-通过内含的 ticos_hal_gen.py 脚本，用户可以创建新的设备接口代码文件，以下为例子：
+通过内含的 create_ticos_hal.py 脚本，用户可以创建新的设备接口代码文件，以下为例子：
 
 ```bash
 $ cd ${Ticos Framework 项目根目录}/scripts/codegen
-$ python3 ticos_hal_gen.py --help #查看脚本命令描述
-$ python3 ticos_hal_gen.py --name="fake_accel" --private="uint8_t scl; uint8_t sda; uint8_t addr; uint8_t freq;" --public="float x; float y; float z;"
+$ python3 create_ticos_hal.py --help #查看脚本命令描述
+$ python3 create_ticos_hal.py --name="fake_accel" --private="uint8_t scl; uint8_t sda; uint8_t addr; uint8_t freq;" --public="float x; float y; float z;"
 ```
 
 创建成功后，请将新生成的 .h 与 .c 文件直接复制到您的项目代码目录下，即可正常使用
 
-## 利用 ticos_proj_gen.py 新建项目工程
+## 利用 create_ticos_proj.py 新建项目工程
 
-通过内含的 ticos_proj_gen.py 脚本，用户可以新建开箱即用的项目工程，以下为例子：
+通过内含的 create_ticos_proj.py 脚本，用户可以新建开箱即用的项目工程，以下为例子：
 
 ```bash
 $ cd ${Ticos Framework 项目根目录}/scripts/codegen
-$ python3 ticos_proj_gen.py --help #查看脚本命令描述
-$ python3 -B ticos_proj_gen.py --name="my_ticos_project" --platform="unix"
+$ python3 create_ticos_proj.py --help #查看脚本命令描述
+$ python3 -B create_ticos_proj.py --name="my_ticos_project" --platform="unix"
 $ cd my_ticos_project
 $ cmake -B build
 $ cd build

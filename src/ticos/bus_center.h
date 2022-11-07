@@ -15,7 +15,7 @@ extern "C" {
     TICOS_NBUS, \
     };
 
-#define TICOS_BUS_ADD(_id, bus, ...) \
+#define TICOS_BUS(_id, bus, ...) \
     do { \
         static bus##_t bus##_id = { \
             TICOS_BUS_SET_VTABLE(bus), .name = #_id, __VA_ARGS__ \
