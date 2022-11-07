@@ -6,10 +6,9 @@
 static ticos_task_t* s_task;
 
 static int ticos_device_center_sync_from_dev(void) {
-    ticos_device_t* const* devs = ticos_device_list;
-    ticos_device_t* dev;
-    for (int i = 0, n = ticos_device_center_ndev(); i < n; ++i) {
-        dev = devs[i];
+    ticos_device_t** devs = (ticos_device_t**) &ticos_device_list;
+    ticos_device_t* dev = devs[0];
+    for (int i = 0; dev; dev = devs[++i]) {
         if (dev->opened) {
             dev->sync_from_dev(dev);
         }
@@ -18,10 +17,9 @@ static int ticos_device_center_sync_from_dev(void) {
 }
 
 static int ticos_device_center_post_to_dev(void) {
-    ticos_device_t* const* devs = ticos_device_list;
-    ticos_device_t* dev;
-    for (int i = 0, n = ticos_device_center_ndev(); i < n; ++i) {
-        dev = devs[i];
+    ticos_device_t** devs = (ticos_device_t**) &ticos_device_list;
+    ticos_device_t* dev = devs[0];
+    for (int i = 0; dev; dev = devs[++i]) {
         if (dev->opened) {
             dev->post_to_dev(dev);
         }
@@ -30,10 +28,9 @@ static int ticos_device_center_post_to_dev(void) {
 }
 
 static void* _runner(ticos_task_t* task) {
-    ticos_device_t* const* devs = ticos_device_list;
-    ticos_device_t* dev;
-    for (int i = 0, n = ticos_device_center_ndev(); i < n; ++i) {
-        dev = devs[i];
+    ticos_device_t** devs = (ticos_device_t**) &ticos_device_list;
+    ticos_device_t* dev = devs[0];
+    for (int i = 0; dev; dev = devs[++i]) {
         if (!dev->opened) {
             if (TICOS_OK == dev->open(dev)) {
                 ticos_logd("device %d:%s open", i, dev->name);
@@ -48,8 +45,8 @@ static void* _runner(ticos_task_t* task) {
         ticos_delay(20);
         ticos_device_center_sync_from_dev();
     }
-    for (int i = 0, n = ticos_device_center_ndev(); i < n; ++i) {
-        dev = devs[i];
+    dev = devs[0];
+    for (int i = 0; dev; dev = devs[++i]) {
         if (dev->opened) {
             if (TICOS_OK == dev->close(dev)) {
                 ticos_logd("device %d:%s close", i, dev->name);
@@ -63,8 +60,8 @@ static void* _runner(ticos_task_t* task) {
 }
 
 int ticos_device_center_startup(void) {
-    uint8_t ndev = ticos_device_center_ndev();
-    if (ndev > 0) {
+    ticos_device_t** devs = (ticos_device_t**) &ticos_device_list;
+    if (devs[0]) {
         if (!s_task) {
             s_task = ticos_task_create("ticos_device_center", _runner);
         }
@@ -88,10 +85,9 @@ int ticos_device_center_cleanup(void) {
 }
 
 int ticos_device_center_sync(void) {
-    ticos_device_t* const* devs = ticos_device_list;
-    ticos_device_t* dev;
-    for (int i = 0, n = ticos_device_center_ndev(); i < n; ++i) {
-        dev = devs[i];
+    ticos_device_t** devs = (ticos_device_t**) &ticos_device_list;
+    ticos_device_t* dev = devs[0];
+    for (int i = 0; dev; dev = devs[++i]) {
         if (dev->opened) {
             dev->sync_from_cache(dev);
         }
@@ -100,10 +96,9 @@ int ticos_device_center_sync(void) {
 }
 
 int ticos_device_center_post(void) {
-    ticos_device_t* const* devs = ticos_device_list;
-    ticos_device_t* dev;
-    for (int i = 0, n = ticos_device_center_ndev(); i < n; ++i) {
-        dev = devs[i];
+    ticos_device_t** devs = (ticos_device_t**) &ticos_device_list;
+    ticos_device_t* dev = devs[0];
+    for (int i = 0; dev; dev = devs[++i]) {
         if (dev->opened) {
             dev->post_to_cache(dev);
         }
