@@ -139,7 +139,9 @@ def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
     prop_tabs = ''
     cmmd_tabs = ''
 
-    puvs = ''
+    tele_puvs = ''
+    prop_puvs = ''
+    cmmd_puvs = ''
 
     for item in raw[0]['contents']:
         item[TYPE] = item[TYPE].lower()
@@ -149,17 +151,19 @@ def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
             func_defs += gen_func_defs(item, cls_name, True, False)
             tele_tabs += gen_table(item, True, False)
             tele_enum += gen_enum(item)
+            tele_puvs += gen_puvs(item)
         elif _type == PROP:
             func_decs += gen_func_decs(item, cls_name, True, True)
             func_defs += gen_func_defs(item, cls_name, True, True)
             prop_tabs += gen_table(item, True, True)
             prop_enum += gen_enum(item)
+            prop_puvs += gen_puvs(item)
         elif _type == CMMD:
             func_decs += gen_func_decs(item, cls_name, False, True)
             func_defs += gen_func_defs(item, cls_name, False, True)
             cmmd_tabs += gen_table(item, False, True)
             cmmd_enum += gen_enum(item)
-        puvs += gen_puvs(item)
+            cmmd_puvs += gen_puvs(item)
     tele_enum += gen_enum({ TYPE:TELE, NAME:'MAX'}) + '\n'
     prop_enum += gen_enum({ TYPE:PROP, NAME:'MAX'}) + '\n'
     cmmd_enum += gen_enum({ TYPE:CMMD, NAME:'MAX'}) + '\n'
@@ -189,7 +193,7 @@ def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
     with open(to + '/ticos_thingmodel.h', 'w') as f:
         f.writelines(dot_h_lines)
 
-    return puvs
+    return (tele_puvs, prop_puvs, cmmd_puvs)
 
 def gen_hal(cls_name, date_time, tmpl_dir, prvs='', puvs='',
             inc_list='', on_open='', on_close='', from_dev='', to_dev='',
@@ -244,15 +248,18 @@ def generate(name, private='', public='', thingmodel='', to='.'):
     inc_list    = ''
     on_open     = '    TICOS_UNUSED(self);\n'
     on_close    = '    TICOS_UNUSED(self);\n'
-    from_dev    = '    TICOS_UNUSED(self);\n'
-    to_dev      = '    TICOS_UNUSED(self);\n'
-    dirty_cond  = ''
+    from_dev    = ''
+    to_dev      = ''
+    tele_dirty_cond  = ''
+    prop_dirty_cond  = ''
 
     if thingmodel:
-        iot_puvs = gen_iot(name, date_time, tmpl_dir, thingmodel, to)
-        if iot_puvs:
-            dirty_cond = re.sub('.*? (\w+);', r'ticos_cache_isdirty(self, \1)\n     || ', iot_puvs)[:-9]
-            puvs += iot_puvs
+        tele_puvs, prop_puvs, cmmd_puvs = gen_iot(name, date_time, tmpl_dir, thingmodel, to)
+        if tele_puvs:
+            tele_dirty_cond = re.sub('.*? (\w+);', r'ticos_cache_isdirty(self, \1)\n     || ', tele_puvs)[:-9]
+        if prop_puvs:
+            prop_dirty_cond = re.sub('.*? (\w+);', r'ticos_cache_isdirty(self, \1)\n     || ', prop_puvs)[:-9]
+        puvs += tele_puvs + prop_puvs + cmmd_puvs
     prvs = prvs.replace('; ', ';').strip()
     puvs = puvs.replace('; ', ';').strip()
     if thingmodel:
@@ -263,11 +270,22 @@ def generate(name, private='', public='', thingmodel='', to='.'):
                     '    ticos_cloud_start(self->product_id, self->device_id, self->secret_key);\n'
         on_close += '    ticos_cloud_stop();\n' \
                     '    ticos_wifi_stop();\n'
-        from_dev  = '' if not puvs else \
+        if tele_dirty_cond:
+            from_dev  = \
+                    '    if (%s) {\n' \
+                    '        ticos_telemetry_report();\n' \
+                    '    }\n' \
+                    % (tele_dirty_cond)
+        if prop_dirty_cond:
+            from_dev += \
                     '    if (%s) {\n' \
                     '        ticos_property_report();\n' \
                     '    }\n' \
-                    % (dirty_cond)
+                    % (prop_dirty_cond)
+    if not from_dev:
+        from_dev    = '    TICOS_UNUSED(self);\n'
+    if not to_dev:
+        to_dev      = '    TICOS_UNUSED(self);\n'
 
     if prvs or puvs:
         gen_hal(name, date_time, tmpl_dir, prvs, puvs,
