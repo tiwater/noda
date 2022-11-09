@@ -80,7 +80,7 @@ def main_handler(event, content):
         zip_stream = open(os.path.join(
             zip_path, 'ticos_framework.zip'), 'rb').read()
         logger.info(str(zip_stream, encoding='latin-1'))
-        return {'sdk': str(zip_stream, encoding='latin-1')}
+        return {'framework': str(zip_stream, encoding='latin-1')}
 
     logger.info('end main_handler nothing')
     return {'status': 'failed'}
