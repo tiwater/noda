@@ -6,7 +6,7 @@ from create_ticos_proj import generate as prj_generator
 PROJ_NAME = 'ticos_project'
 
 def generate(name, platform, thingmodel='', to='.'):
-    prj_generator(PROJ_NAME, args.platform, args.thingmodel, args.to)
+    prj_generator(PROJ_NAME, platform, thingmodel, to)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='kick off')
