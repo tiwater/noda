@@ -7,7 +7,7 @@
  ************************************************************************/
 
 #include "silan_sc7a20.h"
-#include "ticos/bus_center.h"
+#include <ticos/bus_center.h>
 
 /**********sc7a20**********/
 #define IIC_ADDR        0x19

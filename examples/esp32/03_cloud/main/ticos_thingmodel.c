@@ -3,33 +3,32 @@
  * @brief 物模型接口实现
  * @author
  * @details 此文件为自动生成，请不要更改文件内容
- * @date: 2022-11-01 09:06:27
+ * @date: 2022-11-01 08:35:39
  * @copyright
  ************************************************************************/
 
+#include "ticos_config.h"
 #include "ticos_thingmodel.h"
 #include <ticos_thingmodel_type.h>
-#include <ticos/device_center.h>
-#include "ticos_iot.h"
 
 bool ticos_property_switch_send(void) {
-    ticos_iot_t* iot = ticos_dev(0, ticos_iot);
+    ticos_iot_t* iot = ticos_dev(DEV_IOT);
     return ticos_cache_get(iot, prop_switch);
 }
 
 int ticos_property_switch_recv(bool switch_) {
-    ticos_iot_t* iot = ticos_dev(0, ticos_iot);
+    ticos_iot_t* iot = ticos_dev(DEV_IOT);
     ticos_cache_set(iot, prop_switch, switch_);
     return 0;
 }
 
 bool ticos_property_led_send(void) {
-    ticos_iot_t* iot = ticos_dev(0, ticos_iot);
+    ticos_iot_t* iot = ticos_dev(DEV_IOT);
     return ticos_cache_get(iot, prop_led);
 }
 
 int ticos_property_led_recv(bool led_) {
-    ticos_iot_t* iot = ticos_dev(0, ticos_iot);
+    ticos_iot_t* iot = ticos_dev(DEV_IOT);
     ticos_cache_set(iot, prop_led, led_);
     return 0;
 }

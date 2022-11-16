@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 extern void ticos_register_onexit(int (*onexit) (void));
-extern int ticos_onboot_internal(void);
+extern int ticos_onboot(void);
 extern int ticos_onloop(void);
 
 int ticos_boot(void);

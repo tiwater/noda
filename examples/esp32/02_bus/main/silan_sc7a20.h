@@ -10,6 +10,7 @@
 #define __SILAN_SC7A20_H
 
 #include "ticos/device.h"
+#include "ticos/bus/i2c.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,9 +20,9 @@ extern "C" {
  * silan_sc7a20类定义
  ************************************************************************/
 TICOS_DEV_CLASS_BEGIN(silan_sc7a20);
-    uint8_t     bus;
-    uint8_t     addr;
-    uint16_t    rw_wait_ms;
+    ticos_bus_t*    bus;
+    uint8_t         addr;
+    uint16_t        rw_wait_ms;
     TICOS_VAR(float, x);
     TICOS_VAR(float, y);
     TICOS_VAR(float, z);

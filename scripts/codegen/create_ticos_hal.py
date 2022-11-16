@@ -50,13 +50,13 @@ def gen_func_head_setter(_key, _id, _type):
 
 def gen_func_body_getter(cls_name, _key, _id, _type):
     ''' 根据物模型json内容返回对应的getter函数内容 '''
-    body = '\n    ' + cls_name + '_t* iot = ticos_dev(0, ' + cls_name + ');' \
+    body = '\n    ' + cls_name + '_t* iot = ticos_dev(_DEV_' + cls_name + ');' \
          + '\n    return ticos_cache_get(iot, ' + _key[:4] + '_' +  _id + ');'
     return ' {' + body + '\n}\n'
 
 def gen_func_body_setter(cls_name, _key, _id, _type):
     ''' 根据物模型json内容返回对应的setter函数内容 '''
-    body = '\n    ' + cls_name + '_t* iot = ticos_dev(0, ' + cls_name + ');' \
+    body = '\n    ' + cls_name + '_t* iot = ticos_dev(_DEV_' + cls_name + ');' \
          + '\n    ticos_cache_set(iot, ' + _key[:4] + '_' + _id + ', ' + _id + '_);'
     return ' {' + body + '\n    return 0;\n}\n'
 
@@ -115,7 +115,7 @@ def gen_puvs(item):
     _t = schema_to_c_type(item[SCHEMA])
     return  _t + ' ' + _k[:4] + '_' + _i + ';'
 
-def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
+def gen_iot(cls_name, dev_name, date_time, tmpl_dir, thingmodel, to='.'):
     ''' 根据物模型json文件返回对应的物模型接口文件 '''
     import json
 
@@ -174,6 +174,7 @@ def gen_iot(cls_name, date_time, tmpl_dir, thingmodel, to='.'):
         dot_c_lines.append(tmpl.substitute(
                     DATE_TIME = date_time,
                     CLS_NAME = cls_name,
+                    DEV_NAME = dev_name,
                     FUNC_DEFS = func_defs,
                     TELEMETRY_TABS = tele_tabs,
                     PROPERTY_TABS = prop_tabs,
@@ -235,8 +236,8 @@ def gen_hal(cls_name, date_time, tmpl_dir, prvs='', puvs='',
     with open(r'%s/%s.c' % (to, cls_name), 'w') as f:
         f.writelines(dot_c_lines)
 
-def generate(name, private='', public='', thingmodel='', to='.'):
-    if not name:
+def generate(cls_name, dev_name, private='', public='', thingmodel='', to='.'):
+    if not cls_name:
         raise Exception('类型名(--name)参数必须填写')
     date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     py_dir = os.path.dirname(os.path.abspath(__file__))
@@ -254,7 +255,7 @@ def generate(name, private='', public='', thingmodel='', to='.'):
     prop_dirty_cond  = ''
 
     if thingmodel:
-        tele_puvs, prop_puvs, cmmd_puvs = gen_iot(name, date_time, tmpl_dir, thingmodel, to)
+        tele_puvs, prop_puvs, cmmd_puvs = gen_iot(cls_name, dev_name, date_time, tmpl_dir, thingmodel, to)
         if tele_puvs:
             tele_dirty_cond = re.sub('.*? (\w+);', r'ticos_cache_isdirty(self, \1)\n     || ', tele_puvs)[:-9]
         if prop_puvs:
@@ -288,16 +289,17 @@ def generate(name, private='', public='', thingmodel='', to='.'):
         to_dev      = '    TICOS_UNUSED(self);\n'
 
     if prvs or puvs:
-        gen_hal(name, date_time, tmpl_dir, prvs, puvs,
+        gen_hal(cls_name, date_time, tmpl_dir, prvs, puvs,
                 inc_list, on_open, on_close, to_dev, from_dev,
                 to)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='create_ticos_hal')
     parser.add_argument('--name', type=str, help='class name')
+    parser.add_argument('--device', type=str, help='device name')
     parser.add_argument('--private', type=str, default='', help='private vars')
     parser.add_argument('--public', type=str, default='', help='public vars')
     parser.add_argument('--thingmodel', type=str, default='', help='json file|data of thing model')
     parser.add_argument('--to', type=str, default='.', help='target directory')
     args = parser.parse_args()
-    generate(args.name, args.private, args.public, args.thingmodel, args.to)
+    generate(args.name, args.device, args.private, args.public, args.thingmodel, args.to)

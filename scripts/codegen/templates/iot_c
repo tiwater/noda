@@ -5,10 +5,11 @@
  * @note 此文件为自动生成，请不要更改文件内容
  ************************************************************************/
 
+#include "ticos_config.h"
 #include "ticos_thingmodel.h"
 #include <ticos_thingmodel_type.h>
-#include <ticos/device_center.h>
-#include "${CLS_NAME}.h"
+
+#define _DEV_${CLS_NAME} ${DEV_NAME}
 ${FUNC_DEFS}
 const ticos_telemetry_info_t ticos_telemetry_tab[] = {${TELEMETRY_TABS}
 };
