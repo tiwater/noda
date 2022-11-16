@@ -3,30 +3,13 @@
 #include "ticos/time.h"
 #include "ticos/log.h"
 
-#include "ticos_config.h"
-
-#undef TICOS_DEV_BEGIN
-#undef TICOS_DEV_END
-#undef TICOS_DEV
-
-#define TICOS_DEV_BEGIN \
-    static ticos_device_t* _lst[] = {
-
-#define TICOS_DEV_END \
-        NULL, \
-    };
-
-#define TICOS_DEV(id, type, ...) \
-        (ticos_device_t *) &id,
-
-#undef __TICOS_CONFIG_H
-#include "ticos_config.h"
+extern ticos_device_t* ticos_device_list[];
 
 #define _has_device() \
-    (_lst[0])
+    (ticos_device_list[0])
 
 #define _foreach_device(dev) \
-    for (ticos_device_t **l = _lst, *dev = l[0]; dev; dev = *(l += 1))
+    for (ticos_device_t **l = ticos_device_list, *dev = l[0]; dev; dev = *(l += 1))
 
 static ticos_task_t* s_task;
 

@@ -8,32 +8,28 @@
 extern "C" {
 #endif
 
-#define TICOS_BUS_ID_BEGIN \
-    enum ticos_bus_id_t {
-
-#define TICOS_BUS_ID_END \
-    TICOS_NBUS, \
-    };
-
-#define TICOS_BUS(_id, bus, ...) \
-    do { \
-        static bus##_t bus##_id = { \
-            TICOS_BUS_SET_VTABLE(bus), .name = #_id, __VA_ARGS__ \
-        }; \
-        ticos_bus_list[_id] = (ticos_bus_t*)&bus##_id; \
-    } while (0)
-
 int ticos_bus_center_startup(void);
 int ticos_bus_center_cleanup(void);
-uint8_t ticos_bus_center_nbus(void);
 
-extern ticos_bus_t* ticos_bus_list[];
+#define TICOS_BUS_BEGIN
+#define TICOS_BUS_END
 
-#define ticos_bus(id)        (ticos_bus_list[id])
+#ifdef __TICOS_CONFIG_IMPORT
+/**/
+#define TICOS_BUS(id, type, ...) \
+    type##_t id = { TICOS_BUS_SET_VTABLE(type), .name = #id, __VA_ARGS__ };
+#else
+/**/
+#define TICOS_BUS(id, type, ...) \
+    extern type##_t id;
+#endif
 
-#define ticos_bus_name(id)   (ticos_bus_list[id]->name)
+// FIXME should be &id
+#define ticos_bus(id)        (id)
 
-#define ticos_bus_opened(id) (ticos_bus_list[id]->opened)
+#define ticos_bus_name(id)   (ticos_bus(id)->name)
+
+#define ticos_bus_opened(id) (ticos_bus(id)->opened)
 
 #ifdef __cplusplus
 }

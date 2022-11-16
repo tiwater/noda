@@ -1,7 +1,7 @@
 #include "ticos/internal.h"
-#include "ticos/time.h"
 #include "ticos/bus_center.h"
 #include "ticos/device_center.h"
+#include "ticos/time.h"
 #include "ticos/log.h"
 
 int (*s_onexit) (void);
@@ -16,7 +16,7 @@ static int s_ladder;
 
 int ticos_boot(void) {
     do {
-        _LADDER_UP(1, ticos_onboot_internal());
+        _LADDER_UP(1, ticos_onboot());
         _LADDER_UP(2, ticos_bus_center_startup());
         _LADDER_UP(3, ticos_device_center_startup());
     } while (0);

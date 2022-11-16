@@ -1,19 +1,23 @@
 #include "ticos/bus_center.h"
 #include "ticos/log.h"
 
+extern ticos_bus_t* ticos_bus_list[];
+
+#define _has_bus() \
+    (ticos_bus_list[0])
+
+#define _foreach_bus(bus) \
+    for (ticos_bus_t **l = ticos_bus_list, *bus = l[0]; bus; bus = *(l += 1))
+
 int ticos_bus_center_startup(void) {
-    uint8_t nbus = ticos_bus_center_nbus();
-    if (nbus > 0) {
-        ticos_bus_t* const* buss = ticos_bus_list;
-        ticos_bus_t* bus;
+    if (_has_bus()) {
         ticos_logd("bus center startup");
-        for (int i = 0; i < nbus; ++i) {
-            bus = buss[i];
+        _foreach_bus(bus) {
             if (!bus->opened) {
                 if (TICOS_OK == bus->open(bus)) {
-                    ticos_logd("bus %d:%s open", i, bus->name);
+                    ticos_logd("bus %s open", bus->name);
                 } else {
-                    ticos_loge("fail to open bus %d:%s", i, bus->name);
+                    ticos_loge("fail to open bus %s", bus->name);
                 }
             }
         }
@@ -22,17 +26,13 @@ int ticos_bus_center_startup(void) {
 }
 
 int ticos_bus_center_cleanup(void) {
-    uint8_t nbus = ticos_bus_center_nbus();
-    if (nbus > 0) {
-        ticos_bus_t* const* buss = ticos_bus_list;
-        ticos_bus_t* bus;
-        for (int i = 0; i < nbus; ++i) {
-            bus = buss[i];
+    if (_has_bus()) {
+        _foreach_bus(bus) {
             if (bus->opened) {
                 if (TICOS_OK == bus->close(bus)) {
-                    ticos_logd("bus %d:%s close", i, bus->name);
+                    ticos_logd("bus %s close", bus->name);
                 } else {
-                    ticos_loge("fail to close bus %d:%s", i, bus->name);
+                    ticos_loge("fail to close bus %s", bus->name);
                 }
             }
         }

@@ -4,8 +4,6 @@
 #include <ticos/bus_center.h>
 #include <ticos/device_center.h>
 
-#include <ticos/device/gpio.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -21,8 +19,6 @@ TICOS_BUS_END
  * 向工程注册设备
  ************************************************************************/
 TICOS_DEV_BEGIN
-    TICOS_DEV(IO1, ticos_gpio, .pin=1, .mode=TICOS_GPIO_MODE_INPUT)
-    TICOS_DEV(IO3, ticos_gpio, .pin=3, .mode=TICOS_GPIO_MODE_OUTPUT)
     // TODO 注册更多设备
 TICOS_DEV_END
 

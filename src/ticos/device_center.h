@@ -17,7 +17,7 @@ int ticos_device_center_dump(void);
 #define TICOS_DEV_BEGIN
 #define TICOS_DEV_END
 
-#if defined(__TICOS_FRAMEWORK_APP_MAIN)
+#ifdef __TICOS_CONFIG_IMPORT
 /**/
 #define TICOS_DEV(id, type, ...) \
     type##_t id = { TICOS_DEV_SET_VTABLE(type), .name = #id, __VA_ARGS__ };
