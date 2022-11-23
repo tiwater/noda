@@ -50,19 +50,33 @@ typedef struct ticos_device_t {
     TICOS_DEV_VTABLE(ticos_device_t);
 } ticos_device_t;
 
-#define TICOS_VAR(type, v)  \
-    type _##v##_var;        \
-    type _##v##_cache_var;  \
-    bool _##v##_dirty;      \
-    bool _##v##_cache_dirty
+#define TICOS_VAR(type, v)      \
+    type _##v##_var;            \
+    type _##v##_cache_var;      \
+    bool _##v##_dirty:1;        \
+    bool _##v##_touched:1;      \
+    bool _##v##_cache_dirty:1;  \
+    bool _##v##_cache_touched:1
 
-#define ticos_sync_from_cache(self, v)                       \
-    if ((self)->_##v##_var != ticos_get((self), v##_cache))  \
-        ticos_set((self), v, (self)->_##v##_cache_var)
+#define ticos_sync_from_cache(self, v)                          \
+    if ((self)->_##v##_var != (self)->_##v##_cache_var) {       \
+        (self)->_##v##_var = (self)->_##v##_cache_var;          \
+        (self)->_##v##_dirty = true;                            \
+    }                                                           \
+    if ((self)->_##v##_cache_touched) {                         \
+        (self)->_##v##_cache_touched = false;                   \
+        (self)->_##v##_cache_dirty = false;                     \
+    }
 
-#define ticos_post_to_cache(self, v)                         \
-    if ((self)->_##v##_cache_var != ticos_get((self), v))    \
-        ticos_set((self), v##_cache, (self)->_##v##_var)
+#define ticos_post_to_cache(self, v)                            \
+    if ((self)->_##v##_cache_var != (self)->_##v##_var) {       \
+        (self)->_##v##_cache_var = (self)->_##v##_var;          \
+        (self)->_##v##_cache_dirty = true;                      \
+    }                                                           \
+    if ((self)->_##v##_touched) {                               \
+        (self)->_##v##_touched = false;                         \
+        (self)->_##v##_dirty = false;                           \
+    }
 
 /**
   * @brief 判断设备实例的 public 成员变量是否有刷新
@@ -71,7 +85,7 @@ typedef struct ticos_device_t {
   * @return true：刷新，false：无刷新
   */
 #define ticos_isdirty(self, v)   \
-    ((self)->_##v##_dirty)
+    ((self)->_##v##_touched = true, (self)->_##v##_dirty)
 
 /**
   * @brief 获取设备实例的 public 成员变量值
@@ -80,7 +94,7 @@ typedef struct ticos_device_t {
   * @return 返回变量值
   */
 #define ticos_get(self, v)       \
-    ((self)->_##v##_dirty = false, (self)->_##v##_var)
+    ((self)->_##v##_touched = true, (self)->_##v##_var)
 
 /**
   * @brief 设置设备实例的 public 成员变量值
@@ -89,8 +103,8 @@ typedef struct ticos_device_t {
   * @param[in] d 待更新的变量值输入
   */
 #define ticos_set(self, v, d)           \
+    (self)->_##v##_touched = true;      \
     if ((self)->_##v##_var != (d)) {    \
-        (self)->_##v##_dirty = true;    \
         (self)->_##v##_var = (d);       \
     }
 

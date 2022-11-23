@@ -9,7 +9,7 @@
 /************************************************************************
  * 设置ticos_onloop函数触发间隔，若不设置，则默认为200毫秒
  ************************************************************************/
-#define TICOS_HEARTBEAT_MILLIS 250
+#define TICOS_HEARTBEAT_MILLIS 100
 
 #include "ticos_project.h"
 #include <ticos/log.h>
@@ -18,6 +18,7 @@
  * 生命周期函数，负责系统启动后的自定义初始化工作
  ************************************************************************/
 int ticos_onboot(void) {
+    ticos_logd("sizeof ticos_gpio: %d", sizeof (ticos_gpio_t));
     return TICOS_OK;
 }
 
@@ -26,9 +27,8 @@ int ticos_onboot(void) {
  ************************************************************************/
 int ticos_onloop(void) {
     // 检查IO1设备缓存中的level值是否已被更新
-    ticos_gpio_t* io_1 = ticos_dev(IO1);
-    if (ticos_isdirty(io_1, level)) {
-        bool level = ticos_get(io_1, level);
+    if (ticos_dev_isdirty(IO1, level)) {
+        bool level = ticos_dev_getval(IO1, level);
         // 当IO1电平变化时将DEV_IO3设置为反相
         ticos_dev_setval(IO3, level, !level);
     }

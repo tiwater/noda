@@ -5,16 +5,16 @@
 
 extern ticos_device_t* ticos_device_list[];
 
-#define _has_device() \
+#define _has_dev() \
     (ticos_device_list[0])
 
-#define _foreach_device(dev) \
+#define _foreach_dev(dev) \
     for (ticos_device_t **l = ticos_device_list, *dev = l[0]; dev; dev = *(l += 1))
 
 static ticos_task_t* s_task;
 
 static int _sync_from_dev(void) {
-    _foreach_device(dev) {
+    _foreach_dev(dev) {
         if (dev->opened) {
             dev->sync_from_dev(dev);
         }
@@ -23,7 +23,7 @@ static int _sync_from_dev(void) {
 }
 
 static int _post_to_dev(void) {
-    _foreach_device(dev) {
+    _foreach_dev(dev) {
         if (dev->opened) {
             dev->post_to_dev(dev);
         }
@@ -32,7 +32,7 @@ static int _post_to_dev(void) {
 }
 
 static void _open(void) {
-    _foreach_device(dev) {
+    _foreach_dev(dev) {
         if (!dev->opened) {
             if (TICOS_OK == dev->open(dev)) {
                 ticos_logd("device %s open", dev->name);
@@ -45,7 +45,7 @@ static void _open(void) {
 }
 
 static void _close(void) {
-    _foreach_device(dev) {
+    _foreach_dev(dev) {
         if (dev->opened) {
             if (TICOS_OK == dev->close(dev)) {
                 ticos_logd("device %s close", dev->name);
@@ -69,7 +69,7 @@ static void* _runner(ticos_task_t* task) {
 }
 
 int ticos_device_center_startup(void) {
-    if (_has_device()) {
+    if (_has_dev()) {
         if (!s_task) {
             s_task = ticos_task_create("ticos_device_center", _runner);
         }
@@ -93,7 +93,7 @@ int ticos_device_center_cleanup(void) {
 }
 
 int ticos_device_center_sync(void) {
-    _foreach_device(dev) {
+    _foreach_dev(dev) {
         if (dev->opened) {
             dev->sync_from_cache(dev);
         }
@@ -102,7 +102,7 @@ int ticos_device_center_sync(void) {
 }
 
 int ticos_device_center_post(void) {
-    _foreach_device(dev) {
+    _foreach_dev(dev) {
         if (dev->opened) {
             dev->post_to_cache(dev);
         }

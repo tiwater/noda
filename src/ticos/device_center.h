@@ -49,7 +49,7 @@ int ticos_device_center_dump(void);
   * @return true：刷新，false：无刷新
   */
 #define ticos_dev_isdirty(id, v)   \
-    (ticos_dev(id)->_##v##_dirty)
+    ticos_isdirty(ticos_dev(id), v)
 
 /**
   * @brief 获取设备实例的 public 成员变量值
@@ -58,7 +58,7 @@ int ticos_device_center_dump(void);
   * @return 返回变量值
   */
 #define ticos_dev_getval(id, v)  \
-    (ticos_dev(id)->_##v##_var)
+    ticos_get(ticos_dev(id), v)
 
 /**
   * @brief 设置设备实例的 public 成员变量值
@@ -67,7 +67,7 @@ int ticos_device_center_dump(void);
   * @param[in] d 待更新的变量值输入
   */
 #define ticos_dev_setval(id, v, d) \
-    (ticos_dev(id)->_##v##_var = d)
+    ticos_set(ticos_dev(id), v, (d))
 
 #ifdef __cplusplus
 }
