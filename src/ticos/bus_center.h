@@ -19,11 +19,12 @@ int ticos_bus_center_cleanup(void);
 #define TICOS_BUS(id, type, ...) \
     type##_t _##type##id = { \
         TICOS_BUS_SET_VTABLE(type), .name = #id, __VA_ARGS__ }; \
-    type##_t* const id = &_##type##id;
+    static type##_t* const id = &_##type##id;
 #else
 /**/
 #define TICOS_BUS(id, type, ...) \
-    extern type##_t* const id;
+    extern type##_t _##type##id; \
+    static type##_t* const id = &_##type##id;
 #endif
 
 #define ticos_bus(id)        (id)

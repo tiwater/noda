@@ -22,11 +22,12 @@ int ticos_device_center_dump(void);
 #define TICOS_DEV(id, type, ...) \
     type##_t _##type##id = { \
         TICOS_DEV_SET_VTABLE(type), .name = #id, __VA_ARGS__ }; \
-    type##_t* const id = &_##type##id;
+    static type##_t* const id = &_##type##id;
 #else
 /**/
 #define TICOS_DEV(id, type, ...) \
-    extern type##_t* const id;
+    extern type##_t _##type##id; \
+    static type##_t* const id = &_##type##id;
 #endif
 
 /**
