@@ -50,14 +50,12 @@ def gen_func_head_setter(_key, _id, _type):
 
 def gen_func_body_getter(cls_name, _key, _id, _type):
     ''' 根据物模型json内容返回对应的getter函数内容 '''
-    body = '\n    ' + cls_name + '_t* iot = ticos_dev(_DEV_' + cls_name + ');' \
-         + '\n    return ticos_cache_get(iot, ' + _key[:4] + '_' +  _id + ');'
+    body = '\n    return ticos_cache_get(' + cls_name + ', ' + _key[:4] + '_' +  _id + ');'
     return ' {' + body + '\n}\n'
 
 def gen_func_body_setter(cls_name, _key, _id, _type):
     ''' 根据物模型json内容返回对应的setter函数内容 '''
-    body = '\n    ' + cls_name + '_t* iot = ticos_dev(_DEV_' + cls_name + ');' \
-         + '\n    ticos_cache_set(iot, ' + _key[:4] + '_' + _id + ', ' + _id + '_);'
+    body = '\n    ticos_cache_set(' + cls_name + ', ' + _key[:4] + '_' + _id + ', ' + _id + '_);'
     return ' {' + body + '\n    return 0;\n}\n'
 
 def gen_func_decs(item, cls_name, need_getter, need_setter):
