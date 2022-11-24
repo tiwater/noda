@@ -12,24 +12,20 @@
 #include <ticos_thingmodel_type.h>
 
 bool ticos_property_switch_send(void) {
-    ticos_iot_t* iot = ticos_dev(DEV_IOT);
-    return ticos_cache_get(iot, prop_switch);
+    return ticos_cache_get(DEV_IOT, prop_switch);
 }
 
 int ticos_property_switch_recv(bool switch_) {
-    ticos_iot_t* iot = ticos_dev(DEV_IOT);
-    ticos_cache_set(iot, prop_switch, switch_);
+    ticos_cache_set(DEV_IOT, prop_switch, switch_);
     return 0;
 }
 
 bool ticos_property_led_send(void) {
-    ticos_iot_t* iot = ticos_dev(DEV_IOT);
-    return ticos_cache_get(iot, prop_led);
+    return ticos_cache_get(DEV_IOT, prop_led);
 }
 
 int ticos_property_led_recv(bool led_) {
-    ticos_iot_t* iot = ticos_dev(DEV_IOT);
-    ticos_cache_set(iot, prop_led, led_);
+    ticos_cache_set(DEV_IOT, prop_led, led_);
     return 0;
 }
 

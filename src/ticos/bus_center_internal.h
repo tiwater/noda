@@ -13,6 +13,6 @@
     };
 
 #define TICOS_BUS(id, type, ...) \
-        (ticos_bus_t *) &id,
+        (ticos_bus_t * const) id,
 
 #endif // __TICOS_BUS_CENTER_INTERNAL_H

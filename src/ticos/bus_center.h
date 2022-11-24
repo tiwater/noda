@@ -17,14 +17,15 @@ int ticos_bus_center_cleanup(void);
 #ifdef __TICOS_CONFIG_IMPORT
 /**/
 #define TICOS_BUS(id, type, ...) \
-    type##_t id = { TICOS_BUS_SET_VTABLE(type), .name = #id, __VA_ARGS__ };
+    type##_t _##type##id = { \
+        TICOS_BUS_SET_VTABLE(type), .name = #id, __VA_ARGS__ }; \
+    type##_t* const id = &_##type##id;
 #else
 /**/
 #define TICOS_BUS(id, type, ...) \
-    extern type##_t id;
+    extern type##_t* const id;
 #endif
 
-// FIXME should be &id
 #define ticos_bus(id)        (id)
 
 #define ticos_bus_name(id)   (ticos_bus(id)->name)

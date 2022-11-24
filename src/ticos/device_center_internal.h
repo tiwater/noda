@@ -13,6 +13,6 @@
     };
 
 #define TICOS_DEV(id, type, ...) \
-        (ticos_device_t *) &id,
+        (ticos_device_t * const) id,
 
 #endif // __TICOS_DEVICE_CENTER_INTERNAL_H

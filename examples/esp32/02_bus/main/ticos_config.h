@@ -24,7 +24,7 @@ TICOS_BUS_END
  * 向工程注册设备
  ************************************************************************/
 TICOS_DEV_BEGIN
-    TICOS_DEV(GSENSOR, silan_sc7a20, .bus=(ticos_bus_t*)(&I2C0), .addr=0x19, .rw_wait_ms=1000)
+    TICOS_DEV(GSENSOR, silan_sc7a20, .bus=(ticos_bus_t*)I2C0, .addr=0x19, .rw_wait_ms=1000)
     // TODO 注册更多设备
 TICOS_DEV_END
 

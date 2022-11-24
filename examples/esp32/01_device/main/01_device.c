@@ -27,10 +27,10 @@ int ticos_onboot(void) {
  ************************************************************************/
 int ticos_onloop(void) {
     // 检查IO1设备缓存中的level值是否已被更新
-    if (ticos_dev_isdirty(IO1, level)) {
-        bool level = ticos_dev_getval(IO1, level);
+    if (ticos_isdirty(IO1, level)) {
+        bool level = ticos_get(IO1, level);
         // 当IO1电平变化时将DEV_IO3设置为反相
-        ticos_dev_setval(IO3, level, !level);
+        ticos_set(IO3, level, !level);
     }
     return TICOS_OK;
 }

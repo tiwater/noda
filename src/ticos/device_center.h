@@ -20,11 +20,13 @@ int ticos_device_center_dump(void);
 #ifdef __TICOS_CONFIG_IMPORT
 /**/
 #define TICOS_DEV(id, type, ...) \
-    type##_t id = { TICOS_DEV_SET_VTABLE(type), .name = #id, __VA_ARGS__ };
+    type##_t _##type##id = { \
+        TICOS_DEV_SET_VTABLE(type), .name = #id, __VA_ARGS__ }; \
+    type##_t* const id = &_##type##id;
 #else
 /**/
 #define TICOS_DEV(id, type, ...) \
-    extern type##_t id;
+    extern type##_t* const id;
 #endif
 
 /**
@@ -33,7 +35,7 @@ int ticos_device_center_dump(void);
   * @return 设备句柄
   */
 #define ticos_dev(id)    \
-   (&id)
+   (id)
 
 /**
   * @brief 通过设备 ID 检索 设备名
