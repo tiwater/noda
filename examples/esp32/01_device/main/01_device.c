@@ -18,7 +18,6 @@
  * 生命周期函数，负责系统启动后的自定义初始化工作
  ************************************************************************/
 int ticos_onboot(void) {
-    ticos_logd("sizeof ticos_gpio: %d", sizeof (ticos_gpio_t));
     return TICOS_OK;
 }
 

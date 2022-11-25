@@ -8,13 +8,13 @@ extern "C" {
 #endif
 
 #define TICOS_DEV_VTABLE(cls) \
-    int (*open) (struct cls* self); \
-    int (*close) (struct cls* self); \
-    int (*power_mode_changed) (struct cls* self, ticos_power_mode_t mode); \
-    int (*sync_from_cache) (struct cls* self); \
-    int (*post_to_cache) (struct cls* self); \
-    int (*sync_from_dev) (struct cls* self); \
-    int (*post_to_dev) (struct cls* self); \
+    int (* const open) (struct cls* self); \
+    int (* const close) (struct cls* self); \
+    int (* const power_mode_changed) (struct cls* self, ticos_power_mode_t mode); \
+    int (* const sync_from_cache) (struct cls* self); \
+    int (* const post_to_cache) (struct cls* self); \
+    int (* const sync_from_dev) (struct cls* self); \
+    int (* const post_to_dev) (struct cls* self); \
     const char* name; \
     bool opened
 

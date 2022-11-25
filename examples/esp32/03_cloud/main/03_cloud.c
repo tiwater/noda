@@ -26,7 +26,6 @@ static bool g_light_on;
 static void set_light(bool on) {
     ticos_set(DEV_IOT, prop_switch, on);
     ticos_set(DEV_IOT, prop_led, on);
-
     ticos_set(DEV_IO3, level, on);
 
     g_light_on = on;

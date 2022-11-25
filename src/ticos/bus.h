@@ -8,10 +8,10 @@ extern "C" {
 #endif
 
 #define TICOS_BUS_VTABLE(cls) \
-    int (*open) (struct cls* ); \
-    int (*close) (struct cls*); \
-    int (*read) (struct cls*, uint8_t, uint8_t, uint8_t*, size_t, uint16_t); \
-    int (*write_byte) (struct cls*, uint8_t, uint8_t, uint8_t, uint16_t); \
+    int (* const open) (struct cls* ); \
+    int (* const close) (struct cls*); \
+    int (* const read) (struct cls*, uint8_t, uint8_t, uint8_t*, size_t, uint16_t); \
+    int (* const write_byte) (struct cls*, uint8_t, uint8_t, uint8_t, uint16_t); \
     const char* name; \
     bool opened
 
