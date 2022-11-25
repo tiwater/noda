@@ -29,6 +29,28 @@ TICOS_DEV_CLASS_BEGIN(ticos_iot);
     TICOS_VAR(bool, prop_led);      /**< 物模型可用属性：led灯 */
 TICOS_DEV_CLASS_END();
 
+#ifdef __TICOS_CONFIG_IMPORT
+
+/************************************************************************
+ * 此函数为自动生成的内部函数，请不要更改函数内容
+ ************************************************************************/
+int ticos_iot_sync_from_cache(ticos_iot_t* self) {
+    ticos_sync_from_cache(self, prop_switch);
+    ticos_sync_from_cache(self, prop_led);
+    return TICOS_OK;
+}
+
+/************************************************************************
+ * 此函数为自动生成的内部函数，请不要更改函数内容
+ ************************************************************************/
+int ticos_iot_post_to_cache(ticos_iot_t* self) {
+    ticos_post_to_cache(self, prop_switch);
+    ticos_post_to_cache(self, prop_led);
+    return TICOS_OK;
+}
+
+#endif
+
 #ifdef __cplusplus
 }
 #endif

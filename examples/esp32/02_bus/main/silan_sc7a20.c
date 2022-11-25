@@ -159,32 +159,6 @@ int silan_sc7a20_power_mode_changed(silan_sc7a20_t* self, ticos_power_mode_t mod
 }
 
 /************************************************************************
- * @brief 必须实现的类成员函数，负责设备数据从缓存复制到应用层的复制操作
- * @attention 此函数为自动生成，请不要更改函数内容
- * @param[in] self 类实例
- * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
- ************************************************************************/
-int silan_sc7a20_sync_from_cache(silan_sc7a20_t* self) {
-    ticos_sync_from_cache(self, x);
-    ticos_sync_from_cache(self, y);
-    ticos_sync_from_cache(self, z);
-    return TICOS_OK;
-}
-
-/************************************************************************
- * @brief 必须实现的类成员函数，负责设备数据从应用层到缓存的复制操作
- * @attention 此函数为自动生成，请不要更改函数内容
- * @param[in] self 类实例
- * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败
- ************************************************************************/
-int silan_sc7a20_post_to_cache(silan_sc7a20_t* self) {
-    ticos_post_to_cache(self, x);
-    ticos_post_to_cache(self, y);
-    ticos_post_to_cache(self, z);
-    return TICOS_OK;
-}
-
-/************************************************************************
  * @brief 必须实现的类成员函数，负责设备数据从传感器到缓存的获取操作
  * @param[in] self 类实例
  * @return 返回操作结果 TICOS_OK: 成功, TICOS_FAIL: 失败

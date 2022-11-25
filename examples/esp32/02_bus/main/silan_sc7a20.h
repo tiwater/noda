@@ -28,6 +28,30 @@ TICOS_DEV_CLASS_BEGIN(silan_sc7a20);
     TICOS_VAR(float, z);
 TICOS_DEV_CLASS_END();
 
+#ifdef __TICOS_CONFIG_IMPORT
+
+/************************************************************************
+ * 此函数为自动生成的内部函数，请不要更改函数内容
+ ************************************************************************/
+int silan_sc7a20_post_to_cache(silan_sc7a20_t* self) {
+    ticos_post_to_cache(self, x);
+    ticos_post_to_cache(self, y);
+    ticos_post_to_cache(self, z);
+    return TICOS_OK;
+}
+
+/************************************************************************
+ * 此函数为自动生成的内部函数，请不要更改函数内容
+ ************************************************************************/
+int silan_sc7a20_sync_from_cache(silan_sc7a20_t* self) {
+    ticos_sync_from_cache(self, x);
+    ticos_sync_from_cache(self, y);
+    ticos_sync_from_cache(self, z);
+    return TICOS_OK;
+}
+
+#endif
+
 #ifdef __cplusplus
 }
 #endif

@@ -33,6 +33,26 @@ TICOS_DEV_CLASS_BEGIN(ticos_gpio);
     TICOS_VAR(bool, level);         /**< GPIO 引脚状态，true: 拉高，false: 拉低 */
 TICOS_DEV_CLASS_END();
 
+#ifdef __TICOS_CONFIG_IMPORT
+
+/************************************************************************
+ * 此函数为自动生成的内部函数，请不要更改函数内容
+ ************************************************************************/
+int ticos_gpio_sync_from_cache(ticos_gpio_t* self) {
+    ticos_sync_from_cache(self, level);
+    return TICOS_OK;
+}
+
+/************************************************************************
+ * 此函数为自动生成的内部函数，请不要更改函数内容
+ ************************************************************************/
+int ticos_gpio_post_to_cache(ticos_gpio_t* self) {
+    ticos_post_to_cache(self, level);
+    return TICOS_OK;
+}
+
+#endif
+
 #ifdef __cplusplus
 }
 #endif
