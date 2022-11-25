@@ -8,6 +8,9 @@
 
 #define TICOS_UNUSED(x) (void) x
 
+#define __TICOS_STRINGIFY_1(x...)   #x
+#define TICOS_STRINGIFY(x...)       __TICOS_STRINGIFY_1(x)
+
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -18,7 +18,8 @@ int ticos_bus_center_cleanup(void);
 /**/
 #define TICOS_BUS(id, type, ...) \
     type##_t _##type##id = { \
-        TICOS_BUS_SET_VTABLE(type), .name = #id, __VA_ARGS__ }; \
+        TICOS_BUS_SET_VTABLE(type), .name = TICOS_STRINGIFY(id), __VA_ARGS__ \
+    }; \
     static type##_t* const id = &_##type##id;
 #else
 /**/

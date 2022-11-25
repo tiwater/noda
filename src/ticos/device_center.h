@@ -21,7 +21,8 @@ int ticos_device_center_dump(void);
 /**/
 #define TICOS_DEV(id, type, ...) \
     type##_t _##type##id = { \
-        TICOS_DEV_SET_VTABLE(type), .name = #id, __VA_ARGS__ }; \
+        TICOS_DEV_SET_VTABLE(type), .name = TICOS_STRINGIFY(id), __VA_ARGS__ \
+    }; \
     static type##_t* const id = &_##type##id;
 #else
 /**/
